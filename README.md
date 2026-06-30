@@ -4,11 +4,13 @@
 
 **A world-class, free, open-source interactive learning platform for AI Engineering**
 
-[![Modules](https://img.shields.io/badge/Modules-22-818cf8?style=for-the-badge&logo=bookstack&logoColor=white)](.)
-[![Phases](https://img.shields.io/badge/Phases-5-34d399?style=for-the-badge&logo=stackshare&logoColor=white)](.)
-[![Concepts](https://img.shields.io/badge/Concepts-80%2B-fbbf24?style=for-the-badge&logo=buffer&logoColor=white)](.)
+### 🌐 [**Live Site → vikram512700.github.io/Ai_for_All**](https://vikram512700.github.io/Ai_for_All/)
+
+[![Live Site](https://img.shields.io/badge/🌐%20Live%20Site-GitHub%20Pages-34d399?style=for-the-badge)](https://vikram512700.github.io/Ai_for_All/)
+[![Modules](https://img.shields.io/badge/Modules-22-818cf8?style=for-the-badge&logo=bookstack&logoColor=white)](https://vikram512700.github.io/Ai_for_All/)
+[![Phases](https://img.shields.io/badge/Phases-5-fbbf24?style=for-the-badge&logo=stackshare&logoColor=white)](https://vikram512700.github.io/Ai_for_All/)
+[![Concepts](https://img.shields.io/badge/Concepts-80%2B-f472b6?style=for-the-badge&logo=buffer&logoColor=white)](https://vikram512700.github.io/Ai_for_All/)
 [![License](https://img.shields.io/badge/License-MIT-60a5fa?style=for-the-badge)](LICENSE)
-[![No Build Step](https://img.shields.io/badge/No%20Build%20Step-Just%20Open%20HTML-f472b6?style=for-the-badge)](.)
 
 *From zero to production-grade Agentic AI, RAG, LangGraph, and LLMOps — in 5 structured phases.*
 
@@ -18,6 +20,7 @@
 ![Design](https://img.shields.io/badge/Design-Glassmorphism%20%7C%20Dark%20%2B%20Light%20Mode-2dd4bf?style=flat-square)
 ![Icons](https://img.shields.io/badge/Icons-Ionicons%207.1.0-818cf8?style=flat-square)
 ![Fonts](https://img.shields.io/badge/Fonts-Inter%20%2B%20Fira%20Code-60a5fa?style=flat-square)
+![Deployed](https://img.shields.io/badge/Deployed-GitHub%20Pages-222222?style=flat-square&logo=github)
 
 </div>
 
@@ -141,12 +144,18 @@ This portal is intentionally **zero-dependency** — no Node.js, no build step, 
 
 ## 🚀 Getting Started
 
-### Option A — Just Open It (Recommended)
+### Option A — Visit the Live Site ✨ (No install needed)
+
+**👉 [https://vikram512700.github.io/Ai_for_All/](https://vikram512700.github.io/Ai_for_All/)**
+
+Open the link in any browser. No login, no paywall, no ads — works on desktop and mobile.
+
+### Option B — Run Locally
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/yourname/ai-for-all.git
-cd ai-for-all
+git clone https://github.com/vikram512700/Ai_for_All.git
+cd Ai_for_All
 
 # 2. Open in your browser — no server needed
 open index.html          # macOS
@@ -154,7 +163,7 @@ start index.html         # Windows
 xdg-open index.html      # Linux
 ```
 
-### Option B — Local Dev Server (for live reload)
+### Option C — Local Dev Server (for live reload)
 
 ```bash
 # Python (no install needed)
@@ -355,8 +364,12 @@ MIT License — free to use, fork, adapt, and share. If this portal helped you l
 
 **Built with care for the AI Engineering community**
 
-[🏠 Home](index.html) · [🗺️ Roadmap](roadmap.html) · [📖 Glossary](glossary.html) · [🗺️ Knowledge Map](knowledge-map.html)
+[![Live Site](https://img.shields.io/badge/🌐%20Visit%20Live%20Site-vikram512700.github.io%2FAi__for__All-34d399?style=for-the-badge)](https://vikram512700.github.io/Ai_for_All/)
 
-*Start at [index.html](index.html) — no login, no paywall, no ads.*
+[🏠 Home](https://vikram512700.github.io/Ai_for_All/) · [🗺️ Roadmap](https://vikram512700.github.io/Ai_for_All/roadmap.html) · [📖 Glossary](https://vikram512700.github.io/Ai_for_All/glossary.html) · [🗺️ Knowledge Map](https://vikram512700.github.io/Ai_for_All/knowledge-map.html)
+
+*No login · No paywall · No ads · Works on mobile*
+
+⭐ **[Star this repo](https://github.com/vikram512700/Ai_for_All)** if it helped you learn AI Engineering
 
 </div>
