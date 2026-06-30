@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Test-Path \"C:\\\\Users\\\\vikra\\\\OneDrive\\\\Desktop\\\\AI_Buzz_Words\\\\README.md\")"
+    ]
+  }
+}

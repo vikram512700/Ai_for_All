@@ -5,64 +5,714 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI for All | Master Modern AI Engineering</title>
     <meta name="description" content="A world-class interactive learning platform for AI Engineering, GenAI, RAG, Agentic AI, MCP, LLMOps and more.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
-    </head>
+    <style>
+        /* ════════════════════════════════
+           ENHANCED SIDEBAR
+        ════════════════════════════════ */
+        .sidebar {
+            background: linear-gradient(180deg, #0a0a12 0%, #0c0c16 100%);
+            border-right: 1px solid rgba(129,140,248,0.12);
+        }
+
+        /* Sidebar mini progress indicator */
+        .sb-progress-ring {
+            width: 36px; height: 36px;
+            position: relative; flex-shrink: 0;
+        }
+        .sb-progress-ring svg { transform: rotate(-90deg); }
+        .sb-progress-ring circle {
+            fill: none; stroke-width: 3;
+            stroke-dasharray: 88; stroke-linecap: round;
+        }
+        .sb-ring-bg   { stroke: rgba(255,255,255,0.08); }
+        .sb-ring-fill { stroke: url(#ringGrad); stroke-dashoffset: 0; }
+
+        /* Sidebar user badge */
+        .sb-user-card {
+            margin: 0 12px 16px;
+            background: linear-gradient(135deg, rgba(129,140,248,0.1), rgba(52,211,153,0.06));
+            border: 1px solid rgba(129,140,248,0.2);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sb-avatar {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, #818cf8, #34d399);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: white; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .sb-user-info { flex: 1; min-width: 0; }
+        .sb-user-name  { font-size: 0.82rem; font-weight: 700; color: var(--text-primary); }
+        .sb-user-level { font-size: 0.72rem; color: var(--text-secondary); }
+
+        /* Sidebar phase labels with glow lines */
+        .nav-section-title {
+            position: relative;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav-section-title::after {
+            content: '';
+            flex: 1; height: 1px;
+            background: linear-gradient(90deg, rgba(129,140,248,0.2), transparent);
+        }
+
+        /* Nav item badge (new/hot) */
+        .nav-badge {
+            margin-left: auto;
+            font-size: 0.6rem; font-weight: 700;
+            padding: 1px 6px; border-radius: 10px;
+            text-transform: uppercase; letter-spacing: 0.03em;
+        }
+        .nav-badge.hot { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .nav-badge.new { background: rgba(52,211,153,0.2);  color: #34d399; }
+
+        /* Sidebar mini stat strip */
+        .sb-stats {
+            margin: 0 12px 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .sb-stat {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 9px 6px;
+            text-align: center;
+        }
+        .sb-stat-n { font-size: 1.05rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .sb-stat-l { font-size: 0.62rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+        /* Sidebar phase section icons */
+        .nav-section-title ion-icon {
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        /* Bottom sidebar CTA */
+        .sb-cta {
+            margin: 8px 12px 0;
+            background: linear-gradient(135deg, rgba(129,140,248,0.15), rgba(52,211,153,0.08));
+            border: 1px solid rgba(129,140,248,0.25);
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center;
+        }
+        .sb-cta-text { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4; }
+        .sb-cta-btn {
+            display: block;
+            background: linear-gradient(135deg, #818cf8, #34d399);
+            color: white; font-size: 0.78rem; font-weight: 700;
+            padding: 7px 14px; border-radius: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .sb-cta-btn:hover { opacity: 0.85; }
+
+        /* ════════════════════════════════
+           HERO SECTION
+        ════════════════════════════════ */
+        .hero-banner {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid rgba(129,140,248,0.2);
+            border-radius: 24px;
+            padding: 56px 52px 48px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+        /* Animated mesh background */
+        .hero-mesh {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .hero-mesh::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(129,140,248,0.18) 0%, transparent 65%);
+            border-radius: 50%;
+            animation: meshDrift1 8s ease-in-out infinite alternate;
+        }
+        .hero-mesh::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -60px;
+            width: 380px; height: 380px;
+            background: radial-gradient(circle, rgba(52,211,153,0.14) 0%, transparent 65%);
+            border-radius: 50%;
+            animation: meshDrift2 10s ease-in-out 2s infinite alternate;
+        }
+        @keyframes meshDrift1 { 0%{transform:translate(0,0) scale(1);} 100%{transform:translate(30px,-20px) scale(1.2);} }
+        @keyframes meshDrift2 { 0%{transform:translate(0,0) scale(1);} 100%{transform:translate(-20px,25px) scale(1.15);} }
+
+        /* Floating orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.25;
+            animation: orbFloat 6s ease-in-out infinite alternate;
+        }
+        .orb-1 { width:140px;height:140px; top:10%; right:18%; background:radial-gradient(circle,#818cf8,transparent); animation-duration:7s; }
+        .orb-2 { width:80px; height:80px; top:55%; right:8%;  background:radial-gradient(circle,#34d399,transparent); animation-duration:5s; animation-delay:1s; }
+        .orb-3 { width:60px; height:60px; top:25%; right:6%;  background:radial-gradient(circle,#f472b6,transparent); animation-duration:9s; animation-delay:2s; }
+        @keyframes orbFloat { 0%{transform:translateY(0) scale(1);} 100%{transform:translateY(-18px) scale(1.08);} }
+
+        /* Grid lines decoration */
+        .hero-grid-lines {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(129,140,248,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(129,140,248,0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse at 70% 50%, black 20%, transparent 70%);
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, rgba(129,140,248,0.15), rgba(52,211,153,0.1));
+            border: 1px solid rgba(129,140,248,0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.78rem; font-weight: 700;
+            color: #818cf8; margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+        .hero-eyebrow .dot {
+            width: 7px; height: 7px;
+            background: #34d399; border-radius: 50%;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+        @keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
+
+        .hero-banner h1 {
+            font-size: 3.2rem; font-weight: 900;
+            letter-spacing: -2px; line-height: 1.1;
+            margin-bottom: 18px;
+        }
+        .hero-sub {
+            font-size: 1.1rem; color: var(--text-secondary);
+            max-width: 580px; line-height: 1.7; margin-bottom: 36px;
+        }
+
+        /* Hero CTA buttons */
+        .hero-ctas {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px;
+        }
+        .hero-cta-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #818cf8, #6366f1);
+            color: white; font-weight: 700; font-size: 0.9rem;
+            padding: 12px 24px; border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(129,140,248,0.35);
+            transition: all 0.25s ease;
+        }
+        .hero-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(129,140,248,0.45); }
+        .hero-cta-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-primary); font-weight: 600; font-size: 0.9rem;
+            padding: 12px 24px; border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .hero-cta-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+        /* Hero stats redesign */
+        .hero-stats {
+            display: flex; gap: 0; flex-wrap: wrap;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.03);
+        }
+        .stat-item {
+            flex: 1; min-width: 100px;
+            padding: 18px 20px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-size: 2rem; font-weight: 900; line-height: 1;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+        /* ════════════════════════════════
+           LIVE TICKER
+        ════════════════════════════════ */
+        .ticker-wrap {
+            background: rgba(129,140,248,0.06);
+            border: 1px solid rgba(129,140,248,0.15);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            overflow: hidden;
+        }
+        .ticker-label {
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.1em; color: #818cf8; white-space: nowrap; flex-shrink: 0;
+            border-right: 1px solid rgba(129,140,248,0.3); padding-right: 16px;
+        }
+        .ticker-track {
+            overflow: hidden; flex: 1;
+        }
+        .ticker-inner {
+            display: flex; gap: 48px; white-space: nowrap;
+            animation: tickerScroll 22s linear infinite;
+        }
+        .ticker-inner:hover { animation-play-state: paused; }
+        @keyframes tickerScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+        .ticker-item {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.8rem; color: var(--text-secondary); flex-shrink: 0;
+        }
+        .ticker-item ion-icon { font-size: 0.85rem; color: var(--accent-primary); flex-shrink: 0; }
+
+        /* ════════════════════════════════
+           AI PIPELINE GRAPHIC
+        ════════════════════════════════ */
+        .pipeline-graphic {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin: 24px 0;
+            overflow-x: auto;
+        }
+        .pipeline-graphic-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+            font-weight: 700; color: var(--text-muted); margin-bottom: 20px;
+            text-align: center;
+        }
+        .pg-row {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            justify-content: center;
+            min-width: 700px;
+        }
+        .pg-node {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            flex-shrink: 0;
+        }
+        .pg-icon-wrap {
+            width: 58px; height: 58px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            border: 2px solid;
+            position: relative;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .pg-icon-wrap:hover { transform: translateY(-4px); }
+        .pg-node-label { font-size: 0.72rem; font-weight: 600; text-align: center; max-width: 70px; line-height: 1.3; }
+        .pg-arrow {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            padding: 0 4px;
+            color: var(--text-muted);
+        }
+        .pg-arrow-line {
+            height: 2px;
+            background: linear-gradient(90deg, rgba(129,140,248,0.2), rgba(52,211,153,0.2));
+            flex: 1; position: relative;
+        }
+        .pg-arrow-line::after {
+            content: '▶';
+            position: absolute;
+            right: -8px; top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.5rem;
+            color: #818cf8;
+        }
+
+        /* ════════════════════════════════
+           LEARNING PATH VISUAL
+        ════════════════════════════════ */
+        .lp-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+        @media(max-width:700px){ .lp-visual { grid-template-columns: 1fr; } }
+        .lp-phase {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .lp-phase::before {
+            content: '';
+            position: absolute; top:0; left:0; right:0; height: 3px;
+        }
+        .lp-phase.lp-1::before { background: linear-gradient(90deg,#818cf8,#a78bfa); }
+        .lp-phase.lp-2::before { background: linear-gradient(90deg,#34d399,#2dd4bf); }
+        .lp-phase.lp-3::before { background: linear-gradient(90deg,#f472b6,#fb923c); }
+        .lp-phase-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .lp-phase-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .lp-phase-meta { flex: 1; }
+        .lp-phase-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 2px; }
+        .lp-phase-weeks { font-size: 0.72rem; color: var(--text-muted); }
+        .lp-items { display: flex; flex-direction: column; gap: 6px; }
+        .lp-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.8rem; color: var(--text-secondary);
+        }
+        .lp-item-dot {
+            width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+        }
+
+        /* ════════════════════════════════
+           TECH RADAR GRID
+        ════════════════════════════════ */
+        .tech-radar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+            gap: 12px;
+            margin: 24px 0;
+        }
+        .tr-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 14px;
+            text-align: center;
+            transition: all 0.25s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+        .tr-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+        }
+        .tr-card:hover { transform: translateY(-4px); border-color: rgba(129,140,248,0.3); }
+        .tr-icon { font-size: 1.6rem; margin-bottom: 8px; }
+        .tr-name { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+        .tr-status { font-size: 0.68rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; display: inline-block; }
+        .tr-adopt { background: rgba(52,211,153,0.15); color: #34d399; }
+        .tr-trial { background: rgba(251,191,36,0.15); color: #fbbf24; }
+        .tr-assess{ background: rgba(96,165,250,0.15); color: #60a5fa; }
+
+        /* ════════════════════════════════
+           MODULE CARDS — enhanced
+        ════════════════════════════════ */
+        .bento-card {
+            position: relative;
+        }
+        .bento-card .module-num {
+            position: absolute; top: 18px; right: 18px;
+            font-size: 0.65rem; font-weight: 800;
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        /* Phase section visuals */
+        .phase-visual-bar {
+            display: flex;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 6px;
+            margin-bottom: 24px;
+            gap: 3px;
+        }
+        .pvb-seg { flex: 1; border-radius: 6px; }
+
+        /* ════════════════════════════════
+           METRICS STRIP
+        ════════════════════════════════ */
+        .metrics-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+            gap: 14px;
+            margin: 0 0 32px;
+        }
+        .ms-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .ms-icon-wrap {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .ms-info .ms-val { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+        .ms-info .ms-lbl { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+
+        /* ════════════════════════════════
+           SECTION HEADERS — enhanced
+        ════════════════════════════════ */
+        .section-head-fancy {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 24px; padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .shf-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        .shf-text { flex: 1; }
+        .shf-text .shf-eyebrow { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 3px; }
+        .shf-text h2 { margin: 0; border: none; padding: 0; font-size: 1.35rem; }
+        .shf-count {
+            font-size: 0.8rem; font-weight: 700;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 4px 12px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        /* ════════════════════════════════
+           PROGRESS (enhanced)
+        ════════════════════════════════ */
+        .portal-progress {
+            background: linear-gradient(135deg, rgba(129,140,248,0.08), rgba(52,211,153,0.05));
+            border: 1px solid rgba(129,140,248,0.2);
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #818cf8, #a78bfa, #34d399);
+            background-size: 200% 100%;
+            animation: progressShimmer 3s linear infinite;
+        }
+        @keyframes progressShimmer { 0%{background-position:0%} 100%{background-position:200%} }
+
+        /* ════════════════════════════════
+           TOOLS ECOSYSTEM — enhanced
+        ════════════════════════════════ */
+        .tool-cat-card {
+            position: relative; overflow: hidden;
+        }
+        .tool-cat-card::before {
+            content: '';
+            position: absolute; top:0; left:0; right:0; height: 2px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .tool-cat-card:hover::before { opacity: 1; }
+
+        /* ════════════════════════════════
+           FLOATING CONCEPTS CLOUD
+        ════════════════════════════════ */
+        .concepts-cloud {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            margin: 24px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .concepts-cloud::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(129,140,248,0.06), transparent 70%);
+            pointer-events: none;
+        }
+        .cc-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; color: var(--text-muted); margin-bottom: 20px; }
+        .cc-grid {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            justify-content: center;
+            position: relative; z-index: 1;
+        }
+        .cc-tag {
+            font-size: 0.8rem; font-weight: 600;
+            padding: 6px 14px; border-radius: 20px;
+            border: 1px solid;
+            transition: all 0.25s;
+            cursor: default;
+        }
+        .cc-tag:hover { transform: translateY(-3px) scale(1.05); }
+        .cc-tag.sz-lg { font-size: 0.9rem; padding: 8px 18px; }
+        .cc-tag.sz-sm { font-size: 0.72rem; padding: 4px 10px; }
+
+        /* ════════════════════════════════
+           WHAT YOU'LL BUILD SECTION
+        ════════════════════════════════ */
+        .build-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .build-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            transition: all 0.25s;
+        }
+        .build-card:hover { border-color: rgba(129,140,248,0.3); transform: translateY(-3px); }
+        .build-card-num { font-size: 2rem; font-weight: 900; line-height: 1; opacity: 0.15; margin-bottom: 10px; font-family: 'Fira Code', monospace; }
+        .build-card h4 { font-size: 0.88rem; margin-bottom: 6px; }
+        .build-card p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+    </style>
+</head>
 <body>
 <div class="app-container">
 
-    <!-- ══════════ SIDEBAR ══════════ -->
+    <!-- ══════════════════════════════════
+         ENHANCED SIDEBAR
+    ══════════════════════════════════ -->
     <aside class="sidebar" id="sidebar">
+        <!-- Logo -->
         <a href="index.html" class="logo-container" style="text-decoration:none;">
-            <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
+            <div class="logo-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
             <div class="logo-text">AI for All</div>
         </a>
-        <div class="nav-section">
-            <div class="nav-section-title">Getting Started</div>
-            <a href="index.html"   class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
-            <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+
+        <!-- SVG defs for ring gradient -->
+        <svg width="0" height="0" style="position:absolute;">
+            <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#818cf8"/>
+                    <stop offset="100%" stop-color="#34d399"/>
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <!-- User card -->
+        <div class="sb-user-card">
+            <div class="sb-avatar">AI</div>
+            <div class="sb-user-info">
+                <div class="sb-user-name">AI Engineer Path</div>
+                <div class="sb-user-level">⚡ 22 modules available</div>
+            </div>
+            <div class="sb-progress-ring">
+                <svg width="36" height="36" viewBox="0 0 36 36">
+                    <circle class="sb-ring-bg" cx="18" cy="18" r="14"/>
+                    <circle class="sb-ring-fill" cx="18" cy="18" r="14" stroke-dashoffset="0"/>
+                </svg>
+            </div>
         </div>
+
+        <!-- Mini stats -->
+        <div class="sb-stats">
+            <div class="sb-stat">
+                <div class="sb-stat-n">22</div>
+                <div class="sb-stat-l">Modules</div>
+            </div>
+            <div class="sb-stat">
+                <div class="sb-stat-n">5</div>
+                <div class="sb-stat-l">Phases</div>
+            </div>
+            <div class="sb-stat">
+                <div class="sb-stat-n">80+</div>
+                <div class="sb-stat-l">Concepts</div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
         <div class="nav-section">
-            <div class="nav-section-title">Core Modules</div>
+            <div class="nav-section-title"><ion-icon name="compass-outline"></ion-icon> Getting Started</div>
+            <a href="index.html"   class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
+            <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap<span class="nav-badge hot">🔥</span></a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-section-title"><ion-icon name="school-outline"></ion-icon> Core Modules</div>
             <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a>
             <a href="claude.html"       class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a>
             <a href="rag.html"          class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a>
             <a href="agents.html"       class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
-            <a href="mcp.html"          class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a>
+            <a href="mcp.html"          class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol<span class="nav-badge new">new</span></a>
         </div>
+
         <div class="nav-section">
-            <div class="nav-section-title">Production Ops</div>
+            <div class="nav-section-title"><ion-icon name="server-outline"></ion-icon> Production Ops</div>
             <a href="llmops.html"   class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a>
             <a href="evals.html"    class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
             <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a>
             <a href="tools.html"    class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a>
         </div>
+
         <div class="nav-section">
-            <div class="nav-section-title">Advanced Engineering</div>
-            <a href="langgraph.html"            class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> LangGraph Deep Dive</a>
-            <a href="agent-engineering.html"    class="nav-item"><ion-icon name="construct-outline"></ion-icon> Agent Engineering</a>
+            <div class="nav-section-title"><ion-icon name="rocket-outline"></ion-icon> Advanced Engineering</div>
+            <a href="langgraph.html"             class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> LangGraph Deep Dive</a>
+            <a href="agent-engineering.html"     class="nav-item"><ion-icon name="construct-outline"></ion-icon> Agent Engineering</a>
             <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
-            <a href="infrastructure.html"       class="nav-item"><ion-icon name="server-outline"></ion-icon> Infrastructure &amp; Serving</a>
-            <a href="multi-agent.html"          class="nav-item"><ion-icon name="people-outline"></ion-icon> Multi-Agent Systems</a>
-            <a href="graphrag.html"             class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
+            <a href="infrastructure.html"        class="nav-item"><ion-icon name="server-outline"></ion-icon> Infrastructure &amp; Serving</a>
+            <a href="multi-agent.html"           class="nav-item"><ion-icon name="people-outline"></ion-icon> Multi-Agent Systems<span class="nav-badge hot">🔥</span></a>
+            <a href="graphrag.html"              class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
         </div>
+
         <div class="nav-section">
-            <div class="nav-section-title">Deep Operations</div>
+            <div class="nav-section-title"><ion-icon name="telescope-outline"></ion-icon> Deep Operations</div>
             <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Advanced Observability</a>
             <a href="ai-gateway.html"             class="nav-item"><ion-icon name="swap-horizontal-outline"></ion-icon> AI Gateways</a>
             <a href="advanced-security.html"      class="nav-item"><ion-icon name="lock-closed-outline"></ion-icon> Advanced Security</a>
             <a href="knowledge-map.html"          class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
         </div>
+
         <div class="nav-section">
-            <div class="nav-section-title">Resources</div>
+            <div class="nav-section-title"><ion-icon name="library-outline"></ion-icon> Resources</div>
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
+
+        <!-- Sidebar CTA -->
+        <div class="sb-cta">
+            <div class="sb-cta-text">Ready to land your first AI Engineering role?</div>
+            <a href="roadmap.html" class="sb-cta-btn">View Full Roadmap →</a>
+        </div>
+
     </aside>
 
     <div class="mobile-overlay" id="mobile-overlay"></div>
 
+    <!-- ══════════════════════════════════
+         MAIN CONTENT
+    ══════════════════════════════════ -->
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
@@ -79,29 +729,255 @@
 
             <!-- ══ HERO ══ -->
             <div class="hero-banner animate-on-scroll">
-                <span class="badge">&#10024; Version 4.0 &mdash; Free &amp; Open Source</span>
-                <h1>Master Modern <span class="text-gradient">AI Engineering</span></h1>
-                <p class="page-description">A world-class interactive learning platform for Cloud, DevOps, and Software Engineers. 22 structured modules across 3 phases — from zero to production-grade Agentic AI, RAG, and LLMOps.</p>
-                <div class="hero-stats">
-                    <div class="stat-item"><div class="stat-number">22</div><div class="stat-label">Modules</div></div>
-                    <div class="stat-item"><div class="stat-number">80+</div><div class="stat-label">Concepts</div></div>
-                    <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Phases</div></div>
-                    <div class="stat-item"><div class="stat-number">15</div><div class="stat-label">Priority Topics</div></div>
+                <div class="hero-mesh"></div>
+                <div class="hero-grid-lines"></div>
+                <div class="hero-orb orb-1"></div>
+                <div class="hero-orb orb-2"></div>
+                <div class="hero-orb orb-3"></div>
+
+                <div class="hero-content">
+                    <div class="hero-eyebrow">
+                        <span class="dot"></span>
+                        Version 4.0 &mdash; Free &amp; Open Source &mdash; All 22 Modules Live
+                    </div>
+                    <h1>Master Modern<br><span class="text-gradient">AI Engineering</span></h1>
+                    <p class="hero-sub">A world-class interactive portal for Cloud, DevOps &amp; Software Engineers. From zero to production-grade <strong style="color:var(--text-primary);">Agentic AI, RAG, LangGraph</strong>, and <strong style="color:var(--text-primary);">LLMOps</strong> — in 5 structured phases.</p>
+                    <div class="hero-ctas">
+                        <a href="roadmap.html" class="hero-cta-primary"><ion-icon name="map-outline"></ion-icon> View Career Roadmap</a>
+                        <a href="fundamentals.html" class="hero-cta-secondary"><ion-icon name="play-outline"></ion-icon> Start Learning</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item"><div class="stat-number">22</div><div class="stat-label">Modules</div></div>
+                        <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Phases</div></div>
+                        <div class="stat-item"><div class="stat-number">80+</div><div class="stat-label">Concepts</div></div>
+                        <div class="stat-item"><div class="stat-number">16</div><div class="stat-label">Roadmap Steps</div></div>
+                        <div class="stat-item"><div class="stat-number">$220K</div><div class="stat-label">Avg Senior Salary</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ TICKER ══ -->
+            <div class="ticker-wrap animate-on-scroll">
+                <span class="ticker-label">📡 Trending</span>
+                <div class="ticker-track">
+                    <div class="ticker-inner">
+                        <span class="ticker-item"><ion-icon name="sparkles-outline"></ion-icon> Claude 4 Opus released</span>
+                        <span class="ticker-item"><ion-icon name="git-network-outline"></ion-icon> MCP now adopted by 50+ tools</span>
+                        <span class="ticker-item"><ion-icon name="people-outline"></ion-icon> Google A2A protocol launched</span>
+                        <span class="ticker-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG 2.0 from Microsoft</span>
+                        <span class="ticker-item"><ion-icon name="hardware-chip-outline"></ion-icon> Llama 3.3 405B available</span>
+                        <span class="ticker-item"><ion-icon name="rocket-outline"></ion-icon> vLLM v0.8 — 40% faster</span>
+                        <span class="ticker-item"><ion-icon name="shield-outline"></ion-icon> OWASP LLM Top 10 updated</span>
+                        <!-- duplicate for seamless loop -->
+                        <span class="ticker-item"><ion-icon name="sparkles-outline"></ion-icon> Claude 4 Opus released</span>
+                        <span class="ticker-item"><ion-icon name="git-network-outline"></ion-icon> MCP now adopted by 50+ tools</span>
+                        <span class="ticker-item"><ion-icon name="people-outline"></ion-icon> Google A2A protocol launched</span>
+                        <span class="ticker-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG 2.0 from Microsoft</span>
+                        <span class="ticker-item"><ion-icon name="hardware-chip-outline"></ion-icon> Llama 3.3 405B available</span>
+                        <span class="ticker-item"><ion-icon name="rocket-outline"></ion-icon> vLLM v0.8 — 40% faster</span>
+                        <span class="ticker-item"><ion-icon name="shield-outline"></ion-icon> OWASP LLM Top 10 updated</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ METRICS STRIP ══ -->
+            <div class="metrics-strip animate-on-scroll">
+                <div class="ms-card">
+                    <div class="ms-icon-wrap" style="background:rgba(129,140,248,0.15);">
+                        <ion-icon name="trending-up-outline" style="color:#818cf8;font-size:1.25rem;"></ion-icon>
+                    </div>
+                    <div class="ms-info">
+                        <div class="ms-val" style="color:#818cf8;">+340%</div>
+                        <div class="ms-lbl">AI Eng job growth '24</div>
+                    </div>
+                </div>
+                <div class="ms-card">
+                    <div class="ms-icon-wrap" style="background:rgba(52,211,153,0.15);">
+                        <ion-icon name="cash-outline" style="color:#34d399;font-size:1.25rem;"></ion-icon>
+                    </div>
+                    <div class="ms-info">
+                        <div class="ms-val" style="color:#34d399;">$220K</div>
+                        <div class="ms-lbl">Senior AI Eng salary</div>
+                    </div>
+                </div>
+                <div class="ms-card">
+                    <div class="ms-icon-wrap" style="background:rgba(251,191,36,0.15);">
+                        <ion-icon name="time-outline" style="color:#fbbf24;font-size:1.25rem;"></ion-icon>
+                    </div>
+                    <div class="ms-info">
+                        <div class="ms-val" style="color:#fbbf24;">9 mo</div>
+                        <div class="ms-lbl">To job-ready (part-time)</div>
+                    </div>
+                </div>
+                <div class="ms-card">
+                    <div class="ms-icon-wrap" style="background:rgba(96,165,250,0.15);">
+                        <ion-icon name="checkmark-circle-outline" style="color:#60a5fa;font-size:1.25rem;"></ion-icon>
+                    </div>
+                    <div class="ms-info">
+                        <div class="ms-val" style="color:#60a5fa;">No PhD</div>
+                        <div class="ms-lbl">SWE → AI Eng transition</div>
+                    </div>
                 </div>
             </div>
 
             <!-- ══ PROGRESS ══ -->
             <div class="portal-progress animate-on-scroll">
-                <span class="progress-label">&#128218; Portal Coverage</span>
+                <ion-icon name="library-outline" style="color:var(--accent-primary);font-size:1.1rem;"></ion-icon>
+                <span class="progress-label">Portal Coverage</span>
                 <div class="progress-track"><div class="progress-fill"></div></div>
-                <span class="progress-note">22 / 22 modules live &mdash; all phases complete</span>
+                <span class="progress-note">22 / 22 modules live &mdash; all phases complete ✓</span>
             </div>
+
+            <!-- ══ AI PIPELINE GRAPHIC ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">How Modern AI Systems Work</div>
+                <h2 style="margin-top:0;border:none;">The Production AI Pipeline</h2>
+                <p>Every production AI application flows through this pipeline. Each step is a module in this portal.</p>
+                <div class="pipeline-graphic">
+                    <div class="pipeline-graphic-title">End-to-End AI Request Pipeline</div>
+                    <div class="pg-row">
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(129,140,248,0.15);border-color:rgba(129,140,248,0.4);color:#818cf8;">👤</div>
+                            <div class="pg-node-label" style="color:#818cf8;">User Query</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(96,165,250,0.15);border-color:rgba(96,165,250,0.4);color:#60a5fa;"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
+                            <div class="pg-node-label" style="color:#60a5fa;">AI Gateway</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(52,211,153,0.15);border-color:rgba(52,211,153,0.4);color:#34d399;"><ion-icon name="search-outline"></ion-icon></div>
+                            <div class="pg-node-label" style="color:#34d399;">RAG Retrieval</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);color:#fbbf24;"><ion-icon name="sparkles-outline"></ion-icon></div>
+                            <div class="pg-node-label" style="color:#fbbf24;">LLM (Claude)</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(244,114,182,0.15);border-color:rgba(244,114,182,0.4);color:#f472b6;"><ion-icon name="hardware-chip-outline"></ion-icon></div>
+                            <div class="pg-node-label" style="color:#f472b6;">Agent Loop</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(45,212,191,0.15);border-color:rgba(45,212,191,0.4);color:#2dd4bf;"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                            <div class="pg-node-label" style="color:#2dd4bf;">Guardrails</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(129,140,248,0.15);border-color:rgba(129,140,248,0.4);color:#818cf8;"><ion-icon name="eye-outline"></ion-icon></div>
+                            <div class="pg-node-label" style="color:#818cf8;">Observability</div>
+                        </div>
+                        <div class="pg-arrow"><div class="pg-arrow-line"></div></div>
+                        <div class="pg-node">
+                            <div class="pg-icon-wrap" style="background:rgba(52,211,153,0.15);border-color:rgba(52,211,153,0.4);color:#34d399;">✅</div>
+                            <div class="pg-node-label" style="color:#34d399;">Response</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ LEARNING PATH VISUAL ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Your Learning Journey</div>
+                <h2 style="margin-top:0;border:none;">5-Phase Learning Path</h2>
+                <div class="lp-visual">
+                    <div class="lp-phase lp-1">
+                        <div class="lp-phase-header">
+                            <div class="lp-phase-icon" style="background:rgba(129,140,248,0.15);color:#818cf8;"><ion-icon name="school-outline"></ion-icon></div>
+                            <div class="lp-phase-meta">
+                                <div class="lp-phase-title" style="color:#818cf8;">Phase 1 — Foundations</div>
+                                <div class="lp-phase-weeks">Weeks 1–6</div>
+                            </div>
+                        </div>
+                        <div class="lp-items">
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#818cf8;"></div>LLM Fundamentals</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#818cf8;"></div>Prompt Engineering</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#818cf8;"></div>RAG &amp; Vectors</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#818cf8;"></div>MCP Protocol</div>
+                        </div>
+                    </div>
+                    <div class="lp-phase lp-2">
+                        <div class="lp-phase-header">
+                            <div class="lp-phase-icon" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="construct-outline"></ion-icon></div>
+                            <div class="lp-phase-meta">
+                                <div class="lp-phase-title" style="color:#34d399;">Phase 2 — Production</div>
+                                <div class="lp-phase-weeks">Weeks 7–14</div>
+                            </div>
+                        </div>
+                        <div class="lp-items">
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#34d399;"></div>Agentic AI</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#34d399;"></div>LLMOps</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#34d399;"></div>AI Evaluation (RAGAS)</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#34d399;"></div>AI Security (OWASP)</div>
+                        </div>
+                    </div>
+                    <div class="lp-phase lp-3">
+                        <div class="lp-phase-header">
+                            <div class="lp-phase-icon" style="background:rgba(244,114,182,0.15);color:#f472b6;"><ion-icon name="rocket-outline"></ion-icon></div>
+                            <div class="lp-phase-meta">
+                                <div class="lp-phase-title" style="color:#f472b6;">Phase 3–5 — Advanced</div>
+                                <div class="lp-phase-weeks">Weeks 15–48</div>
+                            </div>
+                        </div>
+                        <div class="lp-items">
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#f472b6;"></div>LangGraph Deep Dive</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#f472b6;"></div>Multi-Agent Systems</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#f472b6;"></div>GraphRAG &amp; Infra</div>
+                            <div class="lp-item"><div class="lp-item-dot" style="background:#f472b6;"></div>Red Teaming &amp; Security</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:8px;">
+                    <a href="roadmap.html" style="font-size:0.85rem;color:var(--accent-primary);text-decoration:none;font-weight:600;">View the full 16-step graphical roadmap →</a>
+                </div>
+            </section>
+
+            <!-- ══ CONCEPTS CLOUD ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Knowledge Landscape</div>
+                <h2 style="margin-top:0;border:none;">80+ Concepts You'll Master</h2>
+                <div class="concepts-cloud">
+                    <div class="cc-title">The AI Engineering vocabulary — from fundamentals to cutting edge</div>
+                    <div class="cc-grid">
+                        <span class="cc-tag sz-lg" style="background:rgba(129,140,248,0.12);color:#818cf8;border-color:rgba(129,140,248,0.3);">Large Language Models</span>
+                        <span class="cc-tag" style="background:rgba(52,211,153,0.1);color:#34d399;border-color:rgba(52,211,153,0.25);">RAG Pipeline</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.25);">Tokens</span>
+                        <span class="cc-tag sz-lg" style="background:rgba(244,114,182,0.12);color:#f472b6;border-color:rgba(244,114,182,0.3);">Agentic AI</span>
+                        <span class="cc-tag" style="background:rgba(96,165,250,0.1);color:#60a5fa;border-color:rgba(96,165,250,0.25);">Vector Database</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(45,212,191,0.1);color:#2dd4bf;border-color:rgba(45,212,191,0.25);">Embeddings</span>
+                        <span class="cc-tag sz-lg" style="background:rgba(251,191,36,0.12);color:#fbbf24;border-color:rgba(251,191,36,0.3);">LangGraph</span>
+                        <span class="cc-tag" style="background:rgba(129,140,248,0.1);color:#818cf8;border-color:rgba(129,140,248,0.25);">MCP Protocol</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(248,113,113,0.1);color:#f87171;border-color:rgba(248,113,113,0.25);">OWASP LLM</span>
+                        <span class="cc-tag" style="background:rgba(52,211,153,0.1);color:#34d399;border-color:rgba(52,211,153,0.25);">RAGAS Evals</span>
+                        <span class="cc-tag sz-lg" style="background:rgba(96,165,250,0.12);color:#60a5fa;border-color:rgba(96,165,250,0.3);">Multi-Agent Systems</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(244,114,182,0.1);color:#f472b6;border-color:rgba(244,114,182,0.25);">Prompt Injection</span>
+                        <span class="cc-tag" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.25);">LLMOps</span>
+                        <span class="cc-tag" style="background:rgba(45,212,191,0.1);color:#2dd4bf;border-color:rgba(45,212,191,0.25);">GraphRAG</span>
+                        <span class="cc-tag sz-lg" style="background:rgba(248,113,113,0.12);color:#f87171;border-color:rgba(248,113,113,0.3);">Prompt Engineering</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(129,140,248,0.1);color:#818cf8;border-color:rgba(129,140,248,0.25);">vLLM</span>
+                        <span class="cc-tag" style="background:rgba(52,211,153,0.1);color:#34d399;border-color:rgba(52,211,153,0.25);">PagedAttention</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(96,165,250,0.1);color:#60a5fa;border-color:rgba(96,165,250,0.25);">Checkpointers</span>
+                        <span class="cc-tag" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.25);">Semantic Cache</span>
+                        <span class="cc-tag sz-lg" style="background:rgba(45,212,191,0.12);color:#2dd4bf;border-color:rgba(45,212,191,0.3);">Knowledge Graphs</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(244,114,182,0.1);color:#f472b6;border-color:rgba(244,114,182,0.25);">Red Teaming</span>
+                        <span class="cc-tag" style="background:rgba(129,140,248,0.1);color:#818cf8;border-color:rgba(129,140,248,0.25);">AI Gateway</span>
+                        <span class="cc-tag" style="background:rgba(248,113,113,0.1);color:#f87171;border-color:rgba(248,113,113,0.25);">Jailbreaking</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(52,211,153,0.1);color:#34d399;border-color:rgba(52,211,153,0.25);">HITL</span>
+                        <span class="cc-tag sz-lg" style="background:rgba(96,165,250,0.12);color:#60a5fa;border-color:rgba(96,165,250,0.3);">Context Window</span>
+                        <span class="cc-tag" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.25);">Quantization (AWQ)</span>
+                        <span class="cc-tag sz-sm" style="background:rgba(45,212,191,0.1);color:#2dd4bf;border-color:rgba(45,212,191,0.25);">ReAct Loop</span>
+                    </div>
+                </div>
+            </section>
 
             <!-- ══ PRIORITY PATH ══ -->
             <section class="animate-on-scroll">
                 <div class="eyebrow">Start Here</div>
-                <h2 style="margin-top:0; border:none;">If You Only Learn 15 Things First</h2>
-                <p>These 15 concepts represent <strong>80% of the vocabulary</strong> used in modern AI Engineering, AI Platform, and MLOps roles. Learn them in order before anything else.</p>
+                <h2 style="margin-top:0; border:none;">Priority Learning Path — First 15 Concepts</h2>
+                <p>These 15 concepts represent <strong>80% of the vocabulary</strong> used in modern AI Engineering roles. Learn them in order.</p>
 
                 <div class="priority-strip">
                     <div class="priority-strip-header">
@@ -138,10 +1014,28 @@
                         <span class="priority-arrow">›</span>
                         <a href="evals.html" class="priority-item pi-5"><span class="pnum">13</span> AI Evals</a>
                         <span class="priority-arrow">›</span>
-                        <a href="observability-advanced.html" class="priority-item pi-5"><span class="pnum">14</span> AI Observability</a>
+                        <a href="observability-advanced.html" class="priority-item pi-5"><span class="pnum">14</span> Observability</a>
                         <span class="priority-arrow">›</span>
                         <a href="llmops.html" class="priority-item pi-5"><span class="pnum">15</span> LLMOps</a>
                     </div>
+                </div>
+            </section>
+
+            <!-- ══ TECH RADAR ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Technology Radar 2025</div>
+                <h2 style="margin-top:0;border:none;">Tools &amp; Technologies by Adoption Stage</h2>
+                <div class="tech-radar">
+                    <div class="tr-card"><div class="tr-icon">🔷</div><div class="tr-name">LangGraph</div><span class="tr-status tr-adopt">Adopt</span></div>
+                    <div class="tr-card"><div class="tr-icon">🟡</div><div class="tr-name">Pinecone</div><span class="tr-status tr-adopt">Adopt</span></div>
+                    <div class="tr-card"><div class="tr-icon">🟢</div><div class="tr-name">vLLM</div><span class="tr-status tr-adopt">Adopt</span></div>
+                    <div class="tr-card"><div class="tr-icon">🟣</div><div class="tr-name">MCP</div><span class="tr-status tr-adopt">Adopt</span></div>
+                    <div class="tr-card"><div class="tr-icon">🔵</div><div class="tr-name">Langfuse</div><span class="tr-status tr-adopt">Adopt</span></div>
+                    <div class="tr-card"><div class="tr-icon">🟤</div><div class="tr-name">GraphRAG</div><span class="tr-status tr-trial">Trial</span></div>
+                    <div class="tr-card"><div class="tr-icon">🔶</div><div class="tr-name">A2A Protocol</div><span class="tr-status tr-trial">Trial</span></div>
+                    <div class="tr-card"><div class="tr-icon">⚪</div><div class="tr-name">LiteLLM</div><span class="tr-status tr-adopt">Adopt</span></div>
+                    <div class="tr-card"><div class="tr-icon">🔴</div><div class="tr-name">Garak</div><span class="tr-status tr-assess">Assess</span></div>
+                    <div class="tr-card"><div class="tr-icon">🟦</div><div class="tr-name">Qdrant</div><span class="tr-status tr-adopt">Adopt</span></div>
                 </div>
             </section>
 
@@ -152,8 +1046,8 @@
                 <p>The terms you'll hear daily — grouped by importance and learning level.</p>
 
                 <div class="buzz-tabs">
-                    <button class="buzz-tab active" onclick="showBuzz('l1',this)">Level 1 — Must Know (Top 20)</button>
-                    <button class="buzz-tab" onclick="showBuzz('l2',this)">Level 2 — Hottest in 2026</button>
+                    <button class="buzz-tab active" onclick="showBuzz('l1',this)">Level 1 — Must Know</button>
+                    <button class="buzz-tab" onclick="showBuzz('l2',this)">Level 2 — Hottest in 2025</button>
                 </div>
 
                 <div class="buzz-panel active" id="bp-l1">
@@ -211,6 +1105,7 @@
                             <span class="buzz-chip bc-pink">ReAct</span>
                             <span class="buzz-chip bc-pink">Reflection</span>
                             <span class="buzz-chip bc-pink">Planning Agent</span>
+                            <span class="buzz-chip bc-pink">A2A Protocol</span>
                         </div>
                     </div>
                     <div class="buzz-group">
@@ -252,40 +1147,55 @@
 
             <!-- ══ PHASE 1 — CORE ══ -->
             <section class="animate-on-scroll">
-                <div class="phase-header">
-                    <span class="phase-badge ph1">Phase 1</span>
-                    <h2>Core Modules</h2>
+                <div class="section-head-fancy">
+                    <div class="shf-icon" style="background:rgba(129,140,248,0.15);color:#818cf8;"><ion-icon name="school-outline"></ion-icon></div>
+                    <div class="shf-text">
+                        <div class="shf-eyebrow" style="color:#818cf8;">Phase 1 — Weeks 1–6</div>
+                        <h2>Core Modules</h2>
+                    </div>
+                    <span class="shf-count">5 modules</span>
                 </div>
-                <img src="concept1.png" alt="Core AI Modules" class="section-banner">
+                <div class="phase-visual-bar">
+                    <div class="pvb-seg" style="background:#818cf8;"></div>
+                    <div class="pvb-seg" style="background:#a78bfa;"></div>
+                    <div class="pvb-seg" style="background:#60a5fa;"></div>
+                    <div class="pvb-seg" style="background:#34d399;"></div>
+                    <div class="pvb-seg" style="background:#2dd4bf;"></div>
+                </div>
                 <div class="bento-grid">
                     <div class="bento-card animate-on-scroll delay-1">
+                        <span class="module-num">M01</span>
                         <div class="card-icon purple"><ion-icon name="bulb-outline"></ion-icon></div>
                         <h3>AI &amp; LLM Fundamentals</h3>
-                        <p>Understand Tokens, Transformers, Embeddings, Temperature, and how an LLM actually generates text.</p>
+                        <p>Understand Tokens, Transformers, Embeddings, Temperature, and how an LLM actually generates text token by token.</p>
                         <a href="fundamentals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-2">
+                        <span class="module-num">M02</span>
                         <div class="card-icon amber"><ion-icon name="sparkles-outline"></ion-icon></div>
                         <h3>Claude &amp; Prompt Engineering</h3>
-                        <p>Master Claude Code, understand tokens &amp; context, write SKILL.md files, and connect Claude with open-source agents.</p>
+                        <p>Master Claude's model tiers, write production-grade prompts with XML structure, Chain of Thought, and extended thinking.</p>
                         <a href="claude.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-2">
+                        <span class="module-num">M03</span>
                         <div class="card-icon green"><ion-icon name="search-outline"></ion-icon></div>
                         <h3>RAG &amp; Vector Search</h3>
-                        <p>Connect LLMs to your private enterprise data using Vector Databases, embeddings, and hybrid search.</p>
+                        <p>Connect LLMs to private enterprise data using Vector Databases, embeddings, hybrid search, and advanced re-ranking.</p>
                         <a href="rag.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-3">
+                        <span class="module-num">M04</span>
                         <div class="card-icon pink"><ion-icon name="hardware-chip-outline"></ion-icon></div>
                         <h3>Agentic AI Systems</h3>
-                        <p>Build autonomous agents that plan, use tools, reflect, and solve complex multi-step problems.</p>
+                        <p>Build autonomous agents with the ReAct loop, tool calling, planning architectures, and production-ready error handling.</p>
                         <a href="agents.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-4">
+                        <span class="module-num">M05</span>
                         <div class="card-icon blue"><ion-icon name="git-network-outline"></ion-icon></div>
                         <h3>Model Context Protocol</h3>
-                        <p>Standardize how your AI models securely access external tools, APIs, and data sources.</p>
+                        <p>The emerging industry standard for connecting AI models to external tools, APIs, and data — Resources, Tools, Prompts.</p>
                         <a href="mcp.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                 </div>
@@ -293,36 +1203,49 @@
 
             <div class="section-divider"></div>
 
-            <!-- ══ PHASE 1 — OPS ══ -->
+            <!-- ══ PHASE 2 — OPS ══ -->
             <section class="animate-on-scroll">
-                <div class="phase-header">
-                    <span class="phase-badge ph2">Phase 1</span>
-                    <h2>Production &amp; Operations</h2>
+                <div class="section-head-fancy">
+                    <div class="shf-icon" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="server-outline"></ion-icon></div>
+                    <div class="shf-text">
+                        <div class="shf-eyebrow" style="color:#34d399;">Phase 2 — Weeks 7–14</div>
+                        <h2>Production &amp; Operations</h2>
+                    </div>
+                    <span class="shf-count">4 modules</span>
                 </div>
-                <img src="concept2.png" alt="Machine Learning Operations" class="section-banner">
+                <div class="phase-visual-bar">
+                    <div class="pvb-seg" style="background:#34d399;"></div>
+                    <div class="pvb-seg" style="background:#2dd4bf;"></div>
+                    <div class="pvb-seg" style="background:#6ee7b7;"></div>
+                    <div class="pvb-seg" style="background:#34d399;"></div>
+                </div>
                 <div class="bento-grid">
                     <div class="bento-card animate-on-scroll delay-1">
+                        <span class="module-num">M06</span>
                         <div class="card-icon amber"><ion-icon name="server-outline"></ion-icon></div>
                         <h3>LLMOps &amp; Observability</h3>
-                        <p>Deploy, monitor, and maintain LLM applications in production with rigorous telemetry and cost controls.</p>
+                        <p>Deploy and maintain LLM apps with semantic caching, TTFT metrics, cost control, CI/CD for prompts, and Langfuse tracing.</p>
                         <a href="llmops.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-2">
+                        <span class="module-num">M07</span>
                         <div class="card-icon red"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
                         <h3>AI Security &amp; OWASP</h3>
-                        <p>OWASP LLM Top 10, prompt injection defenses, jailbreaking, and guardrails for production AI systems.</p>
+                        <p>OWASP LLM Top 10, prompt injection defenses, jailbreaking techniques, input/output guardrails for production systems.</p>
                         <a href="security.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-3">
+                        <span class="module-num">M08</span>
                         <div class="card-icon green"><ion-icon name="bar-chart-outline"></ion-icon></div>
                         <h3>AI Evaluation &amp; RAGAS</h3>
-                        <p>Score LLM outputs with Faithfulness, Relevance, and Context Recall using Golden Datasets and RAGAS.</p>
+                        <p>Score LLM outputs with Faithfulness, Context Recall, Precision using Golden Datasets, LLM-as-Judge, and RAGAS.</p>
                         <a href="evals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-4">
+                        <span class="module-num">M09</span>
                         <div class="card-icon blue"><ion-icon name="build-outline"></ion-icon></div>
                         <h3>Open Source AI &amp; FinOps</h3>
-                        <p>Run Ollama locally, optimize token costs, and implement dynamic model routing and budget controls.</p>
+                        <p>Run Ollama locally, compare Llama vs Claude cost, implement dynamic model routing and per-user budget controls.</p>
                         <a href="tools.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                 </div>
@@ -330,84 +1253,170 @@
 
             <div class="section-divider"></div>
 
-            <!-- ══ PHASE 3 — ADVANCED ENGINEERING ══ -->
+            <!-- ══ PHASE 3 — ADVANCED ══ -->
             <section class="animate-on-scroll">
-                <div class="phase-header">
-                    <span class="phase-badge ph3">Phase 3</span>
-                    <h2>Advanced Engineering</h2>
+                <div class="section-head-fancy">
+                    <div class="shf-icon" style="background:rgba(251,191,36,0.15);color:#fbbf24;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                    <div class="shf-text">
+                        <div class="shf-eyebrow" style="color:#fbbf24;">Phase 3 — Weeks 15–24</div>
+                        <h2>Advanced Agent Engineering</h2>
+                    </div>
+                    <span class="shf-count">3 modules</span>
+                </div>
+                <div class="phase-visual-bar">
+                    <div class="pvb-seg" style="background:#fbbf24;"></div>
+                    <div class="pvb-seg" style="background:#fb923c;"></div>
+                    <div class="pvb-seg" style="background:#fbbf24;"></div>
                 </div>
                 <div class="bento-grid">
                     <div class="bento-card animate-on-scroll delay-1">
+                        <span class="module-num">M10</span>
                         <div class="card-icon purple"><ion-icon name="git-branch-outline"></ion-icon></div>
                         <h3>LangGraph Deep Dive</h3>
-                        <p>Build stateful, multi-actor LLM applications using StateGraphs, Conditional Routing, Checkpointing, and Time Travel.</p>
+                        <p>Build stateful multi-actor agents using StateGraphs, Conditional Edges, Postgres Checkpointing, Time Travel, and HITL.</p>
                         <a href="langgraph.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-2">
+                        <span class="module-num">M11</span>
                         <div class="card-icon pink"><ion-icon name="construct-outline"></ion-icon></div>
                         <h3>Agent Engineering</h3>
-                        <p>Design intelligent systems with Semantic vs Episodic Memory, Plan &amp; Execute loops, and Reflection architectures.</p>
+                        <p>Design agents with Semantic vs Episodic Memory, Plan &amp; Execute loops, Reflection, Tree of Thoughts architectures.</p>
                         <a href="agent-engineering.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-3">
-                        <div class="card-icon blue"><ion-icon name="layers-outline"></ion-icon></div>
-                        <h3>AI Architecture Patterns</h3>
-                        <p>The definitive guide to 7 core design patterns: Chatbot, RAG, Single Agent, MCP, Multi-Agent, HITL, and Gateways.</p>
-                        <a href="architecture-patterns.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-                    <div class="bento-card animate-on-scroll delay-4">
-                        <div class="card-icon amber"><ion-icon name="server-outline"></ion-icon></div>
-                        <h3>Infrastructure &amp; Model Serving</h3>
-                        <p>Hardware and software for serving open-source LLMs efficiently: vLLM, KServe, Quantization, GPU scheduling.</p>
-                        <a href="infrastructure.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-                    <div class="bento-card animate-on-scroll delay-1">
+                        <span class="module-num">M12</span>
                         <div class="card-icon green"><ion-icon name="people-outline"></ion-icon></div>
                         <h3>Multi-Agent Systems</h3>
-                        <p>Orchestrate teams of specialized AI agents: Supervisor vs Worker roles, Hierarchical teams, Agent Mesh (A2A).</p>
+                        <p>Orchestrate Supervisor + Worker agents, implement MapReduce and Debate patterns, handle A2A communication protocols.</p>
                         <a href="multi-agent.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-                    <div class="bento-card animate-on-scroll delay-2">
-                        <div class="card-icon red"><ion-icon name="analytics-outline"></ion-icon></div>
-                        <h3>GraphRAG &amp; Knowledge Graphs</h3>
-                        <p>Overcome limitations of Vector RAG by understanding entity relationships and global context with Knowledge Graphs.</p>
-                        <a href="graphrag.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                 </div>
             </section>
 
             <div class="section-divider"></div>
 
-            <!-- ══ PHASE 3 — DEEP OPS ══ -->
+            <!-- ══ PHASE 4 — DEEP SPECIALIZATION ══ -->
             <section class="animate-on-scroll">
-                <div class="phase-header">
-                    <span class="phase-badge ph3">Phase 3</span>
-                    <h2>Deep Operations</h2>
+                <div class="section-head-fancy">
+                    <div class="shf-icon" style="background:rgba(244,114,182,0.15);color:#f472b6;"><ion-icon name="telescope-outline"></ion-icon></div>
+                    <div class="shf-text">
+                        <div class="shf-eyebrow" style="color:#f472b6;">Phase 4 — Weeks 25–36</div>
+                        <h2>Deep Specialization</h2>
+                    </div>
+                    <span class="shf-count">4 modules</span>
+                </div>
+                <div class="phase-visual-bar">
+                    <div class="pvb-seg" style="background:#f472b6;"></div>
+                    <div class="pvb-seg" style="background:#e879f9;"></div>
+                    <div class="pvb-seg" style="background:#f472b6;"></div>
+                    <div class="pvb-seg" style="background:#fb7185;"></div>
                 </div>
                 <div class="bento-grid">
                     <div class="bento-card animate-on-scroll delay-1">
+                        <span class="module-num">M13</span>
+                        <div class="card-icon blue"><ion-icon name="layers-outline"></ion-icon></div>
+                        <h3>AI Architecture Patterns</h3>
+                        <p>The definitive visual guide to 7 core patterns: Naive RAG, Advanced RAG, Single Agent, MCP, Multi-Agent, HITL, Gateways.</p>
+                        <a href="architecture-patterns.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <span class="module-num">M14</span>
+                        <div class="card-icon amber"><ion-icon name="server-outline"></ion-icon></div>
+                        <h3>Infrastructure &amp; Model Serving</h3>
+                        <p>vLLM + PagedAttention, quantization (INT4/AWQ), KV cache mechanics, GPU scheduling, full production serving stack.</p>
+                        <a href="infrastructure.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <span class="module-num">M15</span>
+                        <div class="card-icon red"><ion-icon name="analytics-outline"></ion-icon></div>
+                        <h3>GraphRAG &amp; Knowledge Graphs</h3>
+                        <p>Overcome Vector RAG limitations using entity-relationship graphs, community detection, multi-hop query traversal.</p>
+                        <a href="graphrag.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-4">
+                        <span class="module-num">M16</span>
+                        <div class="card-icon purple"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
+                        <h3>AI Gateways</h3>
+                        <p>LiteLLM, Portkey — unified API proxy for auth, semantic caching, model routing, failover, and per-user cost budgets.</p>
+                        <a href="ai-gateway.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ PHASE 5 — SENIOR ══ -->
+            <section class="animate-on-scroll">
+                <div class="section-head-fancy">
+                    <div class="shf-icon" style="background:rgba(96,165,250,0.15);color:#60a5fa;"><ion-icon name="trophy-outline"></ion-icon></div>
+                    <div class="shf-text">
+                        <div class="shf-eyebrow" style="color:#60a5fa;">Phase 5 — Weeks 37–48</div>
+                        <h2>Senior / Staff Level</h2>
+                    </div>
+                    <span class="shf-count">3 modules</span>
+                </div>
+                <div class="phase-visual-bar">
+                    <div class="pvb-seg" style="background:#60a5fa;"></div>
+                    <div class="pvb-seg" style="background:#38bdf8;"></div>
+                    <div class="pvb-seg" style="background:#60a5fa;"></div>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <span class="module-num">M17</span>
                         <div class="card-icon blue"><ion-icon name="eye-outline"></ion-icon></div>
                         <h3>Advanced AI Observability</h3>
-                        <p>Trace multi-step agent executions and manage token usage across distributed systems using OpenTelemetry.</p>
+                        <p>Four pillars: Metrics, Logs, Traces, Quality. Distributed trace waterfalls, prompt drift detection, LangSmith vs OTel.</p>
                         <a href="observability-advanced.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                     <div class="bento-card animate-on-scroll delay-2">
-                        <div class="card-icon purple"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
-                        <h3>AI Gateways</h3>
-                        <p>Standardize API access, model routing, and cost control across multiple LLM providers — LiteLLM, Portkey, and more.</p>
-                        <a href="ai-gateway.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-                    <div class="bento-card animate-on-scroll delay-3">
+                        <span class="module-num">M18</span>
                         <div class="card-icon red"><ion-icon name="lock-closed-outline"></ion-icon></div>
                         <h3>Advanced AI Security</h3>
-                        <p>Protect agentic systems from sophisticated attacks: Jailbreaking, Data Exfiltration, and Sandboxing vulnerabilities.</p>
+                        <p>Red team your AI: many-shot jailbreaks, token smuggling, supply chain attacks, model extraction, defense-in-depth (6 layers).</p>
                         <a href="advanced-security.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-                    <div class="bento-card animate-on-scroll delay-4">
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <span class="module-num">M19</span>
                         <div class="card-icon amber"><ion-icon name="map-outline"></ion-icon></div>
-                        <h3>AI Relationship Map</h3>
-                        <p>An interactive, clickable visual graph mapping every concept — from Tokens to Agents to Ops — into one ecosystem.</p>
+                        <h3>AI Knowledge Map</h3>
+                        <p>Interactive clickable visual graph mapping every concept — Tokens → RAG → Agents → Ops — into one unified ecosystem.</p>
                         <a href="knowledge-map.html" class="card-link">Explore Map <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ WHAT YOU'LL BUILD ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Portfolio Projects</div>
+                <h2 style="margin-top:0;border:none;">5 Projects That Will Get You Hired</h2>
+                <p>Don't just study — build. These projects demonstrate concrete skills to interviewers.</p>
+                <div class="build-grid">
+                    <div class="build-card">
+                        <div class="build-card-num" style="color:#818cf8;">01</div>
+                        <h4>Document Q&amp;A with RAG</h4>
+                        <p>PDF → chunk → embed → Chroma → hybrid search → re-rank → Claude + cited sources. RAGAS eval suite.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="build-card-num" style="color:#34d399;">02</div>
+                        <h4>ReAct Agent from Scratch</h4>
+                        <p>Research agent using raw Claude API — no LangChain. Manual ReAct loop in Python. Demonstrates deep understanding.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="build-card-num" style="color:#fbbf24;">03</div>
+                        <h4>LangGraph Agent + HITL</h4>
+                        <p>DevOps agent (kubectl, GitHub tools), Postgres checkpointing, Human-in-the-Loop, LangSmith tracing.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="build-card-num" style="color:#f472b6;">04</div>
+                        <h4>Multi-Agent SaaS Builder</h4>
+                        <p>Supervisor + Research + Code + Writer agents building a feature: spec, implementation, docs — all in parallel.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="build-card-num" style="color:#60a5fa;">05</div>
+                        <h4>AI Security Audit Tool</h4>
+                        <p>Automated red team suite: 50+ attack patterns, defense verification, severity scoring, PDF report generation.</p>
                     </div>
                 </div>
             </section>
@@ -417,108 +1426,78 @@
             <!-- ══ TOOLS ECOSYSTEM ══ -->
             <section class="animate-on-scroll">
                 <div class="eyebrow">Tools Ecosystem</div>
-                <h2 style="margin-top:0; border:none;">Top AI Tools You Should Know</h2>
-                <p>The most important tools used by AI Engineers today, organized by category.</p>
+                <h2 style="margin-top:0; border:none;">Complete AI Engineering Tool Stack</h2>
+                <p>Every tool you'll encounter, organized by category and use case.</p>
                 <div class="tools-grid">
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(129,140,248,0.15);color:#818cf8;"><ion-icon name="chatbubbles-outline"></ion-icon></div>
-                            <span>AI Chat Assistants</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(129,140,248,0.15);color:#818cf8;"><ion-icon name="chatbubbles-outline"></ion-icon></div><span>AI Chat Assistants</span></div>
                         <div class="tool-items">
-                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> ChatGPT</div>
-                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Claude</div>
-                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Gemini</div>
-                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Perplexity</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> ChatGPT (OpenAI)</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Claude (Anthropic)</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Gemini (Google)</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Perplexity AI</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="code-slash-outline"></ion-icon></div>
-                            <span>AI Coding Tools</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="code-slash-outline"></ion-icon></div><span>AI Coding Tools</span></div>
                         <div class="tool-items">
-                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Cursor</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Cursor IDE</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> GitHub Copilot</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Claude Code</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(251,191,36,0.15);color:#fbbf24;"><ion-icon name="hardware-chip-outline"></ion-icon></div>
-                            <span>Agent Frameworks</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(251,191,36,0.15);color:#fbbf24;"><ion-icon name="hardware-chip-outline"></ion-icon></div><span>Agent Frameworks</span></div>
                         <div class="tool-items">
                             <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> LangGraph</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> Semantic Kernel</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> CrewAI</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> OpenAI Swarm</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(96,165,250,0.15);color:#60a5fa;"><ion-icon name="git-branch-outline"></ion-icon></div>
-                            <span>AI Workflow (No-Code)</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(96,165,250,0.15);color:#60a5fa;"><ion-icon name="git-branch-outline"></ion-icon></div><span>No-Code AI Workflow</span></div>
                         <div class="tool-items">
                             <div class="tool-item"><div class="tool-dot" style="background:#60a5fa;"></div> n8n</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#60a5fa;"></div> Flowise</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#60a5fa;"></div> Dify</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="search-outline"></ion-icon></div>
-                            <span>RAG &amp; Search</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="search-outline"></ion-icon></div><span>RAG &amp; Vector DBs</span></div>
                         <div class="tool-items">
-                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Azure AI Search</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Pinecone</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Qdrant</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Weaviate</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> pgvector</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(244,114,182,0.15);color:#f472b6;"><ion-icon name="laptop-outline"></ion-icon></div>
-                            <span>Local AI</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(244,114,182,0.15);color:#f472b6;"><ion-icon name="laptop-outline"></ion-icon></div><span>Local AI Inference</span></div>
                         <div class="tool-items">
                             <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> Ollama</div>
-                            <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> Open WebUI</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> LM Studio</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> Open WebUI</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(248,113,113,0.15);color:#f87171;"><ion-icon name="bar-chart-outline"></ion-icon></div>
-                            <span>AI Evaluation</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(248,113,113,0.15);color:#f87171;"><ion-icon name="bar-chart-outline"></ion-icon></div><span>AI Evaluation</span></div>
                         <div class="tool-items">
-                            <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> Ragas</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> RAGAS</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> DeepEval</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> Promptfoo</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> Braintrust</div>
                         </div>
                     </div>
-
                     <div class="tool-cat-card">
-                        <div class="tool-cat-head">
-                            <div class="tool-cat-ico" style="background:rgba(45,212,191,0.15);color:#2dd4bf;"><ion-icon name="eye-outline"></ion-icon></div>
-                            <span>AI Observability</span>
-                        </div>
+                        <div class="tool-cat-head"><div class="tool-cat-ico" style="background:rgba(45,212,191,0.15);color:#2dd4bf;"><ion-icon name="eye-outline"></ion-icon></div><span>AI Observability</span></div>
                         <div class="tool-items">
                             <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> Langfuse</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> LangSmith</div>
                             <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> Arize Phoenix</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> Helicone</div>
                         </div>
                     </div>
-
                 </div>
             </section>
 
@@ -534,7 +1513,6 @@
         document.getElementById('bp-' + id).classList.add('active');
         btn.classList.add('active');
     }
-    /* Sidebar search filter */
     const si = document.getElementById('search-input');
     if (si) {
         si.addEventListener('input', function() {
