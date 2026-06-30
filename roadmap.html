@@ -1,1172 +1,151 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Career Roadmap | AI for All</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <title>Career Roadmap | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="styles.css?v=3">
-    <style>
-        /* â”€â”€ Hero Banner â”€â”€ */
-        .roadmap-hero {
-            position: relative;
-            background: linear-gradient(135deg, rgba(13,14,21,0.95), rgba(13,14,21,0.8));
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 56px 48px;
-            margin-bottom: 56px;
-            overflow: hidden;
-        }
-        .roadmap-hero::before {
-            content: '';
-            position: absolute;
-            top: -80px; right: -80px;
-            width: 360px; height: 360px;
-            background: radial-gradient(circle, rgba(129,140,248,0.22), transparent 70%);
-            border-radius: 50%;
-            animation: heroPulse 7s ease-in-out infinite alternate;
-        }
-        .roadmap-hero::after {
-            content: '';
-            position: absolute;
-            bottom: -60px; left: -40px;
-            width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(52,211,153,0.18), transparent 70%);
-            border-radius: 50%;
-            animation: heroPulse 9s ease-in-out 2s infinite alternate;
-        }
-        .roadmap-hero .badge { position: relative; z-index: 1; }
-        .roadmap-hero h1 { position: relative; z-index: 1; font-size: 3rem; letter-spacing: -1.5px; margin-bottom: 16px; }
-        .roadmap-hero p { position: relative; z-index: 1; font-size: 1.1rem; max-width: 620px; }
-
-        .hero-stats-row {
-            display: flex;
-            gap: 40px;
-            margin-top: 36px;
-            position: relative;
-            z-index: 1;
-            flex-wrap: wrap;
-        }
-        .hero-stat {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .hero-stat-num {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-        .hero-stat-label {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* â”€â”€ Career Path Cards â”€â”€ */
-        .career-paths-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 28px;
-        }
-        @media (max-width: 900px) { .career-paths-grid { grid-template-columns: 1fr; } }
-
-        .career-card {
-            position: relative;
-            border-radius: 20px;
-            padding: 32px 28px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            overflow: hidden;
-            transition: all 0.35s ease;
-            cursor: default;
-        }
-        .career-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 48px rgba(0,0,0,0.2), 0 0 40px var(--accent-glow);
-            border-color: rgba(129,140,248,0.35);
-        }
-        .career-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-        }
-        .career-card.devops-card::before { background: linear-gradient(90deg, #818cf8, #a78bfa); }
-        .career-card.swe-card::before    { background: linear-gradient(90deg, #34d399, #60a5fa); }
-        .career-card.sec-card::before    { background: linear-gradient(90deg, #f87171, #fbbf24); }
-
-        .career-card-icon {
-            width: 64px; height: 64px;
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        .devops-card .career-card-icon { background: rgba(129,140,248,0.15); color: #818cf8; }
-        .swe-card    .career-card-icon { background: rgba(52,211,153,0.15);   color: #34d399; }
-        .sec-card    .career-card-icon { background: rgba(248,113,113,0.15);  color: #f87171; }
-
-        .career-card h3 { font-size: 1.2rem; margin-bottom: 6px; }
-        .career-arrow {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 0.82rem; color: var(--text-muted);
-            margin: 14px 0;
-        }
-        .career-arrow span { font-size: 1.1rem; }
-        .career-target {
-            font-size: 1rem; font-weight: 700;
-            color: var(--text-primary);
-        }
-        .skill-chips {
-            display: flex; flex-wrap: wrap; gap: 6px;
-            margin-top: 16px;
-        }
-        .skill-chip {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid;
-        }
-        .chip-purple { background: rgba(129,140,248,0.1); color: #818cf8; border-color: rgba(129,140,248,0.25); }
-        .chip-green  { background: rgba(52,211,153,0.1);  color: #34d399; border-color: rgba(52,211,153,0.25); }
-        .chip-amber  { background: rgba(251,191,36,0.1);  color: #fbbf24; border-color: rgba(251,191,36,0.25); }
-        .chip-blue   { background: rgba(96,165,250,0.1);  color: #60a5fa; border-color: rgba(96,165,250,0.25); }
-        .chip-pink   { background: rgba(244,114,182,0.1); color: #f472b6; border-color: rgba(244,114,182,0.25); }
-        .chip-red    { background: rgba(248,113,113,0.1); color: #f87171; border-color: rgba(248,113,113,0.25); }
-
-        /* â”€â”€ Visual Journey Timeline â”€â”€ */
-        .journey-timeline {
-            position: relative;
-            margin-top: 36px;
-            padding-left: 48px;
-        }
-        .journey-timeline::before {
-            content: '';
-            position: absolute;
-            left: 18px; top: 0; bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, #818cf8 0%, #34d399 50%, #f87171 100%);
-            border-radius: 2px;
-        }
-        .journey-step {
-            position: relative;
-            margin-bottom: 40px;
-        }
-        .journey-step:last-child { margin-bottom: 0; }
-        .journey-dot {
-            position: absolute;
-            left: -38px;
-            top: 6px;
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-            font-weight: 700;
-            border: 2px solid;
-            background: var(--bg-primary);
-            transition: all 0.3s ease;
-        }
-        .journey-step:hover .journey-dot { transform: scale(1.15); }
-        .dot-purple { color: #818cf8; border-color: #818cf8; box-shadow: 0 0 12px rgba(129,140,248,0.4); }
-        .dot-green  { color: #34d399; border-color: #34d399; box-shadow: 0 0 12px rgba(52,211,153,0.4); }
-        .dot-amber  { color: #fbbf24; border-color: #fbbf24; box-shadow: 0 0 12px rgba(251,191,36,0.4); }
-        .dot-pink   { color: #f472b6; border-color: #f472b6; box-shadow: 0 0 12px rgba(244,114,182,0.4); }
-
-        .journey-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px 28px;
-            transition: all 0.3s ease;
-        }
-        .journey-step:hover .journey-content {
-            border-color: rgba(129,140,248,0.3);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            transform: translateX(4px);
-        }
-        .journey-step-header {
-            display: flex; align-items: center; gap: 14px;
-            margin-bottom: 12px;
-        }
-        .journey-level-badge {
-            padding: 3px 12px;
-            border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-purple { background: rgba(129,140,248,0.15); color: #818cf8; }
-        .badge-green  { background: rgba(52,211,153,0.15);  color: #34d399; }
-        .badge-amber  { background: rgba(251,191,36,0.15);  color: #fbbf24; }
-        .badge-pink   { background: rgba(244,114,182,0.15); color: #f472b6; }
-
-        .journey-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
-        .journey-desc  { font-size: 0.9rem; color: var(--text-secondary); margin: 8px 0 14px; line-height: 1.6; }
-
-        /* â”€â”€ Skills Grid â”€â”€ */
-        .skills-mastery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-top: 28px;
-        }
-        @media (max-width: 768px) { .skills-mastery-grid { grid-template-columns: 1fr; } }
-
-        .skill-mastery-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 20px 22px;
-            transition: all 0.3s ease;
-        }
-        .skill-mastery-card:hover {
-            border-color: rgba(129,140,248,0.25);
-            transform: translateY(-3px);
-        }
-        .skill-mastery-header {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
-        }
-        .skill-mastery-header ion-icon { font-size: 1.2rem; }
-        .skill-mastery-header span { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); }
-        .skill-bar-track {
-            height: 6px;
-            background: var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
-        .skill-bar-fill {
-            height: 100%;
-            border-radius: 6px;
-            animation: fillBar 1.4s ease-out forwards;
-            transform-origin: left;
-            transform: scaleX(0);
-        }
-        @keyframes fillBar {
-            to { transform: scaleX(1); }
-        }
-        .fill-purple { background: linear-gradient(90deg, #818cf8, #a78bfa); }
-        .fill-green  { background: linear-gradient(90deg, #34d399, #6ee7b7); }
-        .fill-amber  { background: linear-gradient(90deg, #fbbf24, #fde68a); }
-        .fill-blue   { background: linear-gradient(90deg, #60a5fa, #93c5fd); }
-        .fill-pink   { background: linear-gradient(90deg, #f472b6, #f9a8d4); }
-        .fill-red    { background: linear-gradient(90deg, #f87171, #fca5a5); }
-
-        .skill-pct {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: right;
-            margin-top: 4px;
-        }
-
-        /* â”€â”€ Role Comparison Table â”€â”€ */
-        .role-compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-            font-size: 0.88rem;
-        }
-        .role-compare-table th {
-            background: var(--bg-card);
-            padding: 14px 18px;
-            text-align: left;
-            border-bottom: 2px solid var(--accent-primary);
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-        }
-        .role-compare-table td {
-            padding: 12px 18px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            vertical-align: top;
-        }
-        .role-compare-table tr:hover td { background: var(--bg-card-hover); }
-        .role-compare-table .role-name { font-weight: 600; color: var(--text-primary); }
-        .salary-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            background: rgba(52,211,153,0.12);
-            color: #34d399;
-            border: 1px solid rgba(52,211,153,0.2);
-        }
-        .demand-bar {
-            display: flex; align-items: center; gap: 8px;
-        }
-        .demand-dots { display: flex; gap: 3px; }
-        .demand-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--border-color);
-        }
-        .demand-dot.active { background: #34d399; }
-
-        /* â”€â”€ Visual Flowchart â”€â”€ */
-        .flow-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px 32px;
-            margin: 28px 0;
-            overflow-x: auto;
-        }
-        .flow-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            flex-wrap: nowrap;
-            margin-bottom: 20px;
-        }
-        .flow-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            min-width: 120px;
-            text-align: center;
-        }
-        .flow-box {
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            border: 1px solid;
-            white-space: nowrap;
-            transition: all 0.25s ease;
-            cursor: default;
-        }
-        .flow-box:hover { transform: scale(1.06); }
-        .flow-box.source { background: rgba(129,140,248,0.12); color: #818cf8; border-color: rgba(129,140,248,0.3); }
-        .flow-box.target { background: rgba(52,211,153,0.12);  color: #34d399; border-color: rgba(52,211,153,0.3);  }
-        .flow-box.skill  { background: rgba(251,191,36,0.12);  color: #fbbf24; border-color: rgba(251,191,36,0.3);  }
-        .flow-box.sec    { background: rgba(248,113,113,0.12); color: #f87171; border-color: rgba(248,113,113,0.3); }
-        .flow-arrow {
-            font-size: 1.4rem;
-            color: var(--text-muted);
-            padding: 0 6px;
-            flex-shrink: 0;
-        }
-        .flow-label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            max-width: 110px;
-        }
-        .flow-cols {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .flow-col-header {
-            text-align: center;
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-        .flow-col-items {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-        }
-
-        /* â”€â”€ Section Label â”€â”€ */
-        .section-eyebrow {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            color: var(--accent-primary);
-            margin-bottom: 10px;
-        }
-
-        /* â”€â”€ Tip/Info Boxes â”€â”€ */
-        .info-box {
-            background: var(--bg-card);
-            border: 1px solid rgba(96,165,250,0.35);
-            border-radius: 14px;
-            padding: 18px 22px;
-            margin: 20px 0;
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-        }
-        .info-box ion-icon { font-size: 1.3rem; color: #60a5fa; flex-shrink: 0; margin-top: 1px; }
-        .info-box p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
-
-        /* â”€â”€ Level Section Headers â”€â”€ */
-        .level-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 28px;
-            padding: 20px 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-        }
-        .level-num {
-            width: 52px; height: 52px;
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-        .level-num.l1 { background: rgba(129,140,248,0.15); color: #818cf8; border: 2px solid rgba(129,140,248,0.3); }
-        .level-num.l2 { background: rgba(244,114,182,0.15); color: #f472b6; border: 2px solid rgba(244,114,182,0.3); }
-        .level-num.l3 { background: rgba(52,211,153,0.15);  color: #34d399; border: 2px solid rgba(52,211,153,0.3); }
-        .level-meta h3 { margin: 0 0 4px; font-size: 1.2rem; color: var(--text-primary); }
-        .level-meta p  { margin: 0; font-size: 0.88rem; color: var(--text-secondary); }
-
-        @keyframes heroPulse {
-            0%   { transform: scale(1);   opacity: 0.6; }
-            100% { transform: scale(1.3); opacity: 1; }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 <div class="app-container">
-
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
-            
-            <div class="nav-section"><div class="nav-section-title">Getting Started</div>
-                <a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
-                <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Core Concepts</div>
-                <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI Fundamentals</a>
-                <a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompts</a>
-                <a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> Vector RAG</a>
-                <a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
-                <a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> MCP</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Agents</div>
-                <a href="langgraph.html" class="nav-item"><ion-icon name="git-commit-outline"></ion-icon> LangGraph</a>
-                <a href="agent-engineering.html" class="nav-item"><ion-icon name="brain-outline"></ion-icon> Agent Engineering</a>
-                <a href="multi-agent.html" class="nav-item"><ion-icon name="people-circle-outline"></ion-icon> Multi-Agent Systems</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Data</div>
-                <a href="graphrag.html" class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Arch & Infra</div>
-                <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
-                <a href="infrastructure.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> Infra & Serving</a>
-                <a href="ai-gateway.html" class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> AI Gateways</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Production Ops</div>
-                <a href="llmops.html" class="nav-item"><ion-icon name="pulse-outline"></ion-icon> LLMOps</a>
-                <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Observability</a>
-                <a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
-                <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> App Security</a>
-                <a href="advanced-security.html" class="nav-item"><ion-icon name="skull-outline"></ion-icon> Adv Security</a>
-                <a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Resources</div>
-                <a href="knowledge-map.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
-                <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
-            </div>
-        </aside>
+        <a href="index.html" class="logo-container" style="text-decoration:none;">
+            <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
+            <div class="logo-text">AI for All</div>
+        </a>
+        <div class="nav-section">
+            <div class="nav-section-title">Getting Started</div>
+            <a href="index.html"   class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
+            <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Core Modules</div>
+            <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a>
+            <a href="claude.html"       class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a>
+            <a href="rag.html"          class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a>
+            <a href="agents.html"       class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
+            <a href="mcp.html"          class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Production Ops</div>
+            <a href="llmops.html"   class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a>
+            <a href="evals.html"    class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
+            <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a>
+            <a href="tools.html"    class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Advanced Engineering</div>
+            <a href="langgraph.html"            class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> LangGraph Deep Dive</a>
+            <a href="agent-engineering.html"    class="nav-item"><ion-icon name="construct-outline"></ion-icon> Agent Engineering</a>
+            <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
+            <a href="infrastructure.html"       class="nav-item"><ion-icon name="server-outline"></ion-icon> Infrastructure &amp; Serving</a>
+            <a href="multi-agent.html"          class="nav-item"><ion-icon name="people-outline"></ion-icon> Multi-Agent Systems</a>
+            <a href="graphrag.html"             class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Deep Operations</div>
+            <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Advanced Observability</a>
+            <a href="ai-gateway.html"             class="nav-item"><ion-icon name="swap-horizontal-outline"></ion-icon> AI Gateways</a>
+            <a href="advanced-security.html"      class="nav-item"><ion-icon name="lock-closed-outline"></ion-icon> Advanced Security</a>
+            <a href="knowledge-map.html"          class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Resources</div>
+            <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
+        </div>
+    </aside>
     <div class="mobile-overlay" id="mobile-overlay"></div>
-
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
             <div class="search-bar">
                 <ion-icon name="search-outline"></ion-icon>
-                <input type="text" placeholder="Search roadmap...">
+                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
             </div>
             <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
             </div>
         </header>
-
         <div class="content-area">
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <div class="roadmap-hero animate-on-scroll">
-                <span class="badge">&#128640; Career Roadmap</span>
-                <h1>Your Path into <span class="text-gradient">AI Engineering</span></h1>
-                <p class="page-description">Map your transition from traditional Software, Cloud, or DevOps engineering into the rapidly growing field of AI Engineering â€” no PhD required.</p>
-                <div class="hero-stats-row">
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">$180K+</div>
-                        <div class="hero-stat-label">Avg. AI Eng Salary</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">40%</div>
-                        <div class="hero-stat-label">YoY Job Growth</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">3â€“6 mo</div>
-                        <div class="hero-stat-label">To First AI Role</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">11</div>
-                        <div class="hero-stat-label">Core Skill Modules</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 1: LANDSCAPE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 01</div>
-                <h2 style="margin-top:0; border:none;">The AI Engineering Landscape</h2>
-                <p>You don't need a PhD in Mathematics or PyTorch training experience to build AI applications today. The modern <strong>AI Engineer</strong> glues together foundational models using APIs, Vector Databases, and Agentic logic.</p>
-
-                <div class="info-box">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    <p><strong>Key Insight:</strong> AI Engineering is primarily a software engineering discipline with a layer of ML/AI understanding on top. If you can write Python and call REST APIs, you already have 60% of what you need.</p>
-                </div>
-            </section>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 2: CAREER PATHS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 02</div>
-                <h2 style="margin-top:0; border:none;">Choose Your Transition Path</h2>
-                <p>Your existing background shapes the fastest route into AI. Pick the path that matches your current role.</p>
-
-                <div class="career-paths-grid">
-                    <!-- DevOps Path -->
-                    <div class="career-card devops-card">
-                        <div class="career-card-icon"><ion-icon name="cloud-outline"></ion-icon></div>
-                        <h3>Cloud / DevOps</h3>
-                        <div class="career-arrow">
-                            <span>&#x2192;</span> transitions to
-                        </div>
-                        <div class="career-target">AI Platform Engineer</div>
-                        <p style="margin: 10px 0 14px; font-size: 0.85rem;">Your Kubernetes, CI/CD, and infrastructure skills directly transfer â€” you'll orchestrate GPU workloads and model serving instead of microservices.</p>
-                        <div class="skill-chips">
-                            <span class="skill-chip chip-purple">Kubernetes</span>
-                            <span class="skill-chip chip-purple">vLLM</span>
-                            <span class="skill-chip chip-blue">Grafana</span>
-                            <span class="skill-chip chip-blue">LangSmith</span>
-                            <span class="skill-chip chip-amber">GPU Provisioning</span>
-                        </div>
-                    </div>
-
-                    <!-- SWE Path -->
-                    <div class="career-card swe-card">
-                        <div class="career-card-icon"><ion-icon name="code-slash-outline"></ion-icon></div>
-                        <h3>Software Engineer</h3>
-                        <div class="career-arrow">
-                            <span>&#x2192;</span> transitions to
-                        </div>
-                        <div class="career-target">AI Engineer</div>
-                        <p style="margin: 10px 0 14px; font-size: 0.85rem;">Your API design and Python skills are the foundation. You'll add RAG pipelines, agentic loops, and prompt engineering to your toolkit.</p>
-                        <div class="skill-chips">
-                            <span class="skill-chip chip-green">RAG Pipelines</span>
-                            <span class="skill-chip chip-green">LangGraph</span>
-                            <span class="skill-chip chip-amber">Prompt Eng.</span>
-                            <span class="skill-chip chip-blue">Vector DBs</span>
-                            <span class="skill-chip chip-pink">MCP Servers</span>
-                        </div>
-                    </div>
-
-                    <!-- Security Path -->
-                    <div class="career-card sec-card">
-                        <div class="career-card-icon"><ion-icon name="shield-outline"></ion-icon></div>
-                        <h3>Security Engineer</h3>
-                        <div class="career-arrow">
-                            <span>&#x2192;</span> transitions to
-                        </div>
-                        <div class="career-target">AI Security Engineer</div>
-                        <p style="margin: 10px 0 14px; font-size: 0.85rem;">Your threat-modelling mindset is invaluable. AI introduces new attack surfaces: prompt injection, data poisoning, model exfiltration.</p>
-                        <div class="skill-chips">
-                            <span class="skill-chip chip-red">Prompt Injection</span>
-                            <span class="skill-chip chip-red">Red Teaming</span>
-                            <span class="skill-chip chip-amber">OWASP LLM Top 10</span>
-                            <span class="skill-chip chip-pink">Guardrails</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 3: VISUAL FLOW â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 03</div>
-                <h2 style="margin-top:0; border:none;">Role Specialisation Map</h2>
-                <p>How the three career paths branch into distinct AI specialisations, and which tools define each role.</p>
-
-                <div class="flow-container">
-                    <!-- Source roles -->
-                    <div class="flow-row">
-                        <div class="flow-node">
-                            <div class="flow-box source">Cloud / DevOps</div>
-                        </div>
-                        <div class="flow-arrow">&#8594;</div>
-                        <div class="flow-node">
-                            <div class="flow-box target">AI Platform Eng.</div>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="flow-node">
-                            <div class="flow-box source">Software Eng.</div>
-                        </div>
-                        <div class="flow-arrow">&#8594;</div>
-                        <div class="flow-node">
-                            <div class="flow-box target">AI Engineer</div>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="flow-node">
-                            <div class="flow-box source">Security Eng.</div>
-                        </div>
-                        <div class="flow-arrow">&#8594;</div>
-                        <div class="flow-node">
-                            <div class="flow-box sec">AI Security Eng.</div>
-                        </div>
-                    </div>
-
-                    <!-- Skill breakdown -->
-                    <div class="flow-cols">
-                        <div>
-                            <div class="flow-col-header" style="color:#818cf8;">AI Platform Tools</div>
-                            <div class="flow-col-items">
-                                <div class="flow-box skill">Kubernetes / vLLM</div>
-                                <div class="flow-box skill">LangSmith / Grafana</div>
-                                <div class="flow-box skill">GPU Provisioning</div>
-                                <div class="flow-box skill">Ray Serve</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flow-col-header" style="color:#34d399;">AI Engineer Tools</div>
-                            <div class="flow-col-items">
-                                <div class="flow-box skill">RAG &amp; Vector DBs</div>
-                                <div class="flow-box skill">LangGraph / CrewAI</div>
-                                <div class="flow-box skill">Prompt Engineering</div>
-                                <div class="flow-box skill">MCP Servers</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flow-col-header" style="color:#f87171;">AI Security Tools</div>
-                            <div class="flow-col-items">
-                                <div class="flow-box skill">Prompt Injection</div>
-                                <div class="flow-box skill">OWASP LLM Top 10</div>
-                                <div class="flow-box skill">Guardrails AI</div>
-                                <div class="flow-box skill">Red Teaming LLMs</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 4: ROLE COMPARISON â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 04</div>
-                <h2 style="margin-top:0; border:none;">Role Comparison &amp; Market Demand</h2>
-
-                <table class="role-compare-table">
-                    <thead>
-                        <tr>
-                            <th>Role</th>
-                            <th>Focus Area</th>
-                            <th>Key Stack</th>
-                            <th>Salary Range</th>
-                            <th>Demand</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="role-name">AI Engineer</td>
-                            <td>RAG, Agents, APIs</td>
-                            <td>Python, LangChain, Vector DBs, FastAPI</td>
-                            <td><span class="salary-badge">$150Kâ€“$200K</span></td>
-                            <td><div class="demand-bar"><div class="demand-dots">
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div>
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div><div class="demand-dot active"></div>
-                            </div> Very High</div></td>
-                        </tr>
-                        <tr>
-                            <td class="role-name">AI Platform Eng.</td>
-                            <td>Infra, Serving, Ops</td>
-                            <td>K8s, vLLM, Ray, Prometheus</td>
-                            <td><span class="salary-badge">$160Kâ€“$210K</span></td>
-                            <td><div class="demand-bar"><div class="demand-dots">
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div>
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div><div class="demand-dot"></div>
-                            </div> High</div></td>
-                        </tr>
-                        <tr>
-                            <td class="role-name">AI Security Eng.</td>
-                            <td>Red Teaming, Guardrails</td>
-                            <td>OWASP LLM, Garak, Prompt Shields</td>
-                            <td><span class="salary-badge">$155Kâ€“$205K</span></td>
-                            <td><div class="demand-bar"><div class="demand-dots">
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div>
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div><div class="demand-dot active"></div>
-                            </div> Exploding</div></td>
-                        </tr>
-                        <tr>
-                            <td class="role-name">ML Engineer</td>
-                            <td>Fine-tuning, Training</td>
-                            <td>PyTorch, Hugging Face, CUDA</td>
-                            <td><span class="salary-badge">$160Kâ€“$220K</span></td>
-                            <td><div class="demand-bar"><div class="demand-dots">
-                                <div class="demand-dot active"></div><div class="demand-dot active"></div>
-                                <div class="demand-dot active"></div><div class="demand-dot"></div><div class="demand-dot"></div>
-                            </div> Moderate</div></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <div class="section-divider"></div>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 5: LEVEL 1 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 05</div>
-                <h2 style="margin-top:0; border:none;">Learning Journey â€” All Three Levels</h2>
-                <p>A structured, opinionated path from zero to production-ready AI systems.</p>
-
-                <div class="journey-timeline">
-
-                    <!-- Step 1 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-purple">1</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-purple">Level 1</span>
-                                <span class="journey-title">Python &amp; API Foundations</span>
-                            </div>
-                            <div class="journey-desc">Python is the lingua franca of AI. Master async I/O for non-blocking LLM calls, Pydantic for structured outputs, and FastAPI for serving your backend.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-blue">Python 3.12</span>
-                                <span class="skill-chip chip-blue">Async / Await</span>
-                                <span class="skill-chip chip-blue">Pydantic v2</span>
-                                <span class="skill-chip chip-blue">FastAPI</span>
-                                <span class="skill-chip chip-purple">REST APIs</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-purple">2</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-purple">Level 1</span>
-                                <span class="journey-title">Prompt Engineering</span>
-                            </div>
-                            <div class="journey-desc">Programming with natural language. Move beyond simple chat to crafting rigorous, structured system prompts with Chain-of-Thought reasoning and few-shot examples.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-amber">Chain of Thought</span>
-                                <span class="skill-chip chip-amber">Few-Shot</span>
-                                <span class="skill-chip chip-amber">XML Structuring</span>
-                                <span class="skill-chip chip-amber">System Prompts</span>
-                                <span class="skill-chip chip-amber">Temperature / Top-P</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-purple">3</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-purple">Level 1</span>
-                                <span class="journey-title">Basic RAG Architecture</span>
-                            </div>
-                            <div class="journey-desc">Connect models to your enterprise data. Learn embeddings, vector databases, and chunking strategies so LLMs read your docs instead of hallucinating.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-green">Embeddings</span>
-                                <span class="skill-chip chip-green">Pinecone / Qdrant</span>
-                                <span class="skill-chip chip-green">pgvector</span>
-                                <span class="skill-chip chip-green">Semantic Chunking</span>
-                                <span class="skill-chip chip-green">Cosine Similarity</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-pink">4</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-pink">Level 2</span>
-                                <span class="journey-title">Agentic Frameworks</span>
-                            </div>
-                            <div class="journey-desc">Build systems that can act autonomously. Use LangGraph for stateful graphs, implement tool calling, and design human-in-the-loop approval workflows.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-pink">LangGraph</span>
-                                <span class="skill-chip chip-pink">CrewAI</span>
-                                <span class="skill-chip chip-pink">Tool Calling</span>
-                                <span class="skill-chip chip-pink">Memory &amp; State</span>
-                                <span class="skill-chip chip-pink">HITL Patterns</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-pink">5</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-pink">Level 2</span>
-                                <span class="journey-title">Model Context Protocol (MCP)</span>
-                            </div>
-                            <div class="journey-desc">The USB-C of AI â€” a universal protocol to securely connect LLMs to your local environment, databases, and APIs. Build your own MCP servers in Python.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-purple">MCP Servers</span>
-                                <span class="skill-chip chip-purple">Secure Data Access</span>
-                                <span class="skill-chip chip-purple">stdio / SSE Transport</span>
-                                <span class="skill-chip chip-purple">Tool Registration</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 6 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-pink">6</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-pink">Level 2</span>
-                                <span class="journey-title">Evaluation Pipelines</span>
-                            </div>
-                            <div class="journey-desc">Data-driven AI Ops â€” build golden datasets, run LLM-as-a-judge scoring, and integrate evaluation into CI/CD so regressions never ship.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-red">RAGAS</span>
-                                <span class="skill-chip chip-red">Golden Datasets</span>
-                                <span class="skill-chip chip-red">LLM-as-Judge</span>
-                                <span class="skill-chip chip-red">CI/CD Integration</span>
-                                <span class="skill-chip chip-red">Faithfulness Score</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 7 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-green">7</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-green">Level 3</span>
-                                <span class="journey-title">Production LLMOps</span>
-                            </div>
-                            <div class="journey-desc">Ship AI to production with confidence. Set up observability with LangSmith/Arize, implement cost controls, rate limiting, and automated prompt version management.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-blue">LangSmith</span>
-                                <span class="skill-chip chip-blue">Arize Phoenix</span>
-                                <span class="skill-chip chip-blue">Token Budgets</span>
-                                <span class="skill-chip chip-blue">Rate Limiting</span>
-                                <span class="skill-chip chip-green">Prompt Versioning</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 8 -->
-                    <div class="journey-step">
-                        <div class="journey-dot dot-amber">8</div>
-                        <div class="journey-content">
-                            <div class="journey-step-header">
-                                <span class="journey-level-badge badge-amber">Capstone</span>
-                                <span class="journey-title">Build a Portfolio AI Project</span>
-                            </div>
-                            <div class="journey-desc">Apply everything in one end-to-end project: a RAG-powered agent with MCP tools, evaluated via RAGAS, deployed on a FastAPI backend with LangSmith observability.</div>
-                            <div class="skill-chips">
-                                <span class="skill-chip chip-amber">Full-Stack RAG</span>
-                                <span class="skill-chip chip-amber">Agentic Loop</span>
-                                <span class="skill-chip chip-amber">MCP Integration</span>
-                                <span class="skill-chip chip-amber">Eval Dashboard</span>
-                                <span class="skill-chip chip-amber">GitHub Portfolio</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="section-divider"></div>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 6: SKILLS MASTERY â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 06</div>
-                <h2 style="margin-top:0; border:none;">Core Skills &amp; Mastery Depth</h2>
-                <p>How deeply you need to know each discipline to land your first AI role â€” and grow beyond it.</p>
-
-                <div class="skills-mastery-grid">
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="logo-python" style="color:#60a5fa;"></ion-icon>
-                            <span>Python &amp; Async</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-blue" style="width:92%;"></div></div>
-                        <div class="skill-pct">Essential â€” 92%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="sparkles-outline" style="color:#fbbf24;"></ion-icon>
-                            <span>Prompt Engineering</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-amber" style="width:88%;"></div></div>
-                        <div class="skill-pct">Essential â€” 88%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="search-outline" style="color:#34d399;"></ion-icon>
-                            <span>RAG &amp; Vector Search</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-green" style="width:80%;"></div></div>
-                        <div class="skill-pct">Core â€” 80%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="hardware-chip-outline" style="color:#f472b6;"></ion-icon>
-                            <span>Agentic Frameworks</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-pink" style="width:72%;"></div></div>
-                        <div class="skill-pct">Advanced â€” 72%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="git-network-outline" style="color:#818cf8;"></ion-icon>
-                            <span>Model Context Protocol</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-purple" style="width:65%;"></div></div>
-                        <div class="skill-pct">Advanced â€” 65%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="bar-chart-outline" style="color:#f87171;"></ion-icon>
-                            <span>Evaluation &amp; LLMOps</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-red" style="width:60%;"></div></div>
-                        <div class="skill-pct">Production â€” 60%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="shield-checkmark-outline" style="color:#f87171;"></ion-icon>
-                            <span>AI Security</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-red" style="width:55%;"></div></div>
-                        <div class="skill-pct">Specialist â€” 55%</div>
-                    </div>
-                    <div class="skill-mastery-card">
-                        <div class="skill-mastery-header">
-                            <ion-icon name="server-outline" style="color:#818cf8;"></ion-icon>
-                            <span>ML / Model Training</span>
-                        </div>
-                        <div class="skill-bar-track"><div class="skill-bar-fill fill-purple" style="width:30%;"></div></div>
-                        <div class="skill-pct">Nice-to-have â€” 30%</div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="section-divider"></div>
-
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTION 7: LEVEL DEEP DIVES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <section class="animate-on-scroll">
-                <div class="section-eyebrow">Section 07</div>
-                <h2 style="margin-top:0; border:none;">Level Deep-Dives</h2>
-
-                <!-- Level 1 -->
-                <div class="level-header" style="margin-top:28px;">
-                    <div class="level-num l1">01</div>
-                    <div class="level-meta">
-                        <h3>Core Fundamentals <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);">(Month 1â€“2)</span></h3>
-                        <p>Build the daily tools every AI Engineer uses â€” Python, Prompt Eng, and basic RAG.</p>
-                    </div>
-                </div>
-
-                <div class="bento-grid">
-                    <div class="bento-card">
-                        <div class="card-icon blue"><ion-icon name="logo-python"></ion-icon></div>
-                        <h3>Python &amp; API Integrations</h3>
-                        <p><strong>The Lingua Franca of AI:</strong> The entire ecosystem â€” LangChain, LlamaIndex, PyTorch, OpenAI SDK â€” is built on Python.</p>
-                        <ul style="margin-top:12px; margin-left:20px;">
-                            <li><strong>Async I/O:</strong> Critical for calling LLM APIs without blocking.</li>
-                            <li><strong>Pydantic:</strong> Structure and validate LLM outputs (Structured Outputs).</li>
-                            <li><strong>FastAPI:</strong> The standard for serving your AI backend.</li>
-                        </ul>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-blue">asyncio</span>
-                            <span class="skill-chip chip-blue">pydantic</span>
-                            <span class="skill-chip chip-blue">fastapi</span>
-                            <span class="skill-chip chip-blue">httpx</span>
-                        </div>
-                    </div>
-
-                    <div class="bento-card">
-                        <div class="card-icon amber"><ion-icon name="sparkles-outline"></ion-icon></div>
-                        <h3>Prompt Engineering</h3>
-                        <p><strong>Programming with Natural Language:</strong> Crafting rigorous system prompts that produce consistent, structured responses.</p>
-                        <ul style="margin-top:12px; margin-left:20px;">
-                            <li><strong>Chain of Thought:</strong> Forcing reasoning before answering.</li>
-                            <li><strong>Few-Shot:</strong> Strict output formatting via examples.</li>
-                            <li><strong>XML Structuring:</strong> Tags like <code>&lt;context&gt;</code> to separate data.</li>
-                        </ul>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-amber">CoT</span>
-                            <span class="skill-chip chip-amber">Few-Shot</span>
-                            <span class="skill-chip chip-amber">ReAct</span>
-                            <span class="skill-chip chip-amber">Self-Consistency</span>
-                        </div>
-                    </div>
-
-                    <div class="bento-card">
-                        <div class="card-icon green"><ion-icon name="search-outline"></ion-icon></div>
-                        <h3>Basic RAG Architecture</h3>
-                        <p><strong>Connecting Models to Data:</strong> Teaching LLMs to read your enterprise data instead of hallucinating.</p>
-                        <ul style="margin-top:12px; margin-left:20px;">
-                            <li><strong>Embeddings:</strong> Converting text into number arrays.</li>
-                            <li><strong>Vector DBs:</strong> Pinecone, Qdrant, pgvector.</li>
-                            <li><strong>Chunking:</strong> Splitting PDFs into meaningful paragraphs.</li>
-                        </ul>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-green">text-embedding-3</span>
-                            <span class="skill-chip chip-green">Qdrant</span>
-                            <span class="skill-chip chip-green">pgvector</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Level 2 -->
-                <div class="level-header" style="margin-top:40px;">
-                    <div class="level-num l2">02</div>
-                    <div class="level-meta">
-                        <h3>Advanced AI Engineering <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);">(Month 3â€“4)</span></h3>
-                        <p>Build systems that act autonomously and don't break in production.</p>
-                    </div>
-                </div>
-
-                <div class="bento-grid">
-                    <div class="bento-card">
-                        <div class="card-icon pink"><ion-icon name="hardware-chip-outline"></ion-icon></div>
-                        <h3>Agentic Frameworks</h3>
-                        <p><strong>Autonomous Workflows:</strong> LangGraph and CrewAI for intelligent loops with tool use and stateful memory.</p>
-                        <ul style="margin-top:12px; margin-left:20px;">
-                            <li><strong>Tool Calling:</strong> LLMs execute Python functions.</li>
-                            <li><strong>Stateful Graphs:</strong> Memory across multi-step tasks.</li>
-                            <li><strong>HITL:</strong> Pausing for user approval on sensitive actions.</li>
-                        </ul>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-pink">LangGraph</span>
-                            <span class="skill-chip chip-pink">CrewAI</span>
-                            <span class="skill-chip chip-pink">AutoGen</span>
-                        </div>
-                    </div>
-
-                    <div class="bento-card">
-                        <div class="card-icon purple"><ion-icon name="git-network-outline"></ion-icon></div>
-                        <h3>Model Context Protocol</h3>
-                        <p><strong>The USB-C of AI:</strong> A universal protocol to securely connect LLMs to your local environment and APIs.</p>
-                        <ul style="margin-top:12px; margin-left:20px;">
-                            <li><strong>Server Building:</strong> Custom Python MCP servers.</li>
-                            <li><strong>Secure Data Access:</strong> Granting Claude access to databases.</li>
-                            <li><strong>Standardisation:</strong> Away from custom tool-calling hacks.</li>
-                        </ul>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-purple">@modelcontextprotocol</span>
-                            <span class="skill-chip chip-purple">stdio</span>
-                            <span class="skill-chip chip-purple">SSE</span>
-                        </div>
-                    </div>
-
-                    <div class="bento-card">
-                        <div class="card-icon red"><ion-icon name="bar-chart-outline"></ion-icon></div>
-                        <h3>Evaluation Pipelines</h3>
-                        <p><strong>Data-Driven AI Ops:</strong> RAGAS to mathematically score AI outputs. Never ship a prompt change blind.</p>
-                        <ul style="margin-top:12px; margin-left:20px;">
-                            <li><strong>Golden Datasets:</strong> 100+ Q&amp;A pairs to benchmark against.</li>
-                            <li><strong>LLM-as-Judge:</strong> GPT-4 grades GPT-3.5 on Faithfulness.</li>
-                            <li><strong>CI/CD Integration:</strong> Fail PRs if accuracy degrades.</li>
-                        </ul>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-red">RAGAS</span>
-                            <span class="skill-chip chip-red">DeepEval</span>
-                            <span class="skill-chip chip-red">Arize</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Level 3 -->
-                <div class="level-header" style="margin-top:40px;">
-                    <div class="level-num l3">03</div>
-                    <div class="level-meta">
-                        <h3>Production &amp; Specialisation <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);">(Month 5â€“6)</span></h3>
-                        <p>Ship to production with observability, security, and FinOps in place.</p>
-                    </div>
-                </div>
-
-                <div class="bento-grid">
-                    <div class="bento-card">
-                        <div class="card-icon blue"><ion-icon name="server-outline"></ion-icon></div>
-                        <h3>LLMOps</h3>
-                        <p>Observability, cost management, and model versioning for AI systems in production at scale.</p>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-blue">LangSmith</span>
-                            <span class="skill-chip chip-blue">Weights &amp; Biases</span>
-                            <span class="skill-chip chip-blue">Helicone</span>
-                            <span class="skill-chip chip-blue">Token Budgets</span>
-                        </div>
-                    </div>
-                    <div class="bento-card">
-                        <div class="card-icon red"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
-                        <h3>AI Security</h3>
-                        <p>Defend against prompt injection, jailbreaks, and data exfiltration. Essential for enterprise AI deployments.</p>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-red">Prompt Injection</span>
-                            <span class="skill-chip chip-red">Guardrails AI</span>
-                            <span class="skill-chip chip-red">OWASP LLM Top 10</span>
-                            <span class="skill-chip chip-red">Garak</span>
-                        </div>
-                    </div>
-                    <div class="bento-card">
-                        <div class="card-icon amber"><ion-icon name="build-outline"></ion-icon></div>
-                        <h3>Open-Source Tools &amp; FinOps</h3>
-                        <p>Run open-source models locally with Ollama, manage costs with token budgeting, and pick the right model for every task.</p>
-                        <div class="skill-chips" style="margin-top:16px;">
-                            <span class="skill-chip chip-amber">Ollama</span>
-                            <span class="skill-chip chip-amber">LM Studio</span>
-                            <span class="skill-chip chip-amber">vLLM</span>
-                            <span class="skill-chip chip-amber">Cost Modelling</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div><!-- /content-area -->
-    </main>
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 2</span>
+                <h1>Career <span class="text-gradient">Roadmap</span> <span class="text-gradient"></span></h1>
+                <p class="page-description">A structured guide for transitioning into AI Engineering.</p>
+                <div class="chip-strip">
+    <span class="chip ch-p">AI Engineer</span>
+    <span class="chip ch-g">MLOps</span>
+    <span class="chip ch-a">Phase 3</span>
 </div>
 
-<script src="script.js"></script>
-<script>
-    /* Trigger skill bar animations when cards scroll into view */
-    const bars = document.querySelectorAll('.skill-bar-fill');
-    const barObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.style.animationPlayState = 'running';
-                barObserver.unobserve(e.target);
-            }
+            </header>
+            
+
+            <section class="animate-on-scroll">
+                <div class="eyebrow">The Journey</div>
+                <h2 style="margin-top:0;">Platform Engineer to AI Engineer</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>The gap between a traditional Software Engineer and an AI Engineer is shrinking. The focus has shifted from training models (Data Science) to <strong>integrating APIs, orchestrating agents, and building RAG pipelines</strong>.</p>
+                </div>
+                
+                <div class="transformer-flow">
+                    <div class="tf-step">
+                        <div class="tf-box tf-1"><h4>Phase 1: Core Fundamentals</h4><p>Tokens, Context Windows, basic RAG, and prompt engineering.</p></div>
+                    </div>
+                    <div class="tf-arrow"></div>
+                    <div class="tf-step">
+                        <div class="tf-box tf-2"><h4>Phase 2: Production Ops</h4><p>LLMOps, Security, Evals (RAGAS), and FinOps.</p></div>
+                    </div>
+                    <div class="tf-arrow"></div>
+                    <div class="tf-step">
+                        <div class="tf-box tf-3"><h4>Phase 3: Advanced Agentic Eng</h4><p>LangGraph, Multi-Agent systems, and GraphRAG.</p></div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+    <div class="qa-item">
+        <div class="qa-q">What is the difference between an AI Engineer and a Data Scientist? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+        <div class="qa-a">Data Scientists train models using PyTorch/TensorFlow. AI Engineers build software applications using pre-trained models via APIs (like building a LangGraph agent).</div>
+    </div>
+</div>
+
+            </section>
+            
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+    <a href="fundamentals.html" class="next-card">
+        <ion-icon name="bulb-outline" style="color: #818cf8;"></ion-icon>
+        <div class="next-card-text">
+            <h4>Fundamentals</h4>
+            <p>Continue your journey &rarr;</p>
+        </div>
+    </a>
+</div>
+
+            </section>
+        </div>
+    </main>
+</div>
+    <script src="script.js"></script>
+    <script>
+        document.querySelectorAll('.qa-q').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('open');
+            });
         });
-    }, { threshold: 0.3 });
-    bars.forEach(b => {
-        b.style.animationPlayState = 'paused';
-        barObserver.observe(b);
-    });
-</script>
+    </script>
+    <script>mermaid.initialize({theme: "dark", startOnLoad: true});</script>
 </body>
 </html>
-

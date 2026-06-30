@@ -1,173 +1,683 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI & LLM Fundamentals | AI for All</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <link rel="stylesheet" href="styles.css?v=3">
-    <style>
-        .token-anim-box {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 40px;
-            margin: 32px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            min-height: 150px;
-            align-items: center;
-        }
-        .token {
-            padding: 8px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--accent-primary);
-            border-radius: 8px;
-            font-family: 'Fira Code', monospace;
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        .token:nth-child(1) { animation: popIn 2s infinite; animation-delay: 0.2s; }
-        .token:nth-child(2) { animation: popIn 2s infinite; animation-delay: 0.6s; }
-        .token:nth-child(3) { animation: popIn 2s infinite; animation-delay: 1.0s; }
-        .token:nth-child(4) { animation: popIn 2s infinite; animation-delay: 1.4s; }
-        
-        @keyframes popIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            10%, 90% { opacity: 1; transform: translateY(0); background: var(--accent-glow); }
-            100% { opacity: 0; transform: translateY(-10px); }
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="styles.css?v=4">
+    </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-                <aside class="sidebar" id="sidebar">
-            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
-            
-            <div class="nav-section"><div class="nav-section-title">Getting Started</div>
-                <a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
-                <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Core Concepts</div>
-                <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI Fundamentals</a>
-                <a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompts</a>
-                <a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> Vector RAG</a>
-                <a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
-                <a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> MCP</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Agents</div>
-                <a href="langgraph.html" class="nav-item"><ion-icon name="git-commit-outline"></ion-icon> LangGraph</a>
-                <a href="agent-engineering.html" class="nav-item"><ion-icon name="brain-outline"></ion-icon> Agent Engineering</a>
-                <a href="multi-agent.html" class="nav-item"><ion-icon name="people-circle-outline"></ion-icon> Multi-Agent Systems</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Data</div>
-                <a href="graphrag.html" class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Arch & Infra</div>
-                <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
-                <a href="infrastructure.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> Infra & Serving</a>
-                <a href="ai-gateway.html" class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> AI Gateways</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Production Ops</div>
-                <a href="llmops.html" class="nav-item"><ion-icon name="pulse-outline"></ion-icon> LLMOps</a>
-                <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Observability</a>
-                <a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
-                <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> App Security</a>
-                <a href="advanced-security.html" class="nav-item"><ion-icon name="skull-outline"></ion-icon> Adv Security</a>
-                <a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Resources</div>
-                <a href="knowledge-map.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
-                <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
-            </div>
-        </aside>
-        <div class="mobile-overlay" id="mobile-overlay"></div>
+<div class="app-container">
 
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar">
-                    <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" placeholder="Search fundamentals...">
-                </div>
-                <div class="topbar-actions">
-                    <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html" class="logo-container" style="text-decoration:none;">
+            <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
+            <div class="logo-text">AI for All</div>
+        </a>
+        <div class="nav-section">
+            <div class="nav-section-title">Getting Started</div>
+            <a href="index.html"   class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
+            <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Core Modules</div>
+            <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a>
+            <a href="claude.html"       class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a>
+            <a href="rag.html"          class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a>
+            <a href="agents.html"       class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
+            <a href="mcp.html"          class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Production Ops</div>
+            <a href="llmops.html"   class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a>
+            <a href="evals.html"    class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
+            <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a>
+            <a href="tools.html"    class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Advanced Engineering</div>
+            <a href="langgraph.html"             class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> LangGraph Deep Dive</a>
+            <a href="agent-engineering.html"     class="nav-item"><ion-icon name="construct-outline"></ion-icon> Agent Engineering</a>
+            <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
+            <a href="infrastructure.html"        class="nav-item"><ion-icon name="server-outline"></ion-icon> Infrastructure &amp; Serving</a>
+            <a href="multi-agent.html"           class="nav-item"><ion-icon name="people-outline"></ion-icon> Multi-Agent Systems</a>
+            <a href="graphrag.html"              class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Deep Operations</div>
+            <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Advanced Observability</a>
+            <a href="ai-gateway.html"             class="nav-item"><ion-icon name="swap-horizontal-outline"></ion-icon> AI Gateways</a>
+            <a href="advanced-security.html"      class="nav-item"><ion-icon name="lock-closed-outline"></ion-icon> Advanced Security</a>
+            <a href="knowledge-map.html"          class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Resources</div>
+            <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
+        </div>
+    </aside>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" placeholder="Search fundamentals...">
+            </div>
+            <div class="topbar-actions">
+                <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+            </div>
+        </header>
+
+        <div class="content-area">
+
+            <!-- ══ HEADER ══ -->
+            <header class="page-header animate-on-scroll">
+                <span class="badge">&#128161; Phase 1 &mdash; Module 1</span>
+                <h1>AI &amp; LLM <span class="text-gradient">Fundamentals</span></h1>
+                <p class="page-description">Understand how Large Language Models actually work under the hood — Tokens, Transformers, Context Windows, Temperature, Embeddings, and how the world's top models compare.</p>
+                <div class="chip-strip">
+                    <span class="chip ch-p">Tokens</span>
+                    <span class="chip ch-p">Context Window</span>
+                    <span class="chip ch-p">Temperature</span>
+                    <span class="chip ch-g">Embeddings</span>
+                    <span class="chip ch-g">Transformers</span>
+                    <span class="chip ch-b">Top-P / Top-K</span>
+                    <span class="chip ch-a">Model Families</span>
+                    <span class="chip ch-r">Hallucination</span>
                 </div>
             </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 1 & 2</span>
-                    <h1>AI & LLM Fundamentals</h1>
-                    <p class="page-description">Understand the core building blocks of Large Language Models: Tokens, Transformers, and Parameters.</p>
-                </header>
+            <!-- ══ SECTION 1: WHAT IS AN LLM ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 01</div>
+                <h2 style="margin-top:0;">What is a Large Language Model?</h2>
+                <p>A <strong>Large Language Model (LLM)</strong> is a neural network — specifically a <strong>Transformer</strong> — trained on hundreds of billions of words scraped from the internet, books, and code. Its core task is deceptively simple: <em>predict the most likely next token</em> given all previous tokens. Everything else — reasoning, coding, translation, summarization — emerges from doing this extremely well at scale.</p>
 
-                <section class="animate-on-scroll">
-                    <h2>1. What is an LLM?</h2>
-                    <p>A <strong>Large Language Model (LLM)</strong> is a type of neural network (specifically, a Transformer) trained on massive amounts of text data. Its core function is surprisingly simple: it predicts the next most likely word (or token) based on the context of the words that came before it.</p>
-                </section>
+                <div class="bento-grid" style="margin-top:20px;">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="phone-portrait-outline"></ion-icon></div>
+                        <h3>The Autocomplete Analogy</h3>
+                        <p>An LLM is your phone's autocomplete — scaled up by a factor of a trillion. When you type <em>"The capital of France is…"</em>, your phone might suggest "Paris". An LLM does this across multi-paragraph reasoning chains, code blocks, and logical deductions simultaneously.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="school-outline"></ion-icon></div>
+                        <h3>How It Learns</h3>
+                        <p>During <strong>pre-training</strong>, the model reads trillions of tokens and adjusts billions of internal parameters (weights) so its next-token predictions improve. No human labels needed — the text itself is the training signal. This is called <strong>self-supervised learning</strong>.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="sparkles-outline"></ion-icon></div>
+                        <h3>Emergent Capabilities</h3>
+                        <p>Nobody programmed an LLM to write poetry or debug code — these abilities <strong>emerged</strong> from scale. Once models cross a certain parameter threshold (~7B+), they start showing abilities that smaller models completely lack. This is called <strong>emergence</strong>.</p>
+                    </div>
+                </div>
 
-                <section class="animate-on-scroll">
-                    <h2>2. Real World Analogy</h2>
-                    <div class="bento-grid" style="margin-top: 16px;">
-                        <div class="bento-card">
-                            <h3><ion-icon name="phone-portrait-outline"></ion-icon> Smartphone Autocomplete</h3>
-                            <p>An LLM is just a highly advanced version of your phone's autocomplete. When you type "I am going to the...", your phone predicts "store". An LLM does this across paragraphs and code blocks with vast logical reasoning.</p>
+                <div class="key-box" style="margin-top:20px;">
+                    <ion-icon name="key-outline"></ion-icon>
+                    <p><strong>Key Insight:</strong> LLMs are not databases retrieving stored facts. They are probability machines generating the statistically likely continuation of your prompt. This is why they can be wrong — and why <strong>RAG</strong> (connecting them to real data) is so important.</p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 2: TOKENS ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 02</div>
+                <h2 style="margin-top:0;">Tokens — The Atoms of Language</h2>
+                <p>LLMs don't read words — they read <strong>tokens</strong>. A token is a chunk of text: sometimes a full word, sometimes a word-piece, sometimes a single character or punctuation mark. The process of splitting text into tokens is called <strong>tokenization</strong>.</p>
+
+                <div class="token-demo">
+                    <div class="token-demo-label">Tokenized sentence — hover over each token</div>
+                    <div class="token-sentence">
+                        <span class="tok tok-a">The</span>
+                        <span class="tok tok-b">&#32;quick</span>
+                        <span class="tok tok-c">&#32;brown</span>
+                        <span class="tok tok-d">&#32;fox</span>
+                        <span class="tok tok-e">&#32;jump</span>
+                        <span class="tok tok-a">ed</span>
+                        <span class="tok tok-b">&#32;over</span>
+                        <span class="tok tok-c">&#32;the</span>
+                        <span class="tok tok-d">&#32;lazy</span>
+                        <span class="tok tok-e">&#32;dog</span>
+                        <span class="tok tok-a">.</span>
+                    </div>
+                    <div class="token-demo-label" style="margin-top:20px;">A subword example — "unbelievable" splits into pieces</div>
+                    <div class="token-sentence">
+                        <span class="tok tok-c">un</span>
+                        <span class="tok tok-d">bel</span>
+                        <span class="tok tok-e">iev</span>
+                        <span class="tok tok-a">able</span>
+                    </div>
+                    <div class="token-stat-row">
+                        <div class="token-stat"><div class="token-stat-val">~4</div><div class="token-stat-lbl">chars per token (avg)</div></div>
+                        <div class="token-stat"><div class="token-stat-val">~0.75</div><div class="token-stat-lbl">words per token</div></div>
+                        <div class="token-stat"><div class="token-stat-val">1M</div><div class="token-stat-lbl">tokens ≈ 750,000 words</div></div>
+                        <div class="token-stat"><div class="token-stat-val">$</div><div class="token-stat-lbl">APIs charge per token</div></div>
+                    </div>
+                </div>
+
+                <div class="warn-box">
+                    <ion-icon name="warning-outline"></ion-icon>
+                    <p><strong>Cost &amp; Latency:</strong> API pricing is always per-token (input + output). A typical GPT-4o call costs ~$5 per million input tokens. Knowing your token count before calling an LLM is a critical FinOps skill.</p>
+                </div>
+
+                <div class="bento-grid" style="margin-top:20px;">
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="language-outline"></ion-icon></div>
+                        <h3>Vocabulary Size</h3>
+                        <p>Modern LLMs use a tokenizer with a fixed vocabulary — typically <strong>50,000–100,000 tokens</strong>. GPT-4 uses cl100k_base (100,000 tokens). Claude uses its own tokenizer. Any string can be encoded using this vocabulary.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="code-slash-outline"></ion-icon></div>
+                        <h3>Code Tokenization</h3>
+                        <p>Code tokens are often different — <code>print</code> is one token, <code>def</code> is one token, but unusual variable names like <code>myVar_123</code> might be split into 3–4 tokens. This affects how efficiently models read code.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 3: CONTEXT WINDOW ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 03</div>
+                <h2 style="margin-top:0;">Context Window — The Model's Working Memory</h2>
+                <p>The <strong>context window</strong> is the maximum number of tokens an LLM can process in a single request — both your input (prompt) and its output (completion) combined. Everything outside the context window is invisible to the model.</p>
+
+                <div class="context-visual">
+                    <div class="token-demo-label" style="margin-bottom:18px;">Context window size comparison across major models</div>
+                    <div class="context-bar-row">
+                        <div class="ctx-model">GPT-3.5 Turbo</div>
+                        <div class="ctx-track"><div class="ctx-fill" style="width:2%; background:linear-gradient(90deg,#818cf8,#a78bfa);">16K</div></div>
+                        <div class="ctx-label">16K tokens</div>
+                    </div>
+                    <div class="context-bar-row">
+                        <div class="ctx-model">GPT-4o</div>
+                        <div class="ctx-track"><div class="ctx-fill" style="width:12%; background:linear-gradient(90deg,#34d399,#6ee7b7);">128K</div></div>
+                        <div class="ctx-label">128K tokens</div>
+                    </div>
+                    <div class="context-bar-row">
+                        <div class="ctx-model">Claude 3.5 Sonnet</div>
+                        <div class="ctx-track"><div class="ctx-fill" style="width:20%; background:linear-gradient(90deg,#f472b6,#f9a8d4);">200K</div></div>
+                        <div class="ctx-label">200K tokens</div>
+                    </div>
+                    <div class="context-bar-row">
+                        <div class="ctx-model">Gemini 1.5 Pro</div>
+                        <div class="ctx-track"><div class="ctx-fill" style="width:100%; background:linear-gradient(90deg,#fbbf24,#fde68a);">1M tokens</div></div>
+                        <div class="ctx-label">1M tokens</div>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="document-text-outline"></ion-icon></div>
+                        <h3>What Fits in 128K?</h3>
+                        <p>128K tokens ≈ <strong>~300 pages</strong> of a book, <strong>~10,000 lines</strong> of code, or a full research paper with all its references. This is why modern models can summarize entire codebases in one call.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon red"><ion-icon name="alert-circle-outline"></ion-icon></div>
+                        <h3>Lost in the Middle</h3>
+                        <p>Research shows LLMs perform best on information at the <strong>beginning and end</strong> of the context window, and worst on content buried in the middle. For RAG, put the most relevant chunks first or last.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="cash-outline"></ion-icon></div>
+                        <h3>Cost Scales with Tokens</h3>
+                        <p>Sending a 200K token context on every API call is expensive. Good AI engineering means designing <strong>smart context management</strong> — only sending what the model actually needs for the current task.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 4: TEMPERATURE & SAMPLING ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 04</div>
+                <h2 style="margin-top:0;">Temperature &amp; Sampling Parameters</h2>
+                <p>After the model produces a probability distribution over the next token, <strong>sampling parameters</strong> decide how to pick from that distribution. These are the levers that control creativity vs. precision.</p>
+
+                <div class="temp-grid">
+                    <div class="temp-card">
+                        <div class="temp-dial dial-low">0.0</div>
+                        <h4>Deterministic</h4>
+                        <p>Always picks the single most probable token. No randomness. Same prompt → same output every time.</p>
+                        <div class="temp-example">Use for: structured data extraction, SQL generation, JSON formatting</div>
+                    </div>
+                    <div class="temp-card">
+                        <div class="temp-dial dial-mid">0.7</div>
+                        <h4>Balanced</h4>
+                        <p>The default for most applications. Introduces variation while staying coherent and on-topic.</p>
+                        <div class="temp-example">Use for: chatbots, Q&amp;A, summarization, code generation</div>
+                    </div>
+                    <div class="temp-card">
+                        <div class="temp-dial dial-high">1.5</div>
+                        <h4>Creative</h4>
+                        <p>High randomness. Outputs vary widely. Can produce brilliant or nonsensical results.</p>
+                        <div class="temp-example">Use for: brainstorming, creative writing, generating diverse ideas</div>
+                    </div>
+                </div>
+
+                <div class="bento-grid" style="margin-top:16px;">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="options-outline"></ion-icon></div>
+                        <h3>Top-P (Nucleus Sampling)</h3>
+                        <p>Instead of considering all tokens, only sample from the smallest set of tokens whose cumulative probability exceeds <strong>P</strong>. <code>top_p=0.9</code> means: only pick from the top 90% probability mass. Keeps outputs sensible while allowing variety.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="filter-outline"></ion-icon></div>
+                        <h3>Top-K</h3>
+                        <p>Only sample from the top <strong>K</strong> most probable tokens at each step. <code>top_k=40</code> means the model can only pick from the 40 highest-probability words. A hard filter, as opposed to Top-P's soft probability cutoff.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="stop-circle-outline"></ion-icon></div>
+                        <h3>Max Tokens (Output Limit)</h3>
+                        <p>Hard cap on how many tokens the model generates in its response. Essential for cost control — if you don't set it, the model may generate until it hits the context window limit, costing you money.</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <ion-icon name="bulb-outline"></ion-icon>
+                    <p><strong>Best Practice:</strong> For production applications, set <code>temperature=0</code> and <code>max_tokens</code> explicitly. Only increase temperature for creative tasks. Never use high temperature for factual or structured output tasks.</p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 5: TRANSFORMER ARCHITECTURE ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 05</div>
+                <h2 style="margin-top:0;">The Transformer Architecture (Simplified)</h2>
+                <p>All modern LLMs are built on the <strong>Transformer</strong> architecture, introduced by Google in 2017 ("Attention Is All You Need"). You don't need to implement one — but understanding the key components helps you reason about model behaviour.</p>
+
+                <div class="transformer-flow">
+                    <div class="tf-step">
+                        <div class="tf-box tf-1">
+                            <h4>1. Input Tokenization</h4>
+                            <p>Text is split into tokens and each token is mapped to a unique integer ID.</p>
                         </div>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>3. Interactive Token Animation</h2>
-                    <p>LLMs don't read words; they read <strong>Tokens</strong>. A token can be a word, a part of a word, or just a single character. Watch how an LLM streams a response token by token:</p>
-                    
-                    <div class="token-anim-box">
-                        <div class="token">The</div>
-                        <div class="token">capital</div>
-                        <div class="token">is</div>
-                        <div class="token">Paris</div>
+                    <div style="width:2px;height:24px;background:var(--border-color);margin:0 auto;position:relative;">
+                        <span style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:0.8rem;">▼</span>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>4. Key Parameters</h2>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>Temperature (0.0 to 1.0)</h3>
-                            <p>Controls randomness. A temperature of <code>0.0</code> makes the model deterministic (always picks the most likely next word). High temperature makes it creative and varied.</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>Context Window</h3>
-                            <p>The maximum number of tokens the model can "remember" in a single prompt. If a model has a 128k context window, it can read a ~300-page book in one go.</p>
+                    <div class="tf-step">
+                        <div class="tf-box tf-2">
+                            <h4>2. Embeddings + Positional Encoding</h4>
+                            <p>Each token ID becomes a high-dimensional vector. Position info (order) is added so the model knows which token came first.</p>
                         </div>
                     </div>
-                </section>
-                
-                <section class="animate-on-scroll">
-                    <h2>5. Interview Questions</h2>
-                    <div class="bento-card" style="margin-bottom: 16px;">
-                        <h3>Beginner</h3>
-                        <p><strong>Q: Why does the model output different answers for the same prompt?</strong></p>
-                        <p><em>A:</em> Because the Temperature is set > 0.0, introducing probability sampling into the next-token prediction.</p>
+                    <div style="width:2px;height:24px;background:var(--border-color);margin:0 auto;position:relative;">
+                        <span style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:0.8rem;">▼</span>
                     </div>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
+                    <div class="tf-step">
+                        <div class="tf-box tf-3">
+                            <h4>3. Self-Attention Layers (×N)</h4>
+                            <p>The core of the Transformer. Each token "attends" to every other token and learns which ones are relevant. GPT-4 has ~96 of these layers stacked.</p>
+                        </div>
+                    </div>
+                    <div style="width:2px;height:24px;background:var(--border-color);margin:0 auto;position:relative;">
+                        <span style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:0.8rem;">▼</span>
+                    </div>
+                    <div class="tf-step">
+                        <div class="tf-box tf-4">
+                            <h4>4. Feed-Forward Networks</h4>
+                            <p>After attention, each token passes through a large feed-forward network that stores factual knowledge in its weights. This is where the model's "memory" lives.</p>
+                        </div>
+                    </div>
+                    <div style="width:2px;height:24px;background:var(--border-color);margin:0 auto;position:relative;">
+                        <span style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:0.8rem;">▼</span>
+                    </div>
+                    <div class="tf-step">
+                        <div class="tf-box tf-5">
+                            <h4>5. Output: Next-Token Probability Distribution</h4>
+                            <p>A final layer (the "language model head") converts the last hidden state into probabilities over the entire vocabulary. The model picks the next token and repeats.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p><strong>Self-Attention in plain English:</strong> When reading the word "it" in "The animal didn't cross the street because <em>it</em> was too tired", self-attention lets the model figure out that "it" refers to "animal" — by weighing how much each prior word should influence the representation of "it".</p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 6: EMBEDDINGS ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 06</div>
+                <h2 style="margin-top:0;">Embeddings — Meaning as Numbers</h2>
+                <p>An <strong>embedding</strong> is a dense numerical vector (an array of floating-point numbers) that represents the semantic meaning of a piece of text. Words or sentences with similar meanings have embeddings that are <em>close together</em> in vector space.</p>
+
+                <div class="embedding-visual">
+                    <div class="token-demo-label" style="margin-bottom:18px;">Words and their approximate similarity relationships</div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(129,140,248,0.12);color:#818cf8;border-color:rgba(129,140,248,0.3);">King</div>
+                        <span class="emb-arrow">→</span>
+                        <div class="emb-vector">[0.82, -0.31, 0.17, 0.64, -0.22, 0.91, ...]</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(244,114,182,0.12);color:#f472b6;border-color:rgba(244,114,182,0.3);">Queen</div>
+                        <span class="emb-arrow">→</span>
+                        <div class="emb-vector">[0.79, -0.28, 0.21, 0.61, -0.19, 0.88, ...]</div>
+                        <span class="emb-sim" style="background:rgba(52,211,153,0.1);color:#34d399;">96% similar</span>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(251,191,36,0.12);color:#fbbf24;border-color:rgba(251,191,36,0.3);">Banana</div>
+                        <span class="emb-arrow">→</span>
+                        <div class="emb-vector">[0.12, 0.73, -0.55, 0.08, 0.44, -0.31, ...]</div>
+                        <span class="emb-sim" style="background:rgba(248,113,113,0.1);color:#f87171;">11% similar to King</span>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="calculator-outline"></ion-icon></div>
+                        <h3>Vector Arithmetic</h3>
+                        <p>The famous equation: <strong>King − Man + Woman ≈ Queen</strong>. Embedding spaces encode relationships. You can add and subtract concepts and navigate the space mathematically. This is the foundation of semantic search.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="search-outline"></ion-icon></div>
+                        <h3>Semantic Search</h3>
+                        <p>Instead of keyword matching, semantic search embeds your query into a vector and finds documents whose vectors are <strong>closest by cosine similarity</strong>. "What causes rain?" finds "precipitation mechanisms" even without the word "rain".</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="server-outline"></ion-icon></div>
+                        <h3>Where They're Stored</h3>
+                        <p>Embeddings are stored in <strong>Vector Databases</strong> like Pinecone, Qdrant, pgvector, or Weaviate. These databases are optimised for Approximate Nearest Neighbour (ANN) search — finding similar vectors in milliseconds across millions of documents.</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <ion-icon name="bulb-outline"></ion-icon>
+                    <p><strong>Popular Embedding Models:</strong> <code>text-embedding-3-small</code> (OpenAI, 1536 dims), <code>text-embedding-3-large</code> (3072 dims), <code>embed-english-v3</code> (Cohere), <code>nomic-embed-text</code> (open-source, runs locally via Ollama).</p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 7: HALLUCINATION ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 07</div>
+                <h2 style="margin-top:0;">Hallucination — Why LLMs Make Things Up</h2>
+                <p>A <strong>hallucination</strong> is when an LLM confidently generates text that is factually incorrect. The model doesn't "know" it's wrong — it's just producing a statistically plausible continuation of your prompt.</p>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon red"><ion-icon name="warning-outline"></ion-icon></div>
+                        <h3>Why It Happens</h3>
+                        <p>The model's goal is to generate a <em>plausible</em> next token, not a <em>true</em> one. When asked about obscure facts it wasn't trained on, it fills gaps with plausible-sounding fiction. It has no mechanism to say "I don't know."</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="flask-outline"></ion-icon></div>
+                        <h3>Common Triggers</h3>
+                        <p>Asking for specific dates, citations, code API signatures, medical dosages, or legal statutes. Any domain where precise, verifiable facts matter and the model's training data may be sparse or outdated.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                        <h3>The Fix: RAG</h3>
+                        <p><strong>Retrieval-Augmented Generation (RAG)</strong> grounds the model in real documents at runtime. Instead of relying on trained weights, the model reads your actual data first — then answers. This is why RAG is the #1 enterprise AI pattern.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 8: MODEL FAMILIES ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 08</div>
+                <h2 style="margin-top:0;">Major Model Families</h2>
+                <p>The AI landscape has several major model providers, each with different models optimized for different tasks and price points. Here are the ones you'll encounter daily as an AI Engineer.</p>
+
+                <table class="model-table">
+                    <thead>
+                        <tr>
+                            <th>Model Family</th>
+                            <th>Provider</th>
+                            <th>Best For</th>
+                            <th>Context</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="model-name">GPT-4o / o1</td>
+                            <td>OpenAI</td>
+                            <td>General reasoning, coding, vision</td>
+                            <td>128K</td>
+                            <td><span class="model-badge mb-purple">Proprietary</span></td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Claude 3.5 / 4</td>
+                            <td>Anthropic</td>
+                            <td>Long documents, coding, safety-first</td>
+                            <td>200K</td>
+                            <td><span class="model-badge mb-purple">Proprietary</span></td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Gemini 1.5 Pro</td>
+                            <td>Google</td>
+                            <td>1M context, multimodal, search</td>
+                            <td>1M</td>
+                            <td><span class="model-badge mb-purple">Proprietary</span></td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Llama 3.x</td>
+                            <td>Meta</td>
+                            <td>Self-hosted, fine-tuning, cost control</td>
+                            <td>128K</td>
+                            <td><span class="model-badge mb-green">Open Weights</span></td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Mistral / Mixtral</td>
+                            <td>Mistral AI</td>
+                            <td>Efficient MoE, European data compliance</td>
+                            <td>32K</td>
+                            <td><span class="model-badge mb-green">Open Weights</span></td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Qwen 2.5</td>
+                            <td>Alibaba</td>
+                            <td>Multilingual, coding, math</td>
+                            <td>128K</td>
+                            <td><span class="model-badge mb-green">Open Weights</span></td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">DeepSeek-R1</td>
+                            <td>DeepSeek</td>
+                            <td>Reasoning, math, cost-efficient</td>
+                            <td>128K</td>
+                            <td><span class="model-badge mb-amber">Open Source</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p><strong>Proprietary vs Open Weights:</strong> Proprietary models are accessed only via API and you never see the weights. Open weights models (Llama, Mistral) let you download the model and run it locally — important for data privacy, compliance, and cost control. <strong>Open Source</strong> means weights + training code are both available.</p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 9: TRAINING vs INFERENCE ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 09</div>
+                <h2 style="margin-top:0;">Training vs Inference vs Fine-Tuning</h2>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="barbell-outline"></ion-icon></div>
+                        <h3>Pre-Training</h3>
+                        <p>Training a model from scratch on billions of tokens. Costs <strong>$10M–$100M+</strong> in GPU compute. Done by OpenAI, Anthropic, Meta, Google. You almost never do this as an AI Engineer.</p>
+                        <div class="chip-strip"><span class="chip ch-r">Very Expensive</span><span class="chip ch-p">Months of GPU time</span></div>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="cut-outline"></ion-icon></div>
+                        <h3>Fine-Tuning</h3>
+                        <p>Taking a pre-trained model and continuing training on your specific domain data. Makes the model better at your use case. Costs <strong>hundreds to thousands</strong> of dollars. Tools: LoRA, QLoRA, Axolotl, Hugging Face TRL.</p>
+                        <div class="chip-strip"><span class="chip ch-a">Moderate Cost</span><span class="chip ch-g">Domain Specialization</span></div>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="flash-outline"></ion-icon></div>
+                        <h3>Inference (What You Do Daily)</h3>
+                        <p>Sending a prompt to an already-trained model and getting a response. This is what <strong>99% of AI Engineering</strong> involves. Pay-per-token via API, or run locally with Ollama/vLLM. No GPU training needed.</p>
+                        <div class="chip-strip"><span class="chip ch-g">Cheap</span><span class="chip ch-b">Instant Results</span></div>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="sparkles-outline"></ion-icon></div>
+                        <h3>Prompt Engineering vs Fine-Tuning</h3>
+                        <p><strong>Always try prompt engineering first.</strong> A well-crafted system prompt + few-shot examples can outperform fine-tuning for many tasks — and costs nothing upfront. Fine-tune only when you have 1000+ labeled examples and prompting has plateaued.</p>
+                        <div class="chip-strip"><span class="chip ch-g">Prompting = Fast</span><span class="chip ch-a">Fine-tune = Expensive</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 10: STREAMING ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 10</div>
+                <h2 style="margin-top:0;">How Text Generation Works — Token by Token</h2>
+                <p>LLMs don't generate an entire response at once. They generate <strong>one token at a time</strong>, each token conditioned on all previous tokens. This is why you see text appear progressively ("streaming") in ChatGPT and Claude.</p>
+
+                <div class="stream-box">
+                    <span class="stream-text" id="stream-output">The transformer architecture was originally designed for machine translation tasks, but its ability to model long-range dependencies made it ideal for language modeling at scale.</span>
+                    <span class="stream-cursor"></span>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h3>Why Streaming Matters</h3>
+                        <p>Without streaming, the user waits for the full response (could be 30+ seconds). With streaming via <strong>Server-Sent Events (SSE)</strong>, tokens arrive as they're generated. This is the default in all modern AI APIs and critical for UX.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="timer-outline"></ion-icon></div>
+                        <h3>TTFT vs Throughput</h3>
+                        <p><strong>Time-to-First-Token (TTFT)</strong> is how long until the first token appears. <strong>Throughput</strong> is tokens-per-second thereafter. For real-time chat, TTFT matters most. For batch processing, throughput matters most. Both are LLMOps metrics.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ SECTION 11: Q&A ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Section 11</div>
+                <h2 style="margin-top:0;">Interview Q&amp;A — Test Your Knowledge</h2>
+                <p>Click each question to reveal the answer. These are real questions asked in AI Engineer and ML Platform Engineer interviews.</p>
+
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            Why does the model give different outputs for the same prompt?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a">Because <code>temperature &gt; 0</code> introduces probability sampling. At each step, instead of always choosing the most probable token, the model samples from a probability distribution — so different random samples produce different outputs. Set <code>temperature=0</code> for fully deterministic outputs.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            What is the difference between a token and a word?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a">A token is the atomic unit a model processes — which may be a whole word, a subword piece, punctuation, or whitespace. On average, 1 word ≈ 1.3 tokens in English. Rare or compound words like "unbelievable" may be split into ["un", "believ", "able"] — 3 tokens. API pricing is always per token, not per word.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            What happens when you exceed the context window?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a">The API throws an error (context length exceeded), or with some models, older tokens are silently truncated. The model has zero memory of anything outside its context window — it cannot "remember" previous conversations unless you explicitly include them in the new prompt or use an external memory store.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            Why do LLMs hallucinate and how do you prevent it?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a">LLMs hallucinate because they are trained to produce plausible text, not verified truth. When asked about facts outside their training data, they generate statistically likely continuations that may be false. Prevention strategies: (1) RAG — provide real source documents at runtime, (2) set <code>temperature=0</code> for factual tasks, (3) instruct the model to say "I don't know" in the system prompt, (4) use evaluation pipelines (RAGAS) to measure hallucination rates.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            What is the difference between Top-P and Temperature?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a">Temperature scales the entire probability distribution before sampling — high temperature flattens it (more randomness), low temperature sharpens it (more deterministic). Top-P then filters the distribution to only the tokens that cumulatively account for P% of the probability mass. They work together: temperature reshapes the distribution, Top-P then truncates it. Most APIs let you set both; a common default is <code>temperature=0.7, top_p=0.9</code>.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            When should you fine-tune instead of prompt engineer?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a">Fine-tune only when: (1) you have 1,000+ high-quality labeled examples, (2) prompt engineering has genuinely plateaued, (3) you need specific output formats or domain jargon the base model doesn't handle, or (4) you need to reduce prompt length and cost at scale. Always exhaust prompt engineering (including few-shot examples and chain-of-thought) before committing to the cost and complexity of fine-tuning.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            What is RLHF and why does it matter?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a"><strong>Reinforcement Learning from Human Feedback (RLHF)</strong> is the training step that turns a base language model into a helpful, safe assistant. Human raters rank model responses; a "reward model" learns to predict human preferences; the LLM is then fine-tuned using RL (PPO) to maximize that reward. This is why ChatGPT and Claude feel like assistants rather than raw text completers. A newer variant, <strong>DPO (Direct Preference Optimization)</strong>, achieves similar results without the complex RL loop.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q" onclick="toggleQA(this)">
+                            What is the difference between open-weights and open-source models?
+                            <span class="qa-toggle">+</span>
+                        </div>
+                        <div class="qa-a"><strong>Open weights</strong> means the trained model parameters are publicly downloadable, but the training code and data may not be (e.g., Llama 3 — Meta releases the weights but not the full training pipeline). <strong>Open source</strong> means weights + training code + data are all publicly available (e.g., DeepSeek-R1). For AI Engineering, the key practical difference is that open-weights models can be run locally (via Ollama, vLLM, etc.) for privacy, customisation, and cost reasons.</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ NEXT STEPS ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">What's Next</div>
+                <h2 style="margin-top:0;">Continue Your Learning Path</h2>
+                <p>Now that you understand how LLMs work, the next step is learning how to talk to them effectively and connect them to your data.</p>
+                <div class="next-steps-grid">
+                    <a href="claude.html" class="next-card">
+                        <ion-icon name="sparkles-outline" style="color:#fbbf24;"></ion-icon>
+                        <div class="next-card-text">
+                            <h4>Prompt Engineering</h4>
+                            <p>Learn Chain-of-Thought, few-shot prompting, and system prompt design</p>
+                        </div>
+                    </a>
+                    <a href="rag.html" class="next-card">
+                        <ion-icon name="search-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text">
+                            <h4>RAG &amp; Vector Search</h4>
+                            <p>Connect LLMs to your enterprise data to eliminate hallucination</p>
+                        </div>
+                    </a>
+                    <a href="agents.html" class="next-card">
+                        <ion-icon name="hardware-chip-outline" style="color:#f472b6;"></ion-icon>
+                        <div class="next-card-text">
+                            <h4>Agentic AI</h4>
+                            <p>Build LLMs that can take actions, use tools, and reason autonomously</p>
+                        </div>
+                    </a>
+                    <a href="roadmap.html" class="next-card">
+                        <ion-icon name="map-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text">
+                            <h4>Career Roadmap</h4>
+                            <p>See the full learning path from fundamentals to production AI</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+        </div><!-- /content-area -->
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+    function toggleQA(el) {
+        const item = el.closest('.qa-item');
+        item.classList.toggle('open');
+    }
+</script>
 </body>
 </html>
-
-
-

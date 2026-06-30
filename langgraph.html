@@ -7,145 +7,184 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder (will be replaced by batch script) -->
-        <aside class="sidebar" id="sidebar">
-            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
-            
-            <div class="nav-section"><div class="nav-section-title">Getting Started</div>
-                <a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
-                <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html" class="logo-container" style="text-decoration:none;">
+            <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
+            <div class="logo-text">AI for All</div>
+        </a>
+        <div class="nav-section">
+            <div class="nav-section-title">Getting Started</div>
+            <a href="index.html"   class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
+            <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Core Modules</div>
+            <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a>
+            <a href="claude.html"       class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a>
+            <a href="rag.html"          class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a>
+            <a href="agents.html"       class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
+            <a href="mcp.html"          class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Production Ops</div>
+            <a href="llmops.html"   class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a>
+            <a href="evals.html"    class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
+            <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a>
+            <a href="tools.html"    class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Advanced Engineering</div>
+            <a href="langgraph.html"            class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> LangGraph Deep Dive</a>
+            <a href="agent-engineering.html"    class="nav-item"><ion-icon name="construct-outline"></ion-icon> Agent Engineering</a>
+            <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
+            <a href="infrastructure.html"       class="nav-item"><ion-icon name="server-outline"></ion-icon> Infrastructure &amp; Serving</a>
+            <a href="multi-agent.html"          class="nav-item"><ion-icon name="people-outline"></ion-icon> Multi-Agent Systems</a>
+            <a href="graphrag.html"             class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Deep Operations</div>
+            <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Advanced Observability</a>
+            <a href="ai-gateway.html"             class="nav-item"><ion-icon name="swap-horizontal-outline"></ion-icon> AI Gateways</a>
+            <a href="advanced-security.html"      class="nav-item"><ion-icon name="lock-closed-outline"></ion-icon> Advanced Security</a>
+            <a href="knowledge-map.html"          class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Resources</div>
+            <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
+        </div>
+    </aside>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
             </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Core Concepts</div>
-                <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI Fundamentals</a>
-                <a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompts</a>
-                <a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> Vector RAG</a>
-                <a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
-                <a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> MCP</a>
+            <div class="topbar-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
             </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Agents</div>
-                <a href="langgraph.html" class="nav-item"><ion-icon name="git-commit-outline"></ion-icon> LangGraph</a>
-                <a href="agent-engineering.html" class="nav-item"><ion-icon name="brain-outline"></ion-icon> Agent Engineering</a>
-                <a href="multi-agent.html" class="nav-item"><ion-icon name="people-circle-outline"></ion-icon> Multi-Agent Systems</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Data</div>
-                <a href="graphrag.html" class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Arch & Infra</div>
-                <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
-                <a href="infrastructure.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> Infra & Serving</a>
-                <a href="ai-gateway.html" class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> AI Gateways</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Production Ops</div>
-                <a href="llmops.html" class="nav-item"><ion-icon name="pulse-outline"></ion-icon> LLMOps</a>
-                <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Observability</a>
-                <a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
-                <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> App Security</a>
-                <a href="advanced-security.html" class="nav-item"><ion-icon name="skull-outline"></ion-icon> Adv Security</a>
-                <a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Resources</div>
-                <a href="knowledge-map.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
-                <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
-            </div>
-        </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search LangGraph concepts..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 13</span>
+                <h1>LangGraph <span class="text-gradient">Deep Dive</span> <span class="text-gradient"></span></h1>
+                <p class="page-description">Build highly controllable, stateful, multi-actor applications with LLMs using graphs.</p>
+                <div class="chip-strip">
+    <span class="chip ch-p">StateGraphs</span>
+    <span class="chip ch-g">Checkpointers</span>
+    <span class="chip ch-a">Conditional Edges</span>
+    <span class="chip ch-b">Time Travel</span>
+    <span class="chip ch-r">HITL</span>
+</div>
+
             </header>
+            
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 13</span>
-                    <h1>LangGraph <span class="text-gradient">Deep Dive</span></h1>
-                    <p class="page-description">Build highly controllable, stateful, multi-actor applications with LLMs using graphs.</p>
-                </header>
-
-                <section class="animate-on-scroll">
-                    <h2>1. Core Concepts</h2>
-                    <p>LangGraph extends LangChain by letting you build agents as <strong>graphs</strong> instead of linear chains. This enables complex cycles, state management, and multi-agent coordination.</p>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <div class="card-icon blue"><ion-icon name="git-commit-outline"></ion-icon></div>
-                            <h3>StateGraph & State</h3>
-                            <p>Every execution maintains a global <code>State</code> object. <strong>Typed State</strong> using Pydantic ensures data structure integrity. <strong>Message State</strong> tracks conversation history natively.</p>
-                        </div>
-                        <div class="bento-card">
-                            <div class="card-icon amber"><ion-icon name="radio-button-on-outline"></ion-icon></div>
-                            <h3>Nodes & Edges</h3>
-                            <p><strong>Nodes</strong> are Python functions (often invoking LLMs or tools). <strong>Edges</strong> define the execution flow between nodes. Unlike DAGs, LangGraph allows cyclic edges (loops).</p>
-                        </div>
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Advanced Agent Orchestration</div>
+                <h2 style="margin-top:0;">Why LangGraph?</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>Standard agents (like basic ReAct agents) are unpredictable and hard to control in production. <strong>LangGraph</strong> solves this by treating agents as State Machines (Graphs). You define exactly which paths the agent is allowed to take.</p>
+                </div>
+                
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="git-commit-outline"></ion-icon></div>
+                        <h3>Nodes & Edges</h3>
+                        <p><strong>Nodes</strong> are Python functions (e.g., 'Call LLM', 'Run Tool'). <strong>Edges</strong> connect the nodes and control the flow of execution.</p>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>2. Advanced Concepts</h2>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>Dynamic Routing & Parallelism</h3>
-                            <p><strong>Conditional Edges</strong> allow the graph to branch based on LLM output (e.g., routing to 'Research' vs 'Coding'). <strong>Parallel Execution</strong> spins up multiple nodes simultaneously (e.g., searching 3 APIs at once).</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>Persistence & Checkpointing</h3>
-                            <p>LangGraph saves the state at every step using <strong>Checkpointers</strong> (like Postgres or Sqlite). This enables memory across sessions, "Time Travel" (rewinding state), and pausing for user input.</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>Human-In-The-Loop (HITL)</h3>
-                            <p>Using <strong>Interrupts</strong>, you can pause graph execution before sensitive actions (like executing SQL). The agent waits for human approval before proceeding.</p>
-                        </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="shuffle-outline"></ion-icon></div>
+                        <h3>Conditional Edges</h3>
+                        <p>The magic of LangGraph. After a node runs, a conditional edge acts as an 'if/else' router. <em>If tool output is bad &rarr; loop back to LLM. If good &rarr; go to End.</em></p>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>3. Interactive Graph Visualization</h2>
-                    <p>Below is a visual representation of a complex multi-agent flow built in LangGraph.</p>
-                    <div class="bento-card" style="text-align: center;">
-                        <div class="mermaid">
-                        graph TD
-                            classDef startNode fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
-                            classDef endNode fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff;
-                            classDef llmNode fill:#6366f1,stroke:#4338ca,stroke-width:2px,color:#fff;
-                            classDef toolNode fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:#fff;
-
-                            START((START)):::startNode --> Planner[Planner Agent]:::llmNode
-                            Planner --> Router{Conditional Router}
-                            Router -- "Needs Research" --> Research[Research Agent]:::toolNode
-                            Router -- "Needs Code" --> Coding[Coding Agent]:::toolNode
-                            Research --> Review[Review Agent]:::llmNode
-                            Coding --> Review
-                            Review -- "Approved" --> END((END)):::endNode
-                            Review -- "Rejected" --> Planner
-                        </div>
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>The Power of State & Time Travel</h2>
+                
+                <div class="temp-grid">
+                    <div class="temp-card">
+                        <h4>Global State</h4>
+                        <p>Every node receives and updates a global <code>State</code> object (usually a Pydantic model). This ensures all agents share the exact same memory and context.</p>
                     </div>
-                </section>
+                    <div class="temp-card">
+                        <h4>Checkpointers</h4>
+                        <p>LangGraph saves the State to a database (Postgres, SQLite) after every single node execution. This provides flawless memory persistence across sessions.</p>
+                    </div>
+                    <div class="temp-card">
+                        <h4>Time Travel & HITL</h4>
+                        <p>Because every state is saved, you can pause the graph for Human-in-the-Loop (HITL) approval, or literally 'rewind' the agent to a previous step if it made a mistake.</p>
+                    </div>
+                </div>
+                
+                <div class="warn-box">
+                    <ion-icon name="warning-outline"></ion-icon>
+                    <p><strong>Cyclic Graphs:</strong> Unlike traditional DAGs (Directed Acyclic Graphs) used in data engineering (like Airflow), LangGraph allows cycles (loops). This is essential for agents, which need to loop to correct their own mistakes.</p>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>4. Hands-On Labs</h2>
-                    <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>Lab 1: Build a Research Agent:</strong> Create a simple graph with a Tool Node (Tavily Search) and an LLM Node.</li>
-                        <li><strong>Lab 2: Multi-Step Agent:</strong> Add conditional edges to loop until the LLM is satisfied with the answer.</li>
-                        <li><strong>Lab 3: Human Approval Workflow:</strong> Add an interrupt before a node that writes to a database.</li>
-                    </ul>
-                </section>
-            </div>
-        </main>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+    <div class="qa-item">
+        <div class="qa-q">Why use LangGraph instead of vanilla LangChain? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+        <div class="qa-a">Vanilla LangChain is great for linear pipelines (Chain A -> Chain B). But agents require non-linear logic (loops, branching, decision making). LangGraph was built specifically to handle these cyclic flows reliably.</div>
     </div>
+    <div class="qa-item">
+        <div class="qa-q">What is Time Travel in LangGraph? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+        <div class="qa-a">Because LangGraph uses checkpointers to save the state after every node, you can fetch a previous state, modify it (e.g., fix a bad prompt that caused a crash), and resume the graph execution from that exact point in the past.</div>
+    </div>
+    <div class="qa-item">
+        <div class="qa-q">How does Human-in-the-Loop work? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+        <div class="qa-a">You can define an `interrupt_before` on a specific node (e.g., the `execute_sql` node). The graph will run, pause right before that node, and return control to the user. The user approves, and the graph resumes.</div>
+    </div>
+</div>
+
+            </section>
+            
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+    <a href="agent-engineering.html" class="next-card">
+        <ion-icon name="construct-outline" style="color: #f472b6;"></ion-icon>
+        <div class="next-card-text">
+            <h4>Agent Engineering</h4>
+            <p>Continue your journey &rarr;</p>
+        </div>
+    </a>
+    <a href="multi-agent.html" class="next-card">
+        <ion-icon name="people-outline" style="color: #34d399;"></ion-icon>
+        <div class="next-card-text">
+            <h4>Multi-Agent Systems</h4>
+            <p>Continue your journey &rarr;</p>
+        </div>
+    </a>
+</div>
+
+            </section>
+        </div>
+    </main>
+</div>
     <script src="script.js"></script>
-    <script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
+    <script>
+        // Q&A Accordion Logic
+        document.querySelectorAll('.qa-q').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+    </script>
 </body>
 </html>

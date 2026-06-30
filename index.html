@@ -3,295 +3,547 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI for All | Master Modern AI</title>
+    <title>AI for All | Master Modern AI Engineering</title>
     <meta name="description" content="A world-class interactive learning platform for AI Engineering, GenAI, RAG, Agentic AI, MCP, LLMOps and more.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="styles.css?v=3">
-</head>
+    <link rel="stylesheet" href="styles.css?v=4">
+    </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
-            
-            <div class="nav-section"><div class="nav-section-title">Getting Started</div>
-                <a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
-                <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Core Concepts</div>
-                <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI Fundamentals</a>
-                <a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompts</a>
-                <a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> Vector RAG</a>
-                <a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
-                <a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> MCP</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Agents</div>
-                <a href="langgraph.html" class="nav-item"><ion-icon name="git-commit-outline"></ion-icon> LangGraph</a>
-                <a href="agent-engineering.html" class="nav-item"><ion-icon name="brain-outline"></ion-icon> Agent Engineering</a>
-                <a href="multi-agent.html" class="nav-item"><ion-icon name="people-circle-outline"></ion-icon> Multi-Agent Systems</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Advanced Data</div>
-                <a href="graphrag.html" class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Arch & Infra</div>
-                <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
-                <a href="infrastructure.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> Infra & Serving</a>
-                <a href="ai-gateway.html" class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> AI Gateways</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Production Ops</div>
-                <a href="llmops.html" class="nav-item"><ion-icon name="pulse-outline"></ion-icon> LLMOps</a>
-                <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Observability</a>
-                <a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
-                <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> App Security</a>
-                <a href="advanced-security.html" class="nav-item"><ion-icon name="skull-outline"></ion-icon> Adv Security</a>
-                <a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a>
-            </div>
-            
-            <div class="nav-section"><div class="nav-section-title">Resources</div>
-                <a href="knowledge-map.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
-                <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
-            </div>
-        </aside>
+<div class="app-container">
 
-        <!-- Mobile Overlay -->
-        <div class="mobile-overlay" id="mobile-overlay"></div>
+    <!-- ══════════ SIDEBAR ══════════ -->
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html" class="logo-container" style="text-decoration:none;">
+            <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
+            <div class="logo-text">AI for All</div>
+        </a>
+        <div class="nav-section">
+            <div class="nav-section-title">Getting Started</div>
+            <a href="index.html"   class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
+            <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Core Modules</div>
+            <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a>
+            <a href="claude.html"       class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a>
+            <a href="rag.html"          class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a>
+            <a href="agents.html"       class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
+            <a href="mcp.html"          class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Production Ops</div>
+            <a href="llmops.html"   class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a>
+            <a href="evals.html"    class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
+            <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a>
+            <a href="tools.html"    class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Advanced Engineering</div>
+            <a href="langgraph.html"            class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> LangGraph Deep Dive</a>
+            <a href="agent-engineering.html"    class="nav-item"><ion-icon name="construct-outline"></ion-icon> Agent Engineering</a>
+            <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
+            <a href="infrastructure.html"       class="nav-item"><ion-icon name="server-outline"></ion-icon> Infrastructure &amp; Serving</a>
+            <a href="multi-agent.html"          class="nav-item"><ion-icon name="people-outline"></ion-icon> Multi-Agent Systems</a>
+            <a href="graphrag.html"             class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Deep Operations</div>
+            <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Advanced Observability</a>
+            <a href="ai-gateway.html"             class="nav-item"><ion-icon name="swap-horizontal-outline"></ion-icon> AI Gateways</a>
+            <a href="advanced-security.html"      class="nav-item"><ion-icon name="lock-closed-outline"></ion-icon> Advanced Security</a>
+            <a href="knowledge-map.html"          class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Resources</div>
+            <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
+        </div>
+    </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle">
-                    <ion-icon name="menu-outline"></ion-icon>
-                </button>
-                <div class="search-bar">
-                    <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" placeholder="Search modules, concepts, labs...">
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
+            </div>
+            <div class="topbar-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
+            </div>
+        </header>
+
+        <div class="content-area">
+
+            <!-- ══ HERO ══ -->
+            <div class="hero-banner animate-on-scroll">
+                <span class="badge">&#10024; Version 4.0 &mdash; Free &amp; Open Source</span>
+                <h1>Master Modern <span class="text-gradient">AI Engineering</span></h1>
+                <p class="page-description">A world-class interactive learning platform for Cloud, DevOps, and Software Engineers. 22 structured modules across 3 phases — from zero to production-grade Agentic AI, RAG, and LLMOps.</p>
+                <div class="hero-stats">
+                    <div class="stat-item"><div class="stat-number">22</div><div class="stat-label">Modules</div></div>
+                    <div class="stat-item"><div class="stat-number">80+</div><div class="stat-label">Concepts</div></div>
+                    <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Phases</div></div>
+                    <div class="stat-item"><div class="stat-number">15</div><div class="stat-label">Priority Topics</div></div>
                 </div>
-                <div class="topbar-actions">
-                    <button class="icon-btn" id="theme-toggle" title="Toggle theme">
-                        <ion-icon name="moon-outline"></ion-icon>
-                    </button>
-                </div>
-            </header>
+            </div>
 
-            <div class="content-area">
-                <!-- Hero Banner -->
-                <div class="hero-banner animate-on-scroll">
-                    <span class="badge">&#10024; Version 2.0 &mdash; Free & Open Source</span>
-                    <h1>Master Modern <span class="text-gradient">AI Engineering</span></h1>
-                    <p class="page-description">A world-class interactive learning platform designed for Cloud, DevOps, and Platform Engineers. Go from zero AI knowledge to building production-grade Agentic AI and RAG systems.</p>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">10+</div>
-                            <div class="stat-label">Modules</div>
+            <!-- ══ PROGRESS ══ -->
+            <div class="portal-progress animate-on-scroll">
+                <span class="progress-label">&#128218; Portal Coverage</span>
+                <div class="progress-track"><div class="progress-fill"></div></div>
+                <span class="progress-note">22 / 22 modules live &mdash; all phases complete</span>
+            </div>
+
+            <!-- ══ PRIORITY PATH ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Start Here</div>
+                <h2 style="margin-top:0; border:none;">If You Only Learn 15 Things First</h2>
+                <p>These 15 concepts represent <strong>80% of the vocabulary</strong> used in modern AI Engineering, AI Platform, and MLOps roles. Learn them in order before anything else.</p>
+
+                <div class="priority-strip">
+                    <div class="priority-strip-header">
+                        <ion-icon name="rocket-outline"></ion-icon>
+                        <div>
+                            <h3>Priority Learning Path</h3>
+                            <p>Master these before exploring the advanced modules</p>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">50+</div>
-                            <div class="stat-label">Concepts</div>
+                    </div>
+                    <div class="priority-path">
+                        <a href="fundamentals.html" class="priority-item pi-1"><span class="pnum">1</span> LLM</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="fundamentals.html" class="priority-item pi-1"><span class="pnum">2</span> Tokens</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="fundamentals.html" class="priority-item pi-1"><span class="pnum">3</span> Context Window</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="claude.html" class="priority-item pi-2"><span class="pnum">4</span> Prompt Engineering</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="agents.html" class="priority-item pi-2"><span class="pnum">5</span> Function Calling</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="rag.html" class="priority-item pi-3"><span class="pnum">6</span> Embeddings</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="rag.html" class="priority-item pi-3"><span class="pnum">7</span> Vector Database</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="rag.html" class="priority-item pi-3"><span class="pnum">8</span> RAG</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="rag.html" class="priority-item pi-3"><span class="pnum">9</span> Chunking</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="langgraph.html" class="priority-item pi-4"><span class="pnum">10</span> LangGraph</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="agents.html" class="priority-item pi-4"><span class="pnum">11</span> Agentic AI</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="mcp.html" class="priority-item pi-4"><span class="pnum">12</span> MCP</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="evals.html" class="priority-item pi-5"><span class="pnum">13</span> AI Evals</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="observability-advanced.html" class="priority-item pi-5"><span class="pnum">14</span> AI Observability</a>
+                        <span class="priority-arrow">›</span>
+                        <a href="llmops.html" class="priority-item pi-5"><span class="pnum">15</span> LLMOps</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ BUZZWORDS ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">AI Vocabulary</div>
+                <h2 style="margin-top:0; border:none;">Essential Buzzwords by Level</h2>
+                <p>The terms you'll hear daily — grouped by importance and learning level.</p>
+
+                <div class="buzz-tabs">
+                    <button class="buzz-tab active" onclick="showBuzz('l1',this)">Level 1 — Must Know (Top 20)</button>
+                    <button class="buzz-tab" onclick="showBuzz('l2',this)">Level 2 — Hottest in 2026</button>
+                </div>
+
+                <div class="buzz-panel active" id="bp-l1">
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">Foundation</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-purple">AI (Artificial Intelligence)</span>
+                            <span class="buzz-chip bc-purple">ML (Machine Learning)</span>
+                            <span class="buzz-chip bc-purple">Deep Learning</span>
+                            <span class="buzz-chip bc-purple">GenAI (Generative AI)</span>
+                            <span class="buzz-chip bc-purple">LLM (Large Language Model)</span>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">16</div>
-                            <div class="stat-label">Topics</div>
+                    </div>
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">Core LLM Concepts</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-blue">Tokens</span>
+                            <span class="buzz-chip bc-blue">Context Window</span>
+                            <span class="buzz-chip bc-blue">Prompt Engineering</span>
+                            <span class="buzz-chip bc-blue">Temperature</span>
+                            <span class="buzz-chip bc-blue">Function Calling</span>
+                        </div>
+                    </div>
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">Knowledge &amp; Search</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-green">Embeddings</span>
+                            <span class="buzz-chip bc-green">Vector Database</span>
+                            <span class="buzz-chip bc-green">RAG</span>
+                            <span class="buzz-chip bc-green">Hybrid Search</span>
+                            <span class="buzz-chip bc-green">Re-ranking</span>
+                        </div>
+                    </div>
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">Agents</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-amber">Agent</span>
+                            <span class="buzz-chip bc-amber">Agentic AI</span>
+                            <span class="buzz-chip bc-amber">Tool Calling</span>
+                            <span class="buzz-chip bc-amber">LangGraph</span>
+                            <span class="buzz-chip bc-amber">MCP (Model Context Protocol)</span>
                         </div>
                     </div>
                 </div>
 
-                <h2>Core Learning Modules</h2>
-                <img src="concept1.png" alt="Generative AI Modules" class="section-banner">
-
-                <div class="bento-grid">
-                    <!-- Fundamentals -->
-                    <div class="bento-card animate-on-scroll delay-1">
-                        <div class="card-icon purple">
-                            <ion-icon name="bulb-outline"></ion-icon>
+                <div class="buzz-panel" id="bp-l2">
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">Agent World</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-pink">Multi-Agent Systems</span>
+                            <span class="buzz-chip bc-pink">Agent Mesh</span>
+                            <span class="buzz-chip bc-pink">Agent Orchestration</span>
+                            <span class="buzz-chip bc-pink">Supervisor Agent</span>
+                            <span class="buzz-chip bc-pink">Worker Agent</span>
+                            <span class="buzz-chip bc-pink">ReAct</span>
+                            <span class="buzz-chip bc-pink">Reflection</span>
+                            <span class="buzz-chip bc-pink">Planning Agent</span>
                         </div>
-                        <h3>AI & LLM Fundamentals</h3>
+                    </div>
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">RAG World</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-teal">GraphRAG</span>
+                            <span class="buzz-chip bc-teal">Agentic RAG</span>
+                            <span class="buzz-chip bc-teal">Context Engineering</span>
+                            <span class="buzz-chip bc-teal">Knowledge Graph</span>
+                            <span class="buzz-chip bc-teal">Semantic Search</span>
+                            <span class="buzz-chip bc-teal">Chunking</span>
+                        </div>
+                    </div>
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">AI Operations</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-blue">LLMOps</span>
+                            <span class="buzz-chip bc-blue">AgentOps</span>
+                            <span class="buzz-chip bc-blue">PromptOps</span>
+                            <span class="buzz-chip bc-blue">EvalOps</span>
+                            <span class="buzz-chip bc-blue">AI Observability</span>
+                            <span class="buzz-chip bc-blue">AI FinOps</span>
+                        </div>
+                    </div>
+                    <div class="buzz-group">
+                        <div class="buzz-group-label">Security</div>
+                        <div class="buzz-chips">
+                            <span class="buzz-chip bc-red">Prompt Injection</span>
+                            <span class="buzz-chip bc-red">Jailbreaking</span>
+                            <span class="buzz-chip bc-red">Data Exfiltration</span>
+                            <span class="buzz-chip bc-red">OWASP LLM Top 10</span>
+                            <span class="buzz-chip bc-red">Model Poisoning</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ PHASE 1 — CORE ══ -->
+            <section class="animate-on-scroll">
+                <div class="phase-header">
+                    <span class="phase-badge ph1">Phase 1</span>
+                    <h2>Core Modules</h2>
+                </div>
+                <img src="concept1.png" alt="Core AI Modules" class="section-banner">
+                <div class="bento-grid">
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon purple"><ion-icon name="bulb-outline"></ion-icon></div>
+                        <h3>AI &amp; LLM Fundamentals</h3>
                         <p>Understand Tokens, Transformers, Embeddings, Temperature, and how an LLM actually generates text.</p>
                         <a href="fundamentals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <!-- Claude & Prompt Engineering -->
                     <div class="bento-card animate-on-scroll delay-2">
-                        <div class="card-icon amber">
-                            <ion-icon name="sparkles-outline"></ion-icon>
-                        </div>
-                        <h3>Claude & Prompt Engineering</h3>
-                        <p>Master Claude Code, understand tokens & context, write SKILL.md files, and connect Claude with open-source agents.</p>
+                        <div class="card-icon amber"><ion-icon name="sparkles-outline"></ion-icon></div>
+                        <h3>Claude &amp; Prompt Engineering</h3>
+                        <p>Master Claude Code, understand tokens &amp; context, write SKILL.md files, and connect Claude with open-source agents.</p>
                         <a href="claude.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <!-- RAG Module -->
                     <div class="bento-card animate-on-scroll delay-2">
-                        <div class="card-icon green">
-                            <ion-icon name="search-outline"></ion-icon>
-                        </div>
-                        <h3>RAG & Vector Search</h3>
+                        <div class="card-icon green"><ion-icon name="search-outline"></ion-icon></div>
+                        <h3>RAG &amp; Vector Search</h3>
                         <p>Connect LLMs to your private enterprise data using Vector Databases, embeddings, and hybrid search.</p>
                         <a href="rag.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <!-- Agents Module -->
                     <div class="bento-card animate-on-scroll delay-3">
-                        <div class="card-icon pink">
-                            <ion-icon name="hardware-chip-outline"></ion-icon>
-                        </div>
+                        <div class="card-icon pink"><ion-icon name="hardware-chip-outline"></ion-icon></div>
                         <h3>Agentic AI Systems</h3>
                         <p>Build autonomous agents that plan, use tools, reflect, and solve complex multi-step problems.</p>
                         <a href="agents.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <!-- MCP Module -->
                     <div class="bento-card animate-on-scroll delay-4">
-                        <div class="card-icon blue">
-                            <ion-icon name="git-network-outline"></ion-icon>
-                        </div>
+                        <div class="card-icon blue"><ion-icon name="git-network-outline"></ion-icon></div>
                         <h3>Model Context Protocol</h3>
                         <p>Standardize how your AI models securely access external tools, APIs, and data sources.</p>
                         <a href="mcp.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                 </div>
+            </section>
 
-                <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-                <h2>Advanced Engineering</h2>
-                
+            <!-- ══ PHASE 1 — OPS ══ -->
+            <section class="animate-on-scroll">
+                <div class="phase-header">
+                    <span class="phase-badge ph2">Phase 1</span>
+                    <h2>Production &amp; Operations</h2>
+                </div>
+                <img src="concept2.png" alt="Machine Learning Operations" class="section-banner">
                 <div class="bento-grid">
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon pink"><ion-icon name="git-commit-outline"></ion-icon></div>
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon amber"><ion-icon name="server-outline"></ion-icon></div>
+                        <h3>LLMOps &amp; Observability</h3>
+                        <p>Deploy, monitor, and maintain LLM applications in production with rigorous telemetry and cost controls.</p>
+                        <a href="llmops.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon red"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                        <h3>AI Security &amp; OWASP</h3>
+                        <p>OWASP LLM Top 10, prompt injection defenses, jailbreaking, and guardrails for production AI systems.</p>
+                        <a href="security.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <div class="card-icon green"><ion-icon name="bar-chart-outline"></ion-icon></div>
+                        <h3>AI Evaluation &amp; RAGAS</h3>
+                        <p>Score LLM outputs with Faithfulness, Relevance, and Context Recall using Golden Datasets and RAGAS.</p>
+                        <a href="evals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-4">
+                        <div class="card-icon blue"><ion-icon name="build-outline"></ion-icon></div>
+                        <h3>Open Source AI &amp; FinOps</h3>
+                        <p>Run Ollama locally, optimize token costs, and implement dynamic model routing and budget controls.</p>
+                        <a href="tools.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- ══ PHASE 3 — ADVANCED ENGINEERING ══ -->
+            <section class="animate-on-scroll">
+                <div class="phase-header">
+                    <span class="phase-badge ph3">Phase 3</span>
+                    <h2>Advanced Engineering</h2>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon purple"><ion-icon name="git-branch-outline"></ion-icon></div>
                         <h3>LangGraph Deep Dive</h3>
-                        <p>Build highly controllable, stateful, multi-actor applications with LLMs using graphs.</p>
+                        <p>Build stateful, multi-actor LLM applications using StateGraphs, Conditional Routing, Checkpointing, and Time Travel.</p>
                         <a href="langgraph.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon purple"><ion-icon name="brain-outline"></ion-icon></div>
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon pink"><ion-icon name="construct-outline"></ion-icon></div>
                         <h3>Agent Engineering</h3>
-                        <p>Designing intelligent systems with memory, task planning, and evaluation loops.</p>
+                        <p>Design intelligent systems with Semantic vs Episodic Memory, Plan &amp; Execute loops, and Reflection architectures.</p>
                         <a href="agent-engineering.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon amber"><ion-icon name="people-circle-outline"></ion-icon></div>
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <div class="card-icon blue"><ion-icon name="layers-outline"></ion-icon></div>
+                        <h3>AI Architecture Patterns</h3>
+                        <p>The definitive guide to 7 core design patterns: Chatbot, RAG, Single Agent, MCP, Multi-Agent, HITL, and Gateways.</p>
+                        <a href="architecture-patterns.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-4">
+                        <div class="card-icon amber"><ion-icon name="server-outline"></ion-icon></div>
+                        <h3>Infrastructure &amp; Model Serving</h3>
+                        <p>Hardware and software for serving open-source LLMs efficiently: vLLM, KServe, Quantization, GPU scheduling.</p>
+                        <a href="infrastructure.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon green"><ion-icon name="people-outline"></ion-icon></div>
                         <h3>Multi-Agent Systems</h3>
-                        <p>Orchestrating teams of specialized AI agents to solve problems collaboratively.</p>
+                        <p>Orchestrate teams of specialized AI agents: Supervisor vs Worker roles, Hierarchical teams, Agent Mesh (A2A).</p>
                         <a href="multi-agent.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon green"><ion-icon name="analytics-outline"></ion-icon></div>
-                        <h3>GraphRAG & Knowledge Graphs</h3>
-                        <p>Overcoming Vector RAG limitations by understanding relationships and global context.</p>
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon red"><ion-icon name="analytics-outline"></ion-icon></div>
+                        <h3>GraphRAG &amp; Knowledge Graphs</h3>
+                        <p>Overcome limitations of Vector RAG by understanding entity relationships and global context with Knowledge Graphs.</p>
                         <a href="graphrag.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                 </div>
+            </section>
 
-                <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-                <h2>Architecture & Infrastructure</h2>
-                <div class="bento-grid">
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon blue"><ion-icon name="layers-outline"></ion-icon></div>
-                        <h3>Architecture Patterns</h3>
-                        <p>Visual guide to the 7 core design patterns used in modern AI engineering.</p>
-                        <a href="architecture-patterns.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon red"><ion-icon name="server-outline"></ion-icon></div>
-                        <h3>Infra & Model Serving</h3>
-                        <p>Hardware and software to serve open-source LLMs in production efficiently.</p>
-                        <a href="infrastructure.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon amber"><ion-icon name="git-branch-outline"></ion-icon></div>
-                        <h3>AI Gateways</h3>
-                        <p>Standardizing API access, model routing, and cost control across multiple LLMs.</p>
-                        <a href="ai-gateway.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
+            <!-- ══ PHASE 3 — DEEP OPS ══ -->
+            <section class="animate-on-scroll">
+                <div class="phase-header">
+                    <span class="phase-badge ph3">Phase 3</span>
+                    <h2>Deep Operations</h2>
                 </div>
-
-                <div class="section-divider"></div>
-
-                <h2>Production & Operations</h2>
-                <img src="concept2.png" alt="Machine Learning Operations" class="section-banner">
-
                 <div class="bento-grid">
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon amber">
-                            <ion-icon name="server-outline"></ion-icon>
-                        </div>
-                        <h3>LLMOps</h3>
-                        <p>Deploy, monitor, and maintain LLM applications in production.</p>
-                        <a href="llmops.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon pink">
-                            <ion-icon name="pulse-outline"></ion-icon>
-                        </div>
-                        <h3>Advanced Observability</h3>
-                        <p>Tracing multi-step agent executions and managing token usage (OpenTelemetry).</p>
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon blue"><ion-icon name="eye-outline"></ion-icon></div>
+                        <h3>Advanced AI Observability</h3>
+                        <p>Trace multi-step agent executions and manage token usage across distributed systems using OpenTelemetry.</p>
                         <a href="observability-advanced.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon green">
-                            <ion-icon name="bar-chart-outline"></ion-icon>
-                        </div>
-                        <h3>AI Evaluation (RAGAS)</h3>
-                        <p>Score LLM outputs with Faithfulness and Context Recall using Golden Datasets.</p>
-                        <a href="evals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon purple"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
+                        <h3>AI Gateways</h3>
+                        <p>Standardize API access, model routing, and cost control across multiple LLM providers — LiteLLM, Portkey, and more.</p>
+                        <a href="ai-gateway.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-                    
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon red">
-                            <ion-icon name="shield-checkmark-outline"></ion-icon>
-                        </div>
-                        <h3>AI Security & OWASP</h3>
-                        <p>OWASP LLM Top 10, prompt injection defenses, and guardrails.</p>
-                        <a href="security.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-                    
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon purple">
-                            <ion-icon name="skull-outline"></ion-icon>
-                        </div>
-                        <h3>Advanced Security</h3>
-                        <p>Protecting agentic systems from sophisticated jailbreaks and data exfiltration.</p>
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <div class="card-icon red"><ion-icon name="lock-closed-outline"></ion-icon></div>
+                        <h3>Advanced AI Security</h3>
+                        <p>Protect agentic systems from sophisticated attacks: Jailbreaking, Data Exfiltration, and Sandboxing vulnerabilities.</p>
                         <a href="advanced-security.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
-
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon blue">
-                            <ion-icon name="build-outline"></ion-icon>
-                        </div>
-                        <h3>Open Source AI & FinOps</h3>
-                        <p>Run Ollama locally, optimize token costs, and implement dynamic routing.</p>
-                        <a href="tools.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                    </div>
-                    
-                    <div class="bento-card animate-on-scroll">
-                        <div class="card-icon teal">
-                            <ion-icon name="map-outline"></ion-icon>
-                        </div>
+                    <div class="bento-card animate-on-scroll delay-4">
+                        <div class="card-icon amber"><ion-icon name="map-outline"></ion-icon></div>
                         <h3>AI Relationship Map</h3>
-                        <p>Interactive, clickable visual graph of how all the AI Engineering concepts connect.</p>
-                        <a href="knowledge-map.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                        <p>An interactive, clickable visual graph mapping every concept — from Tokens to Agents to Ops — into one ecosystem.</p>
+                        <a href="knowledge-map.html" class="card-link">Explore Map <ion-icon name="arrow-forward-outline"></ion-icon></a>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
+            </section>
 
-    <script src="script.js"></script>
+            <div class="section-divider"></div>
+
+            <!-- ══ TOOLS ECOSYSTEM ══ -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Tools Ecosystem</div>
+                <h2 style="margin-top:0; border:none;">Top AI Tools You Should Know</h2>
+                <p>The most important tools used by AI Engineers today, organized by category.</p>
+                <div class="tools-grid">
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(129,140,248,0.15);color:#818cf8;"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+                            <span>AI Chat Assistants</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> ChatGPT</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Claude</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Gemini</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#818cf8;"></div> Perplexity</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="code-slash-outline"></ion-icon></div>
+                            <span>AI Coding Tools</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Cursor</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> GitHub Copilot</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Claude Code</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(251,191,36,0.15);color:#fbbf24;"><ion-icon name="hardware-chip-outline"></ion-icon></div>
+                            <span>Agent Frameworks</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> LangGraph</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> Semantic Kernel</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#fbbf24;"></div> CrewAI</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(96,165,250,0.15);color:#60a5fa;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                            <span>AI Workflow (No-Code)</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#60a5fa;"></div> n8n</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#60a5fa;"></div> Flowise</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#60a5fa;"></div> Dify</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(52,211,153,0.15);color:#34d399;"><ion-icon name="search-outline"></ion-icon></div>
+                            <span>RAG &amp; Search</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Azure AI Search</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Pinecone</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Qdrant</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#34d399;"></div> Weaviate</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(244,114,182,0.15);color:#f472b6;"><ion-icon name="laptop-outline"></ion-icon></div>
+                            <span>Local AI</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> Ollama</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> Open WebUI</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f472b6;"></div> LM Studio</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(248,113,113,0.15);color:#f87171;"><ion-icon name="bar-chart-outline"></ion-icon></div>
+                            <span>AI Evaluation</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> Ragas</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> DeepEval</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#f87171;"></div> Promptfoo</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-cat-card">
+                        <div class="tool-cat-head">
+                            <div class="tool-cat-ico" style="background:rgba(45,212,191,0.15);color:#2dd4bf;"><ion-icon name="eye-outline"></ion-icon></div>
+                            <span>AI Observability</span>
+                        </div>
+                        <div class="tool-items">
+                            <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> Langfuse</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> LangSmith</div>
+                            <div class="tool-item"><div class="tool-dot" style="background:#2dd4bf;"></div> Arize Phoenix</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div><!-- /content-area -->
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+    function showBuzz(id, btn) {
+        document.querySelectorAll('.buzz-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.buzz-tab').forEach(b => b.classList.remove('active'));
+        document.getElementById('bp-' + id).classList.add('active');
+        btn.classList.add('active');
+    }
+    /* Sidebar search filter */
+    const si = document.getElementById('search-input');
+    if (si) {
+        si.addEventListener('input', function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll('.sidebar .nav-item').forEach(l => {
+                l.style.opacity = (!q || l.textContent.toLowerCase().includes(q)) ? '' : '0.3';
+            });
+        });
+    }
+</script>
 </body>
 </html>
-
-
