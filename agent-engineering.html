@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -9,11 +9,30 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .memory-diagram { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        @media (max-width: 640px) { .memory-diagram { grid-template-columns: 1fr; } }
+        .mem-col { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
+        .mem-col h4 { font-size: 0.9rem; margin-bottom: 12px; }
+        .mem-type { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
+        .mem-type:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .mem-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+        .mem-text h5 { font-size: 0.85rem; margin-bottom: 2px; }
+        .mem-text p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+        .pattern-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+        .pattern-cell { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; border-top: 3px solid; }
+        .pattern-cell h4 { font-size: 0.92rem; margin-bottom: 8px; }
+        .pattern-cell .when { font-size: 0.78rem; color: var(--text-secondary); margin-top: 10px; font-style: italic; }
+        .eval-criteria { margin-top: 20px; }
+        .eval-row { display: flex; align-items: baseline; gap: 12px; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 8px; }
+        .eval-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .eval-text h5 { font-size: 0.88rem; margin-bottom: 2px; }
+        .eval-text p { font-size: 0.82rem; color: var(--text-secondary); margin: 0; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder -->
-        <aside class="sidebar" id="sidebar">
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
         <a href="index.html" class="logo-container" style="text-decoration:none;">
             <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
             <div class="logo-text">AI for All</div>
@@ -59,111 +78,230 @@
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
     </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Agent Engineering..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
-            
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 14</span>
+                <h1>Agent <span class="text-gradient">Engineering</span></h1>
+                <p class="page-description">Design production-grade intelligent agents with sophisticated memory systems, planning architectures, self-correction loops, and principled evaluation frameworks.</p>
                 <div class="chip-strip">
-                    <span class="chip ch-p">V4.0 Optimized</span>
-                    <span class="chip ch-b">Core Concept</span>
+                    <span class="chip ch-p">Semantic Memory</span>
+                    <span class="chip ch-g">Episodic Memory</span>
+                    <span class="chip ch-a">Plan &amp; Execute</span>
+                    <span class="chip ch-b">Reflection</span>
+                    <span class="chip ch-r">Tree of Thoughts</span>
                 </div>
-</header>
+            </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 14</span>
-                    <h1>Agent <span class="text-gradient">Engineering</span></h1>
-                    <p class="page-description">Designing intelligent, autonomous systems with memory, planning, and evaluation loops.</p>
-                </header>
-
-                <section class="animate-on-scroll">
-                    <h2>1. Agent Architecture & Memory Systems</h2>
-                    <p>Agents are more than just LLMs. They require memory, tools, and a cognitive architecture to function autonomously.</p>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <div class="card-icon pink"><ion-icon name="brain-outline"></ion-icon></div>
-                            <h3>Working & Short-Term Memory</h3>
-                            <p><strong>Working Memory:</strong> In-context learning (what's currently in the prompt). <strong>Short-Term Memory:</strong> Conversation history stored in the immediate session state.</p>
+            <!-- Memory Architecture -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">The Cognitive Architecture</div>
+                <h2 style="margin-top:0;">Agent Memory Systems</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>An agent's intelligence comes from its memory architecture. Short-term memory limits what it can work with right now. Long-term memory determines what it can remember across sessions and days. Getting this architecture right is the difference between a useful agent and a forgetful one.</p>
+                </div>
+                <div class="memory-diagram">
+                    <div class="mem-col" style="border-top:3px solid #818cf8;">
+                        <h4 style="color:#818cf8;">Short-Term Memory</h4>
+                        <div class="mem-type">
+                            <div class="mem-dot" style="background:#818cf8;"></div>
+                            <div class="mem-text">
+                                <h5>Working Memory</h5>
+                                <p>The current conversation context window. Everything in the active prompt. Resets after each session. Limited by context window size (8K–200K tokens).</p>
+                            </div>
                         </div>
-                        <div class="bento-card">
-                            <div class="card-icon purple"><ion-icon name="server-outline"></ion-icon></div>
-                            <h3>Long-Term Memory</h3>
-                            <p><strong>Semantic Memory:</strong> Facts and knowledge retrieved via Vector DBs (RAG). <strong>Episodic Memory:</strong> Logs of past agent actions and experiences used to improve future performance.</p>
+                        <div class="mem-type">
+                            <div class="mem-dot" style="background:#a78bfa;"></div>
+                            <div class="mem-text">
+                                <h5>In-Session State</h5>
+                                <p>LangGraph's State object — messages, tool results, intermediate decisions stored across nodes within a single execution run.</p>
+                            </div>
                         </div>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>2. Agent Planning & Patterns</h2>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>ReAct (Reason + Act)</h3>
-                            <p>The agent thinks about what to do, takes an action, observes the result, and repeats. Excellent for simple, dynamic tasks.</p>
+                    <div class="mem-col" style="border-top:3px solid #34d399;">
+                        <h4 style="color:#34d399;">Long-Term Memory</h4>
+                        <div class="mem-type">
+                            <div class="mem-dot" style="background:#34d399;"></div>
+                            <div class="mem-text">
+                                <h5>Semantic Memory</h5>
+                                <p>Factual knowledge retrieved via Vector DB (RAG). "What is our refund policy?" → retrieve policy doc. Scales to millions of documents. Survives across all sessions.</p>
+                            </div>
                         </div>
-                        <div class="bento-card">
-                            <h3>Plan & Execute</h3>
-                            <p>A Planner agent breaks a complex goal into smaller tasks. A Worker agent executes them sequentially. Best for long-horizon tasks.</p>
+                        <div class="mem-type">
+                            <div class="mem-dot" style="background:#2dd4bf;"></div>
+                            <div class="mem-text">
+                                <h5>Episodic Memory</h5>
+                                <p>Log of past agent actions and their outcomes, stored as searchable records. "Last time I called this API, it rate-limited me at 100 req/min" — agent learns from experience.</p>
+                            </div>
                         </div>
-                        <div class="bento-card">
-                            <h3>Reflection & Self-Correction</h3>
-                            <p>The agent generates an output, criticizes its own output, and refines it before presenting it to the user. Also known as Self-Refine.</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>Tree of Thoughts</h3>
-                            <p>Exploring multiple different reasoning paths simultaneously, scoring them, and selecting the most promising branch.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>3. Agent Lifecycle Simulation</h2>
-                    <div class="bento-card" style="text-align: center;">
-                        <div class="mermaid">
-                        sequenceDiagram
-                            participant User
-                            participant Agent
-                            participant Tools
-                            participant Memory
-                            
-                            User->>Agent: Goal: "Deploy App"
-                            Agent->>Agent: Task Planning & Decomposition
-                            loop Plan Execution
-                                Agent->>Tools: Execute Step 1 (e.g. Git Pull)
-                                Tools-->>Agent: Observation (Code Pulled)
-                                Agent->>Memory: Store Progress
-                                Agent->>Agent: Reflection & Self-Correction
-                            end
-                            Agent-->>User: Success Result
+                        <div class="mem-type">
+                            <div class="mem-dot" style="background:#fbbf24;"></div>
+                            <div class="mem-text">
+                                <h5>Procedural Memory</h5>
+                                <p>Learned workflows and strategies encoded in the system prompt or fine-tuning. "For DevOps tasks, always check logs before making config changes."</p>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>4. Agent Evaluation</h2>
-                    <p>Evaluating non-deterministic agents requires new paradigms.</p>
-                    <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>Agent Benchmarks:</strong> Standardized test suites (like WebArena or SWE-bench).</li>
-                        <li><strong>Success Metrics:</strong> Did the agent achieve the final goal? Did it use the right tools? Did it complete it efficiently?</li>
-                        <li><strong>Agent Reliability:</strong> Measuring the frequency of infinite loops, tool-calling errors, and hallucinated actions.</li>
-                    </ul>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
-    <script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+            <!-- Planning Patterns -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Agent Planning Architectures</h2>
+                <div class="pattern-row">
+                    <div class="pattern-cell" style="border-color:#818cf8;">
+                        <div class="card-icon purple" style="margin-bottom:12px;"><ion-icon name="sync-outline"></ion-icon></div>
+                        <h4>ReAct (Reason + Act)</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Think → Act → Observe → Repeat. The agent writes its reasoning before each action, creating an observable chain of thought. Best for dynamic environments where the plan changes based on tool results.</p>
+                        <div class="when">Use for: research, exploration, dynamic tasks where next step depends on current results</div>
+                    </div>
+                    <div class="pattern-cell" style="border-color:#60a5fa;">
+                        <div class="card-icon blue" style="margin-bottom:12px;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h4>Plan & Execute</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">A Planner LLM (high intelligence, expensive) first generates a complete task decomposition. A separate Executor LLM (cheaper, faster) carries out each step. Reduces hallucination during execution.</p>
+                        <div class="when">Use for: long multi-hour workflows, project management, coding tasks with clear deliverables</div>
+                    </div>
+                    <div class="pattern-cell" style="border-color:#34d399;">
+                        <div class="card-icon green" style="margin-bottom:12px;"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
+                        <h4>Reflection & Self-Correction</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Agent generates an output, then a separate "Critic" call evaluates it against criteria. If below threshold, the agent revises. Also called Self-Refine or Reflexion. Can run multiple iterations.</p>
+                        <div class="when">Use for: writing, code review, any task where quality matters more than speed</div>
+                    </div>
+                    <div class="pattern-cell" style="border-color:#fbbf24;">
+                        <div class="card-icon amber" style="margin-bottom:12px;"><ion-icon name="git-network-outline"></ion-icon></div>
+                        <h4>Tree of Thoughts (ToT)</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Generate 3-5 different reasoning paths simultaneously. Score each path. Prune low-scoring branches. Explore the most promising. Much higher accuracy on complex logic problems — at significant compute cost.</p>
+                        <div class="when">Use for: complex math, strategic planning, problems with many possible solution paths</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lifecycle -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Agent Lifecycle: Full Execution Trace</h2>
+                <div class="bento-card" style="text-align:center;">
+                    <div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Planner as Planner LLM
+    participant Agent
+    participant Tools
+    participant Memory
+
+    User->>Planner: "Deploy the app and run tests"
+    Planner->>Agent: Task decomposition: [Git pull, Build, Test, Deploy]
+    loop Plan Execution
+        Agent->>Memory: Retrieve past deployment logs
+        Memory-->>Agent: Last deploy took 8 min, used port 3000
+        Agent->>Tools: Execute Step (e.g. docker build)
+        Tools-->>Agent: Build success / failure result
+        Agent->>Agent: Self-correction if step failed
+        Agent->>Memory: Store step result and timing
+    end
+    Agent-->>User: Deployment complete — 3 tests passed, 0 failed
+                    </div>
+                </div>
+            </section>
+
+            <!-- Agent Evaluation -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Evaluating Agents: New Paradigms Required</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>Standard RAG metrics (faithfulness, recall) don't apply to agents. Agent evaluation measures <em>process quality</em>, not just output quality — because a correct final answer achieved via an unreliable, expensive path is still a bad agent.</p>
+                </div>
+                <div class="eval-criteria">
+                    <div class="eval-row">
+                        <div class="eval-icon"><ion-icon name="checkmark-circle-outline" style="color:#34d399;"></ion-icon></div>
+                        <div class="eval-text">
+                            <h5>Task Completion Rate</h5>
+                            <p>Did the agent achieve the final goal? Measured against golden test cases with known solutions. Most important metric.</p>
+                        </div>
+                    </div>
+                    <div class="eval-row">
+                        <div class="eval-icon"><ion-icon name="flash-outline" style="color:#fbbf24;"></ion-icon></div>
+                        <div class="eval-text">
+                            <h5>Efficiency (Steps &amp; Tokens)</h5>
+                            <p>How many tool calls and tokens did it take? Compare to a human expert's reference trajectory. An agent that takes 50 steps to do a 5-step task is inefficient and expensive.</p>
+                        </div>
+                    </div>
+                    <div class="eval-row">
+                        <div class="eval-icon"><ion-icon name="build-outline" style="color:#818cf8;"></ion-icon></div>
+                        <div class="eval-text">
+                            <h5>Tool Selection Accuracy</h5>
+                            <p>Did it call the right tools in the right order? Compare the agent's tool call sequence against the reference sequence using trajectory metrics.</p>
+                        </div>
+                    </div>
+                    <div class="eval-row">
+                        <div class="eval-icon"><ion-icon name="shield-outline" style="color:#60a5fa;"></ion-icon></div>
+                        <div class="eval-text">
+                            <h5>Reliability (Failure Modes)</h5>
+                            <p>Frequency of infinite loops, hallucinated tool calls, context overflow errors. Track over time — reliability should improve, not degrade, as the system matures.</p>
+                        </div>
+                    </div>
+                    <div class="eval-row">
+                        <div class="eval-icon"><ion-icon name="person-outline" style="color:#f472b6;"></ion-icon></div>
+                        <div class="eval-text">
+                            <h5>Human Preference Rating</h5>
+                            <p>Domain experts rate agent trajectories on quality, approach, and judgment. Critical for tasks where "correct" is subjective (writing, strategy, code style).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interview Q&A -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q">What is the difference between semantic and episodic memory in agents? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Semantic memory stores facts and knowledge (what the agent knows). Episodic memory stores experiences and past events (what the agent has done). For an AI DevOps agent: Semantic memory holds documentation about Kubernetes, API schemas, and system architecture. Episodic memory holds logs of past deployments, which commands failed, which servers are flaky. Episodic memory is what turns an agent from a stateless tool into a learning system — it gets smarter with experience.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">When should you use Plan & Execute vs. ReAct? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Use Plan & Execute for: long multi-step workflows (10+ steps), tasks with clear sequential dependencies, when you want a human to review the plan before execution, and when you need cost efficiency (executor uses cheaper model). Use ReAct for: exploratory tasks where the next step depends on what you find, debugging sessions where the agent needs to adapt based on error messages, and short tasks (under 5 steps) where planning overhead isn't worthwhile. Hybrid approach: use Plan & Execute but allow the executor to use ReAct within each sub-task for adaptive execution.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How do you prevent an agent from getting into an infinite correction loop? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Three strategies: (1) Hard iteration limits — set max_reflection_rounds=3; after 3 failed correction attempts, escalate to human review instead of looping again. (2) Convergence detection — track the score of each revision; if the score isn't improving by at least 5% per iteration, stop (the agent is oscillating). (3) Root cause analysis — instead of blindly retrying, have the critic identify the specific root cause of failure, so the reviser addresses the underlying issue rather than random trial-and-error. This is especially important for code generation where the same bug gets "fixed" superficially across multiple iterations.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+                    <a href="multi-agent.html" class="next-card">
+                        <ion-icon name="people-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>Multi-Agent Systems</h4><p>Orchestrate teams of agents &rarr;</p></div>
+                    </a>
+                    <a href="architecture-patterns.html" class="next-card">
+                        <ion-icon name="layers-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text"><h4>Architecture Patterns</h4><p>Visual guide to all AI patterns &rarr;</p></div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

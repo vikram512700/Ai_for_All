@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -7,13 +7,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .gw-arch { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin: 24px 0; }
+        .gw-layer { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; }
+        .gw-layer .gw-label { flex: 1; }
+        .gw-layer .gw-desc { font-size: 0.78rem; font-weight: 400; color: var(--text-secondary); }
+        .gw-arrow { text-align: center; color: var(--text-secondary); font-size: 1.2rem; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+        .fg-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
+        .fg-card h4 { font-size: 0.88rem; margin-bottom: 6px; }
+        .routing-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.83rem; }
+        .routing-table th, .routing-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); text-align: left; }
+        .routing-table th { color: var(--text-secondary); font-weight: 600; font-size: 0.8rem; }
+        .routing-table tr:last-child td { border-bottom: none; }
+        .provider-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 20px 0; }
+        .prov-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; }
+        .prov-card h5 { font-size: 0.88rem; margin-bottom: 4px; }
+        .prov-tag { font-size: 0.72rem; padding: 2px 7px; border-radius: 4px; font-weight: 600; display: inline-block; margin-bottom: 8px; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder -->
-        <aside class="sidebar" id="sidebar">
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
         <a href="index.html" class="logo-container" style="text-decoration:none;">
             <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
             <div class="logo-text">AI for All</div>
@@ -59,80 +75,200 @@
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
     </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search AI Gateways..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
-            
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 20</span>
+                <h1>AI <span class="text-gradient">Gateways</span></h1>
+                <p class="page-description">The control plane for all LLM traffic — route requests intelligently, enforce policies, reduce costs, and maintain a single integration point across all models and providers.</p>
                 <div class="chip-strip">
-                    <span class="chip ch-p">V4.0 Optimized</span>
-                    <span class="chip ch-b">Core Concept</span>
+                    <span class="chip ch-p">LiteLLM</span>
+                    <span class="chip ch-g">Model Routing</span>
+                    <span class="chip ch-a">Rate Limiting</span>
+                    <span class="chip ch-b">Semantic Cache</span>
+                    <span class="chip ch-r">Failover</span>
+                    <span class="chip ch-p">Cost Budgets</span>
                 </div>
-</header>
+            </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 20</span>
-                    <h1>AI <span class="text-gradient">Gateways</span></h1>
-                    <p class="page-description">Standardizing API access, model routing, and cost control across multiple LLM providers.</p>
-                </header>
-
-                <section class="animate-on-scroll">
-                    <h2>1. What is an AI Gateway?</h2>
-                    <p>Instead of hardcoding OpenAI, Anthropic, or Gemini SDKs directly into your app, you point your app at an AI Gateway. The Gateway handles the translation to 100+ different LLM providers.</p>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <div class="card-icon amber"><ion-icon name="git-branch-outline"></ion-icon></div>
-                            <h3>Model Routing & Fallbacks</h3>
-                            <p>If GPT-4 goes down, automatically fall back to Claude 3.5 without changing any code.</p>
-                        </div>
-                        <div class="bento-card">
-                            <div class="card-icon green"><ion-icon name="cash-outline"></ion-icon></div>
-                            <h3>Load Balancing & Cost Control</h3>
-                            <p>Route simple tasks to cheap/local models, and hard tasks to expensive models based on API keys and budgets.</p>
-                        </div>
+            <section class="animate-on-scroll">
+                <div class="eyebrow">The Central Control Plane</div>
+                <h2 style="margin-top:0;">What Is an AI Gateway?</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>An AI Gateway sits between your application and all LLM providers. Instead of each service having its own API keys, rate limiting, and cost controls, the gateway centralizes all of this — acting as a unified proxy that adds auth, caching, routing, observability, and policy enforcement to every LLM call without changing application code.</p>
+                </div>
+                <div class="gw-arch">
+                    <div class="gw-layer" style="background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);">
+                        <ion-icon name="apps-outline" style="color:#60a5fa;font-size:1.2rem;flex-shrink:0;"></ion-icon>
+                        <div class="gw-label" style="color:#60a5fa;">Your Applications (n services, 1 API key each → gateway)</div>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>2. Gateway Architecture</h2>
-                    <div class="bento-card" style="text-align: center;">
-                        <div class="mermaid">
-                        graph TD
-                            User --> App[Your Application]
-                            App --> Gateway[AI Gateway e.g. LiteLLM]
-                            Gateway -- "OpenAI format" --> GPT[OpenAI API]
-                            Gateway -- "Anthropic format" --> Claude[Anthropic API]
-                            Gateway -- "Vertex format" --> Gemini[Google Vertex]
-                            Gateway -- "Local format" --> Ollama[Local Ollama]
-                        </div>
+                    <div class="gw-arrow">↓</div>
+                    <div class="gw-layer" style="background:rgba(129,140,248,0.2);border:2px solid rgba(129,140,248,0.5);">
+                        <ion-icon name="swap-horizontal-outline" style="color:#818cf8;font-size:1.2rem;flex-shrink:0;"></ion-icon>
+                        <div class="gw-label" style="color:#818cf8;">AI Gateway</div>
+                        <div class="gw-desc">Auth · Rate Limits · Semantic Cache · Model Routing · Observability · Budget Enforcement · Guardrails</div>
                     </div>
-                </section>
+                    <div class="gw-arrow">↓</div>
+                    <div class="gw-layer" style="background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);">
+                        <ion-icon name="cloud-outline" style="color:#34d399;font-size:1.2rem;flex-shrink:0;"></ion-icon>
+                        <div class="gw-label" style="color:#34d399;">LLM Providers: Anthropic, OpenAI, Gemini, Azure, vLLM (self-hosted)</div>
+                    </div>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>3. Major Platforms</h2>
-                    <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>LiteLLM:</strong> The most popular open-source gateway. Translates every LLM API into the OpenAI format.</li>
-                        <li><strong>Portkey:</strong> Enterprise gateway with robust observability and prompt management built in.</li>
-                        <li><strong>Kong AI Gateway:</strong> High-performance gateway for massive scale.</li>
-                    </ul>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
-    <script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Core Gateway Features</h2>
+                <div class="feature-grid">
+                    <div class="fg-card">
+                        <div class="card-icon purple" style="margin-bottom:10px;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h4>Intelligent Model Routing</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Route simple queries to cheap/fast models (Haiku, GPT-4o-mini), complex queries to powerful models (Opus, GPT-4o). Route based on request content, user tier, latency budget, or real-time provider pricing.</p>
+                    </div>
+                    <div class="fg-card">
+                        <div class="card-icon green" style="margin-bottom:10px;"><ion-icon name="layers-outline"></ion-icon></div>
+                        <h4>Semantic Caching</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Cache LLM responses by semantic similarity — not exact text match. "What is the capital of France?" and "France's capital city?" both hit the same cache entry. Typical cache hit rate: 40–60%, directly reducing costs by the same percentage.</p>
+                    </div>
+                    <div class="fg-card">
+                        <div class="card-icon blue" style="margin-bottom:10px;"><ion-icon name="sync-outline"></ion-icon></div>
+                        <h4>Automatic Failover</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">If Anthropic is down or rate-limiting, automatically retry on Azure OpenAI or Google Gemini. Applications see zero downtime. Configure fallback priority lists and failover conditions per endpoint or per model.</p>
+                    </div>
+                    <div class="fg-card">
+                        <div class="card-icon amber" style="margin-bottom:10px;"><ion-icon name="cash-outline"></ion-icon></div>
+                        <h4>Budget Enforcement</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Set monthly/daily cost budgets per user, team, or project. When a budget is hit: auto-downgrade to a cheaper model, queue requests, or return a budget-exceeded error. Prevents runaway agent costs from impacting the whole platform.</p>
+                    </div>
+                    <div class="fg-card">
+                        <div class="card-icon" style="background:rgba(244,114,182,0.15);border-radius:10px;padding:10px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><ion-icon name="shield-outline" style="color:#f472b6;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Input/Output Guardrails</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Apply content filters, PII detection, and prompt injection screening to every request before it reaches the LLM. Check outputs for toxicity, hallucination markers, or sensitive data before returning to the user. All enforced centrally.</p>
+                    </div>
+                    <div class="fg-card">
+                        <div class="card-icon" style="background:rgba(100,116,139,0.15);border-radius:10px;padding:10px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><ion-icon name="key-outline" style="color:#94a3b8;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Unified Auth &amp; API Keys</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Application services hold one gateway API key. The gateway holds all provider API keys in a central secrets store. Rotate provider keys without touching application code. Scope key permissions to specific models or endpoints.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Model Routing Logic</h2>
+                <table class="routing-table">
+                    <thead>
+                        <tr><th>Routing Strategy</th><th>Condition</th><th>Target Model</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Complexity-based</strong></td>
+                            <td>Query length &lt; 500 tokens &amp; no code</td>
+                            <td>Claude Haiku / GPT-4o-mini (8× cheaper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complexity-based</strong></td>
+                            <td>Query contains code, math, or long context</td>
+                            <td>Claude Sonnet / GPT-4o</td>
+                        </tr>
+                        <tr>
+                            <td><strong>User tier</strong></td>
+                            <td>Enterprise / paid user</td>
+                            <td>Priority queue + faster model tier</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Latency budget</strong></td>
+                            <td>Real-time chat (&lt; 500ms TTFT required)</td>
+                            <td>Fastest available cached provider</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Failover</strong></td>
+                            <td>Primary provider error rate &gt; 2%</td>
+                            <td>Secondary provider (automatic retry)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost cap</strong></td>
+                            <td>User budget &gt; 80% consumed this month</td>
+                            <td>Downgrade to smaller model automatically</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>AI Gateway Tools: What's Available</h2>
+                <div class="provider-grid">
+                    <div class="prov-card">
+                        <h5>LiteLLM</h5>
+                        <span class="prov-tag" style="background:rgba(52,211,153,0.15);color:#34d399;">Open Source</span>
+                        <p style="font-size:0.8rem;color:var(--text-secondary);">Most popular open-source gateway. 100+ model providers, semantic cache, virtual keys, budget tracking, Prometheus metrics. Can be self-hosted or use managed LiteLLM Cloud.</p>
+                    </div>
+                    <div class="prov-card">
+                        <h5>Portkey</h5>
+                        <span class="prov-tag" style="background:rgba(96,165,250,0.15);color:#60a5fa;">SaaS + OSS</span>
+                        <p style="font-size:0.8rem;color:var(--text-secondary);">Production-grade gateway with advanced routing rules, guardrails, and detailed analytics. Strong UI for managing routing configs. Both managed and self-hosted options.</p>
+                    </div>
+                    <div class="prov-card">
+                        <h5>Kong AI Gateway</h5>
+                        <span class="prov-tag" style="background:rgba(251,191,36,0.15);color:#fbbf24;">Enterprise</span>
+                        <p style="font-size:0.8rem;color:var(--text-secondary);">Enterprise-grade, extends Kong's existing API gateway with LLM-specific plugins. Best for organizations already using Kong for general API management who want to unify LLM traffic.</p>
+                    </div>
+                    <div class="prov-card">
+                        <h5>AWS Bedrock Gateway</h5>
+                        <span class="prov-tag" style="background:rgba(129,140,248,0.15);color:#818cf8;">Cloud Native</span>
+                        <p style="font-size:0.8rem;color:var(--text-secondary);">Built into AWS Bedrock. IAM-based auth, CloudWatch metrics, VPC isolation. Best for AWS-first organizations who want zero infrastructure to manage and tight AWS service integration.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q">Why use an AI gateway instead of calling LLM APIs directly? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Five reasons: (1) Reliability — without a gateway, if Anthropic has an outage, your entire product goes down. A gateway automatically fails over to Azure OpenAI or Gemini in milliseconds, with zero application code changes. (2) Cost control — without centralized budget enforcement, a single runaway agent loop can generate thousands of dollars in unexpected API costs before anyone notices. Gateways can hard-cap spending per user, team, or project. (3) Security — provider API keys are kept in one secured secrets store; applications use scoped gateway tokens. Rotating or revoking a provider key happens in one place. (4) Observability — all LLM traffic flows through one point, making it trivial to track costs, latency, and errors across all models and providers. (5) Semantic caching — responses to semantically similar queries are reused, typically cutting costs 40-60% without any application changes.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How does semantic caching differ from exact-match caching? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Exact-match caching: only returns a cached response if the query string is character-for-character identical to a previous query. Hit rate for LLM queries is typically under 5% since natural language varies constantly. Semantic caching: embed the incoming query into a vector, retrieve the most similar cached vector, and if cosine similarity exceeds a threshold (typically 0.92-0.95), return the cached response. "What's the capital of France?", "France capital?", and "Where is Paris located in terms of being France's capital?" all hit the same cache entry. Hit rates of 40-60% are typical for FAQ-style applications. Implementation: the gateway hashes the query embedding as the cache key; Redis or a vector DB stores (embedding, response) pairs with a configurable TTL.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How would you implement per-user cost budgets through a gateway? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Implementation in LiteLLM (or similar gateway): (1) Create a virtual API key per user or team with a `max_budget` parameter (e.g., $10/month). (2) The gateway tracks token consumption per virtual key and converts to dollar cost using the model's price-per-token. (3) When a user hits 80% of their budget, the gateway can: emit a warning event, downgrade their requests to a cheaper model, or start returning 429 errors with a budget-exceeded message. (4) Budget resets are configurable — daily, weekly, or monthly. (5) Admins get a dashboard showing current spend per key/team. The key advantage: budget enforcement is completely transparent to application code — developers just call the gateway like any other LLM API, and the gateway handles all budget accounting in the middleware layer.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+                    <a href="advanced-security.html" class="next-card">
+                        <ion-icon name="lock-closed-outline" style="color:#f87171;"></ion-icon>
+                        <div class="next-card-text"><h4>Advanced Security</h4><p>Red teaming and defense frameworks &rarr;</p></div>
+                    </a>
+                    <a href="observability-advanced.html" class="next-card">
+                        <ion-icon name="eye-outline" style="color:#60a5fa;"></ion-icon>
+                        <div class="next-card-text"><h4>Advanced Observability</h4><p>Monitor all gateway traffic &rarr;</p></div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

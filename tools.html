@@ -3,12 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools & FinOps | AI for All</title>
+    <title>OS Tools & FinOps | AI for All</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .model-ecosystem { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+        .eco-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; }
+        .eco-card .model-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+        .eco-card .model-maker { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .eco-card p { font-size: 0.83rem; color: var(--text-secondary); margin: 0; }
+        .eco-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; margin-bottom: 8px; }
+        .cost-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.85rem; }
+        .cost-table th { background: var(--bg-card); padding: 10px 14px; text-align: left; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); }
+        .cost-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); }
+        .cost-table tr:last-child td { border-bottom: none; }
+        .cost-free { color: #34d399; font-weight: 700; }
+        .cost-paid { color: #fbbf24; }
+        .ollama-demo { background: rgba(15,15,25,0.9); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.8; margin: 16px 0; }
+        .cmd-prompt { color: #34d399; }
+        .cmd-output { color: #e2e8f0; }
+        .cmd-comment { color: #64748b; }
+        .finops-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 20px; }
+        .finops-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; }
+        .finops-card h4 { font-size: 0.9rem; margin-bottom: 8px; }
+        .saving-badge { display: inline-block; background: rgba(52,211,153,0.2); color: #34d399; padding: 2px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; margin-bottom: 8px; }
+    </style>
 </head>
 <body>
 <div class="app-container">
@@ -62,89 +83,210 @@
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
-            </div>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
         </header>
         <div class="content-area">
+
             <header class="page-header animate-on-scroll">
                 <span class="badge">Module 11</span>
-                <h1>OS Tools & <span class="text-gradient">FinOps</span> <span class="text-gradient"></span></h1>
-                <p class="page-description">Managing the cost and privacy of AI infrastructure.</p>
+                <h1>Open Source AI & <span class="text-gradient">FinOps</span></h1>
+                <p class="page-description">Run powerful LLMs locally for free, manage AI infrastructure costs, and build private AI systems using open-weight models and open-source tooling.</p>
                 <div class="chip-strip">
-    <span class="chip ch-b">Ollama</span>
-    <span class="chip ch-g">FinOps</span>
-    <span class="chip ch-a">Caching</span>
-</div>
-
-            </header>
-            
-
-            <section class="animate-on-scroll">
-                <div class="eyebrow">Local & Open Source</div>
-                <h2 style="margin-top:0;">OS Tools & FinOps</h2>
-                <div class="info-box">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    <p>Running models locally ensures 100% privacy and zero API costs. The open-source ecosystem is led by tools like Ollama and vLLM.</p>
+                    <span class="chip ch-b">Ollama</span>
+                    <span class="chip ch-g">Open Weights</span>
+                    <span class="chip ch-a">FinOps</span>
+                    <span class="chip ch-r">Semantic Caching</span>
+                    <span class="chip ch-p">Llama / Mistral</span>
                 </div>
-                
+            </header>
+
+            <!-- Why Open Source -->
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Privacy + Cost = Open Source</div>
+                <h2 style="margin-top:0;">Why Go Open Source?</h2>
                 <div class="bento-grid">
                     <div class="bento-card">
-                        <div class="card-icon blue"><ion-icon name="download-outline"></ion-icon></div>
-                        <h3>Ollama</h3>
-                        <p>The easiest way to get up and running with large language models locally. Just type `ollama run llama3`.</p>
+                        <div class="card-icon green"><ion-icon name="lock-closed-outline"></ion-icon></div>
+                        <h3>100% Data Privacy</h3>
+                        <p>All inference happens on your machine. No prompts leave your network. Essential for healthcare (HIPAA), legal, finance (SOC2), and any customer PII data. Zero vendor exposure.</p>
                     </div>
                     <div class="bento-card">
-                        <div class="card-icon green"><ion-icon name="cash-outline"></ion-icon></div>
-                        <h3>AI FinOps</h3>
-                        <p>Managing API costs by implementing caching (so duplicate questions are free) and dynamic routing.</p>
+                        <div class="card-icon amber"><ion-icon name="cash-outline"></ion-icon></div>
+                        <h3>Zero API Cost</h3>
+                        <p>Pay once for hardware (or GPU cloud), then run millions of queries for free. At high volumes, self-hosting Llama 3 70B costs 10-50x less than GPT-4o API calls.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="construct-outline"></ion-icon></div>
+                        <h3>Full Control</h3>
+                        <p>Modify model weights, fine-tune on proprietary data, deploy anywhere (air-gapped networks, edge devices). No rate limits, no policy restrictions, no dependency on external uptime.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="people-outline"></ion-icon></div>
+                        <h3>Community Velocity</h3>
+                        <p>Open-source AI moves faster than closed. Llama 3, Mistral, Qwen, DeepSeek — the community ships new state-of-the-art models every month, often matching closed models at 1/10th the size.</p>
                     </div>
                 </div>
             </section>
 
+            <!-- Ollama -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Ollama: Run Any Model Locally</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>Ollama packages model weights, a runtime, and an OpenAI-compatible API into a single tool. Install it once, then pull and run any open-weight model with a single command. It exposes an API identical to OpenAI's — meaning most libraries work with zero code changes.</p>
+                </div>
+                <div class="ollama-demo">
+<span class="cmd-comment"># Install Ollama (Mac/Linux/Windows)</span>
+<span class="cmd-prompt">$</span> <span class="cmd-output">curl -fsSL https://ollama.ai/install.sh | sh</span>
 
+<span class="cmd-comment"># Pull and run Llama 3.1 8B (4.7GB)</span>
+<span class="cmd-prompt">$</span> <span class="cmd-output">ollama run llama3.1</span>
+
+<span class="cmd-comment"># Or use the OpenAI-compatible API endpoint</span>
+<span class="cmd-prompt">$</span> <span class="cmd-output">curl http://localhost:11434/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model": "llama3.1", "messages": [{"role": "user", "content": "Hello"}]}'</span>
+                </div>
+                <div class="tip-box" style="margin-top:0;">
+                    <ion-icon name="bulb-outline"></ion-icon>
+                    <p><strong>Drop-in replacement:</strong> Point your LangChain or LlamaIndex code at <code>http://localhost:11434/v1</code> instead of the OpenAI API. Everything works without changing code — just change the base URL and model name.</p>
+                </div>
+            </section>
+
+            <!-- Open Weight Models -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Top Open-Weight Models (2025)</h2>
+                <div class="model-ecosystem">
+                    <div class="eco-card">
+                        <span class="eco-badge" style="background:rgba(52,211,153,0.2);color:#34d399;">Meta</span>
+                        <div class="model-name">Llama 3.1 / 3.2</div>
+                        <div class="model-maker">8B, 70B, 405B params</div>
+                        <p>Best general-purpose open model. 128K context, multilingual, strong at coding. The benchmark standard for open weights.</p>
+                    </div>
+                    <div class="eco-card">
+                        <span class="eco-badge" style="background:rgba(96,165,250,0.2);color:#60a5fa;">Mistral AI</span>
+                        <div class="model-name">Mistral / Mixtral</div>
+                        <div class="model-maker">7B, 8x7B, 8x22B params</div>
+                        <p>Extremely efficient. Mixtral (MoE architecture) punches well above its active parameter count. Fast inference, great for edge deployment.</p>
+                    </div>
+                    <div class="eco-card">
+                        <span class="eco-badge" style="background:rgba(251,191,36,0.2);color:#fbbf24;">Alibaba</span>
+                        <div class="model-name">Qwen 2.5</div>
+                        <div class="model-maker">0.5B to 72B params</div>
+                        <p>Outstanding at math and coding. Available in many sizes including tiny models for edge inference. Strong multilingual support (Chinese, English).</p>
+                    </div>
+                    <div class="eco-card">
+                        <span class="eco-badge" style="background:rgba(244,114,182,0.2);color:#f472b6;">DeepSeek</span>
+                        <div class="model-name">DeepSeek-R1</div>
+                        <div class="model-maker">1.5B to 671B params</div>
+                        <p>Reasoning-focused model with extended thinking. Distilled versions run locally and match or beat GPT-4 on math/coding at a fraction of the size.</p>
+                    </div>
+                    <div class="eco-card">
+                        <span class="eco-badge" style="background:rgba(129,140,248,0.2);color:#818cf8;">Google</span>
+                        <div class="model-name">Gemma 2</div>
+                        <div class="model-maker">2B, 9B, 27B params</div>
+                        <p>Compact and capable. 2B model runs on a laptop CPU. Great for resource-constrained environments and mobile edge inference.</p>
+                    </div>
+                    <div class="eco-card">
+                        <span class="eco-badge" style="background:rgba(45,212,191,0.2);color:#2dd4bf;">Microsoft</span>
+                        <div class="model-name">Phi-3 / Phi-4</div>
+                        <div class="model-maker">3.8B, 14B params</div>
+                        <p>Small but mighty — trained on high-quality "textbook" data. Best-in-class performance at under 4B parameters. Runs on CPU in 8-bit.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Cost Table -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Cloud API vs. Self-Hosted Cost Comparison</h2>
+                <p style="color:var(--text-secondary); margin-bottom:16px;">Per 1M tokens at typical production volumes. Self-hosted costs assume A100 GPU rental at $2.50/hr, 3.5K tokens/second throughput.</p>
+                <table class="cost-table">
+                    <thead>
+                        <tr><th>Model</th><th>Input (per 1M tok)</th><th>Output (per 1M tok)</th><th>Type</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>GPT-4o</strong></td><td class="cost-paid">$5.00</td><td class="cost-paid">$15.00</td><td>Cloud API</td></tr>
+                        <tr><td><strong>Claude 3.5 Sonnet</strong></td><td class="cost-paid">$3.00</td><td class="cost-paid">$15.00</td><td>Cloud API</td></tr>
+                        <tr><td><strong>GPT-4o Mini</strong></td><td class="cost-paid">$0.15</td><td class="cost-paid">$0.60</td><td>Cloud API</td></tr>
+                        <tr><td><strong>Llama 3.1 70B (self-hosted)</strong></td><td class="cost-free">~$0.35</td><td class="cost-free">~$0.35</td><td>Self-hosted</td></tr>
+                        <tr><td><strong>Llama 3.1 8B (self-hosted)</strong></td><td class="cost-free">~$0.04</td><td class="cost-free">~$0.04</td><td>Self-hosted</td></tr>
+                        <tr><td><strong>Ollama local (any model)</strong></td><td class="cost-free">$0.00</td><td class="cost-free">$0.00</td><td>Local compute</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- FinOps Strategies -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>AI FinOps Strategies</h2>
+                <div class="finops-grid">
+                    <div class="finops-card">
+                        <div class="saving-badge">Save 40–60%</div>
+                        <h4>Semantic Caching</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Return cached responses for semantically similar queries. "What's the return policy?" and "How do I return an item?" share one cached answer. Tools: GPTCache, LiteLLM cache, Redis with embeddings.</p>
+                    </div>
+                    <div class="finops-card">
+                        <div class="saving-badge">Save 30–80%</div>
+                        <h4>Model Routing</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Route by task complexity. Simple: FAQ → Haiku ($0.25/M tokens). Medium: Reasoning → Sonnet ($3/M). Hard: Creative/Novel → Opus ($15/M). Classify query complexity first, then route.</p>
+                    </div>
+                    <div class="finops-card">
+                        <div class="saving-badge">Save 20–40%</div>
+                        <h4>Prompt Compression</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">LLMLingua and similar tools compress prompts 2-5x with minimal quality loss by removing filler words and compressing context. Reduces input tokens significantly for large-context RAG prompts.</p>
+                    </div>
+                    <div class="finops-card">
+                        <div class="saving-badge">Save 50–90%</div>
+                        <h4>Hybrid Local/Cloud</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Non-sensitive, high-volume queries → local Ollama (free). Sensitive or complex queries → cloud API. Route based on data classification tags. A gateway like LiteLLM makes this seamless.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interview Q&A -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Interview Prep</div>
                 <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
                 <div class="qa-list">
-    <div class="qa-item">
-        <div class="qa-q">What is Ollama? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">It is an open-source tool that packages LLM weights, configuration, and data into a single runnable container, making it trivial to run models on a Mac or PC.</div>
-    </div>
-</div>
-
+                    <div class="qa-item">
+                        <div class="qa-q">What is Ollama and how does it differ from running a model directly in Python? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Running a model directly in Python (via Hugging Face transformers) requires managing CUDA dependencies, model loading code, batching logic, and building an API from scratch. Ollama packages all of this: it handles the runtime (llama.cpp under the hood), manages model downloads, serves an OpenAI-compatible REST API at localhost:11434, supports multiple models simultaneously, and handles GPU/CPU allocation automatically. It's the difference between running a raw database binary vs. using a managed database with connection pooling.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">When should you use open-source models vs. commercial APIs? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Use open-source/self-hosted when: (1) Data privacy requirements prevent sending data to external APIs. (2) Volume is high enough that cloud API costs exceed self-hosting costs (~50K+ API calls/day). (3) You need offline/air-gapped deployment. (4) You want to fine-tune on proprietary data. Use commercial APIs when: (1) You need maximum quality and don't have GPU budget. (2) Latency is critical and you lack optimized serving infrastructure. (3) Team is small and infrastructure management overhead outweighs API costs. (4) Your task is novel enough to benefit from frontier model capabilities.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is quantization and why does it matter for local LLMs? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Quantization reduces the numerical precision of model weights — from 32-bit floats to 16-bit (FP16), 8-bit (INT8), or even 4-bit integers. The tradeoff: 4-bit quantization reduces VRAM requirements by ~4x with only ~2-5% quality degradation on most tasks. This is what makes running 70B parameter models possible on consumer GPUs: a full FP16 70B model needs ~140GB VRAM (two A100s). A Q4 quantized version needs ~40GB — fits on a single A100. Ollama ships GGUF quantized models by default, making it "just work" on any GPU or even CPU.</div>
+                    </div>
+                </div>
             </section>
-            
+
+            <!-- Next Steps -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Up Next</div>
                 <h2 style="margin-top:0; border:none;">Continue Learning</h2>
                 <div class="next-steps-grid">
-    <a href="infrastructure.html" class="next-card">
-        <ion-icon name="server-outline" style="color: #34d399;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Infrastructure</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-</div>
-
+                    <a href="infrastructure.html" class="next-card">
+                        <ion-icon name="server-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>Infrastructure & Serving</h4><p>Production-scale model serving &rarr;</p></div>
+                    </a>
+                    <a href="ai-gateway.html" class="next-card">
+                        <ion-icon name="swap-horizontal-outline" style="color:#60a5fa;"></ion-icon>
+                        <div class="next-card-text"><h4>AI Gateways</h4><p>Smart routing between local &amp; cloud &rarr;</p></div>
+                    </a>
+                </div>
             </section>
+
         </div>
     </main>
 </div>
-    <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
-    <script>mermaid.initialize({theme: "dark", startOnLoad: true});</script>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

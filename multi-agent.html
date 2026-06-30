@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -7,13 +7,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .supervisor-arch { display: flex; flex-direction: column; align-items: center; gap: 16px; margin: 24px 0; }
+        .sup-node { background: rgba(129,140,248,0.15); border: 2px solid rgba(129,140,248,0.4); border-radius: 10px; padding: 12px 28px; font-weight: 700; font-size: 0.9rem; color: #818cf8; }
+        .worker-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+        .worker-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .worker-col .w-arrow { color: var(--text-secondary); font-size: 0.85rem; }
+        .agent-node { border-radius: 10px; padding: 10px 18px; font-size: 0.82rem; font-weight: 600; text-align: center; }
+        .agent-node.research { border: 1px solid #34d399; color: #34d399; }
+        .agent-node.code    { border: 1px solid #fbbf24; color: #fbbf24; }
+        .agent-node.writer  { border: 1px solid #60a5fa; color: #60a5fa; }
+        .agent-node.tools { font-size: 0.72rem; color: var(--text-secondary); border: none; }
+        .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 20px 0; }
+        .pg-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; border-top: 3px solid; }
+        .pg-card h4 { font-size: 0.9rem; margin-bottom: 8px; }
+        .comm-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.83rem; }
+        .comm-table th, .comm-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); text-align: left; }
+        .comm-table th { color: var(--text-secondary); font-weight: 600; font-size: 0.8rem; }
+        .comm-table tr:last-child td { border-bottom: none; }
+        .label-green { color: #34d399; font-weight: 600; }
+        .label-amber { color: #fbbf24; font-weight: 600; }
+        .label-blue  { color: #60a5fa; font-weight: 600; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder -->
-        <aside class="sidebar" id="sidebar">
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
         <a href="index.html" class="logo-container" style="text-decoration:none;">
             <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
             <div class="logo-text">AI for All</div>
@@ -59,84 +79,207 @@
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
     </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Multi-Agent Systems..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
-            
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 17</span>
+                <h1>Multi-Agent <span class="text-gradient">Systems</span></h1>
+                <p class="page-description">Orchestrate teams of specialized AI agents working in parallel and sequence — the architecture behind the most capable production AI systems in 2025.</p>
                 <div class="chip-strip">
-                    <span class="chip ch-p">V4.0 Optimized</span>
-                    <span class="chip ch-b">Core Concept</span>
+                    <span class="chip ch-p">Supervisor Pattern</span>
+                    <span class="chip ch-g">Swarm</span>
+                    <span class="chip ch-a">Debate Pattern</span>
+                    <span class="chip ch-b">A2A Protocol</span>
+                    <span class="chip ch-r">Error Propagation</span>
                 </div>
-</header>
+            </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 17</span>
-                    <h1>Multi-Agent <span class="text-gradient">Systems</span></h1>
-                    <p class="page-description">Orchestrating teams of specialized AI agents to solve problems collaboratively.</p>
-                </header>
-
-                <section class="animate-on-scroll">
-                    <h2>1. Specialized Agent Roles</h2>
-                    <p>Instead of one massive prompt doing everything, we split tasks among specialized personas.</p>
-                    <div class="bento-grid">
-                        <div class="bento-card"><div class="card-icon pink"><ion-icon name="star-outline"></ion-icon></div><h3>Supervisor Agent</h3><p>The manager. Receives the main goal, delegates sub-tasks to workers, and aggregates the final result.</p></div>
-                        <div class="bento-card"><div class="card-icon blue"><ion-icon name="search-outline"></ion-icon></div><h3>Research Agent</h3><p>Equipped with web search and RAG tools to find information. Never writes code.</p></div>
-                        <div class="bento-card"><div class="card-icon green"><ion-icon name="code-working-outline"></ion-icon></div><h3>Worker/Coding Agent</h3><p>Executes specific technical tasks, writes code, or runs bash commands.</p></div>
-                        <div class="bento-card"><div class="card-icon red"><ion-icon name="eye-outline"></ion-icon></div><h3>Reviewer Agent</h3><p>Critiques the worker's output and demands revisions if quality standards aren't met.</p></div>
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Beyond Single Agents</div>
+                <h2 style="margin-top:0;">Why Multi-Agent?</h2>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon red"><ion-icon name="sad-outline"></ion-icon></div>
+                        <h3>Problem: Context Window Ceiling</h3>
+                        <p>A single agent with a 200K token context window cannot process a 1M-token codebase, write a 50-page report, and monitor production logs simultaneously. One agent = one focus. Complex tasks exceed any single agent's capacity and expertise.</p>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>2. Multi-Agent Architectures</h2>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>Hierarchical Teams</h3>
-                            <p>Strict top-down management. Supervisor &#8594; Sub-Supervisor &#8594; Worker. Best for deterministic corporate workflows.</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>Agent Mesh / Swarm</h3>
-                            <p>Decentralized. Agents can discover and call each other directly (A2A - Agent to Agent communication) as needed.</p>
-                        </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
+                        <h3>Solution: Specialist Division of Labor</h3>
+                        <p>Separate work across specialist agents: a Research Agent with web search tools, a Coding Agent with a sandboxed executor, a Writer Agent with document templates. Each focuses on what it does best, with its own context and toolset. Run them in parallel.</p>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll" style="margin-top:40px;">
-                    <h2>3. Collaborative Execution Flow</h2>
-                    <div class="bento-card" style="text-align: center;">
-                        <div class="mermaid">
-                        sequenceDiagram
-                            participant User
-                            participant Supervisor
-                            participant Researcher
-                            participant Coder
-                            
-                            User->>Supervisor: "Build a weather app"
-                            Supervisor->>Researcher: "Find weather API docs"
-                            Researcher-->>Supervisor: "Found OpenWeatherMap API details"
-                            Supervisor->>Coder: "Write React component using this API"
-                            Coder-->>Supervisor: "Code completed"
-                            Supervisor-->>User: "Here is your app"
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>The Supervisor Pattern</h2>
+                <div class="supervisor-arch">
+                    <div class="sup-node">Supervisor LLM (Orchestrator)</div>
+                    <div class="worker-row">
+                        <div class="worker-col">
+                            <span class="w-arrow">↓ task delegation</span>
+                            <div class="agent-node research">Research Agent</div>
+                            <div class="agent-node tools">web_search, arxiv</div>
+                        </div>
+                        <div class="worker-col">
+                            <span class="w-arrow">↓ task delegation</span>
+                            <div class="agent-node code">Coding Agent</div>
+                            <div class="agent-node tools">code_exec, GitHub</div>
+                        </div>
+                        <div class="worker-col">
+                            <span class="w-arrow">↓ task delegation</span>
+                            <div class="agent-node writer">Writer Agent</div>
+                            <div class="agent-node tools">docs, templates</div>
                         </div>
                     </div>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
-    <script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+                    <div style="color:var(--text-secondary);font-size:0.85rem;text-align:center;">↑ results aggregated → final synthesis → user</div>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="person-outline"></ion-icon></div>
+                        <h3>Supervisor Responsibilities</h3>
+                        <p>Receives the high-level goal. Decomposes into subtasks. Assigns each subtask to the right specialist. Monitors completion. Aggregates results. Handles partial failures by re-delegating. Does NOT execute tasks itself — only coordinates.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="cog-outline"></ion-icon></div>
+                        <h3>Worker Agent Design</h3>
+                        <p>Each worker receives a focused task definition, a specific toolset, and a limited context with only task-relevant info. Workers report results (success or failure + artifacts) back to the supervisor using structured schemas — not free-form text.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Coordination Patterns</h2>
+                <div class="pattern-grid">
+                    <div class="pg-card" style="border-color:#818cf8;">
+                        <div class="card-icon purple" style="margin-bottom:10px;"><ion-icon name="cellular-outline"></ion-icon></div>
+                        <h4>Hierarchical (Supervisor)</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Central supervisor delegates subtasks to workers. Clear chain of command. Easy to debug. Best for tasks with clear decomposition structure — e.g., build a SaaS feature end-to-end.</p>
+                    </div>
+                    <div class="pg-card" style="border-color:#34d399;">
+                        <div class="card-icon green" style="margin-bottom:10px;"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
+                        <h4>Peer-to-Peer (Swarm)</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Agents communicate directly without a central coordinator. Each can hand off to any other. Very flexible. Complex to debug. Used by OpenAI Swarm for emergent task routing.</p>
+                    </div>
+                    <div class="pg-card" style="border-color:#fbbf24;">
+                        <div class="card-icon amber" style="margin-bottom:10px;"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+                        <h4>Debate Pattern</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Two LLMs argue opposing positions; a judge model evaluates arguments. The winning position is adopted. Significantly improves accuracy on complex reasoning where a single LLM has blind spots.</p>
+                    </div>
+                    <div class="pg-card" style="border-color:#60a5fa;">
+                        <div class="card-icon blue" style="margin-bottom:10px;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h4>MapReduce</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Split large documents into chunks and process in parallel (map), then combine results (reduce). Classic for summarizing long documents, analyzing large codebases, or processing thousands of tickets simultaneously.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Agent Communication Protocols</h2>
+                <table class="comm-table">
+                    <thead>
+                        <tr><th>Protocol</th><th>Description</th><th>Best For</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="label-green">Shared State (LangGraph)</span></td>
+                            <td>All agents read/write a shared TypedDict State via a coordinator graph. Deterministic, easy to inspect.</td>
+                            <td>LangGraph multi-agent subgraphs, structured workflows</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label-blue">A2A Protocol (Google)</span></td>
+                            <td>Agents communicate via structured JSON on a message bus. Loosely coupled, async, cross-vendor.</td>
+                            <td>Cross-org agent collaboration, microservice agents</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label-amber">HTTP Tool Calls</span></td>
+                            <td>Each agent exposes an HTTP endpoint. Supervisor calls agents as if they were tools — agent-as-a-tool pattern.</td>
+                            <td>Simple supervisor+worker setups, rapid prototyping</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label-green">Shared DB / Vector Store</span></td>
+                            <td>Agents read/write to a shared database without direct messaging. Async access to each other's outputs.</td>
+                            <td>Async agents, long-running background tasks</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Multi-Agent Failure Modes</h2>
+                <div class="embedding-visual">
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(239,68,68,0.1);color:#f87171;border-color:rgba(239,68,68,0.3);">Cascade Failure</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector">One agent fails, supervisor treats it as global failure. Fix: design for partial failure — continue with available data and note uncertainty in output.</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.3);">Conflicting Plans</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector">Two workers make contradictory changes. Fix: use an immutable task ledger — each worker locks its sub-task before starting.</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(129,140,248,0.1);color:#818cf8;border-color:rgba(129,140,248,0.3);">Token Explosion</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector">Supervisor includes all worker outputs in its context — O(n) agents × O(m) tokens. Fix: workers return structured summaries + artifact IDs; full artifacts loaded only when needed.</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(96,165,250,0.1);color:#60a5fa;border-color:rgba(96,165,250,0.3);">Prompt Injection</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector">Malicious content in one agent's context hijacks another's behavior. Fix: treat all inter-agent messages as untrusted — sanitize before injecting into another agent's prompt.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q">Why use multi-agent instead of a single agent with more tools? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Three reasons: (1) Context limits — a single agent with 50 tools wastes tokens describing tools it won't use, and can't hold history of a long task. Specialist agents have focused, minimal contexts. (2) Parallelism — a supervisor dispatches Research + Code + Writer agents simultaneously, cutting wall-clock time from O(n) sequential to O(1) parallel execution. (3) Expertise specialization — different tasks benefit from different models, prompting strategies, and tool configurations. Forcing one model with one prompt to do everything is suboptimal for all tasks simultaneously.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is Google's A2A protocol and how does it relate to MCP? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Agent-to-Agent (A2A) is an open protocol released by Google in 2025 to standardize communication between AI agents across different vendors. It defines: (1) Agent Cards — JSON descriptors advertising what tasks an agent can accept (like OpenAPI specs for agents); (2) Task lifecycle messages (submitted/working/input-needed/completed/failed); (3) A message format supporting text, files, structured data, and streams. Relationship to MCP: they're complementary, not competing. MCP (Model Context Protocol by Anthropic) handles how a single AI model accesses tools, data sources, and resources. A2A handles how multiple agents coordinate and communicate with each other. Think of MCP as the agent's "arms" (accessing resources) and A2A as the "voice" (talking to other agents).</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How do you debug a multi-agent system when something goes wrong? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Multi-agent debugging requires tracing across agent boundaries: (1) Correlation IDs — every task gets a UUID propagated through all agent calls, so you can filter LangSmith traces for a single task execution. (2) Structured logging with agent_id, task_id, input, output, tool_calls at every node — never free-form log strings. (3) LangSmith trace waterfall — shows the full hierarchy of supervisor → worker → tool calls with timing, token counts, and errors. (4) Reproduce in isolation — extract the failing worker's exact input and replay it standalone to determine if the bug is in the worker or the supervisor's delegation logic. (5) State diffs — compare LangGraph state before and after each node to identify exactly where corruption appeared.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+                    <a href="graphrag.html" class="next-card">
+                        <ion-icon name="analytics-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>GraphRAG</h4><p>Knowledge graphs for deeper reasoning &rarr;</p></div>
+                    </a>
+                    <a href="langgraph.html" class="next-card">
+                        <ion-icon name="git-branch-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text"><h4>LangGraph Deep Dive</h4><p>Implement supervisor patterns in code &rarr;</p></div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

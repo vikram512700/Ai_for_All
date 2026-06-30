@@ -3,12 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLMOps | AI for All</title>
+    <title>LLMOps & Observability | AI for All</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .ops-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        @media (max-width: 640px) { .ops-compare { grid-template-columns: 1fr; } }
+        .ops-col { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
+        .ops-col h4 { margin-bottom: 12px; }
+        .ops-col ul { margin-left: 16px; line-height: 2; font-size: 0.88rem; color: var(--text-secondary); }
+        .metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 20px; }
+        .metric-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; text-align: center; }
+        .metric-value { font-size: 2rem; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+        .metric-label { font-size: 0.8rem; color: var(--text-secondary); }
+        .metric-note { font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; }
+        .pipeline-visual { display: flex; flex-wrap: wrap; align-items: center; gap: 0; margin: 20px 0; }
+        .pipe-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 18px; text-align: center; font-size: 0.82rem; }
+        .pipe-arrow { color: var(--text-secondary); padding: 0 6px; font-size: 1.2rem; }
+        .tool-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .tool-table th { background: var(--bg-card); padding: 10px 14px; text-align: left; font-size: 0.82rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); }
+        .tool-table td { padding: 10px 14px; font-size: 0.85rem; border-bottom: 1px solid var(--border-subtle); }
+        .tool-table tr:last-child td { border-bottom: none; }
+        .badge-green { background: rgba(52,211,153,0.2); color: #34d399; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+        .badge-blue { background: rgba(96,165,250,0.2); color: #60a5fa; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+        .badge-purple { background: rgba(129,140,248,0.2); color: #818cf8; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+    </style>
 </head>
 <body>
 <div class="app-container">
@@ -62,91 +83,230 @@
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
-            </div>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
         </header>
         <div class="content-area">
+
             <header class="page-header animate-on-scroll">
                 <span class="badge">Module 8</span>
-                <h1>LLMOps & <span class="text-gradient">Observability</span> <span class="text-gradient"></span></h1>
-                <p class="page-description">Deploy, monitor, and maintain LLM applications in production.</p>
+                <h1>LLMOps & <span class="text-gradient">Observability</span></h1>
+                <p class="page-description">The operational discipline of deploying, monitoring, and maintaining LLM applications in production — managing cost, latency, quality, and drift at scale.</p>
                 <div class="chip-strip">
-    <span class="chip ch-p">Telemetry</span>
-    <span class="chip ch-g">Tokens</span>
-    <span class="chip ch-a">TTFT</span>
-</div>
-
+                    <span class="chip ch-p">Telemetry</span>
+                    <span class="chip ch-g">Token Tracking</span>
+                    <span class="chip ch-a">TTFT</span>
+                    <span class="chip ch-b">Prompt Versioning</span>
+                    <span class="chip ch-r">LangSmith</span>
+                    <span class="chip ch-p">Caching</span>
+                </div>
             </header>
-            
 
+            <!-- LLMOps vs MLOps -->
             <section class="animate-on-scroll">
                 <div class="eyebrow">Production Grade</div>
-                <h2 style="margin-top:0;">LLMOps vs MLOps</h2>
+                <h2 style="margin-top:0;">LLMOps vs Traditional MLOps</h2>
                 <div class="info-box">
                     <ion-icon name="information-circle-outline"></ion-icon>
-                    <p>Traditional MLOps focuses on model training and drift. <strong>LLMOps</strong> focuses on prompt management, token cost, API latency, and RAG retrieval quality.</p>
+                    <p>Classical MLOps focuses on model training pipelines, data drift, and model retraining cycles. <strong>LLMOps</strong> focuses on an entirely different set of problems: prompt version control, token spend management, API reliability across multiple providers, and RAG retrieval quality degradation — none of which exist in traditional ML.</p>
                 </div>
-                
-                <div class="temp-grid">
-                    <div class="temp-card">
-                        <h4>Token Tracking</h4>
-                        <p>Monitoring exactly how many Input and Output tokens are consumed to prevent billing shocks.</p>
+                <div class="ops-compare">
+                    <div class="ops-col" style="border-top:3px solid #60a5fa;">
+                        <h4 style="color:#60a5fa;">Traditional MLOps</h4>
+                        <ul>
+                            <li>Model training pipeline automation</li>
+                            <li>Feature store management</li>
+                            <li>Model accuracy drift detection</li>
+                            <li>Retraining triggers and schedules</li>
+                            <li>A/B testing model versions</li>
+                            <li>GPU training cluster management</li>
+                        </ul>
                     </div>
-                    <div class="temp-card">
-                        <h4>Prompt Management</h4>
-                        <p>Versioning system prompts exactly like code, so you can rollback if a prompt tweak degrades agent performance.</p>
-                    </div>
-                    <div class="temp-card">
-                        <h4>Latency Tracing</h4>
-                        <p>Time-To-First-Token (TTFT) is critical for UX. Tracing helps find out if the DB or the LLM is causing the lag.</p>
+                    <div class="ops-col" style="border-top:3px solid #34d399;">
+                        <h4 style="color:#34d399;">LLMOps</h4>
+                        <ul>
+                            <li>Prompt version control &amp; rollback</li>
+                            <li>Token cost attribution per feature</li>
+                            <li>API latency monitoring (TTFT, throughput)</li>
+                            <li>RAG retrieval quality tracking</li>
+                            <li>Provider failover &amp; fallback routing</li>
+                            <li>Semantic cache hit rate optimization</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
+            <!-- Key Metrics -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Production Metrics That Matter</h2>
+                <div class="metric-row">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color:#34d399;">&lt;500ms</div>
+                        <div class="metric-label">Target TTFT</div>
+                        <div class="metric-note">Time To First Token — the perceived latency users feel. Stream responses to hit this even for slow completions.</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color:#60a5fa;">$0.02</div>
+                        <div class="metric-label">Per-Query Cost Cap</div>
+                        <div class="metric-note">Budget per API call. Exceeding this at scale (1M queries/day) = $20K/day overspend. Track input + output tokens separately.</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color:#fbbf24;">40–60%</div>
+                        <div class="metric-label">Cache Hit Rate</div>
+                        <div class="metric-note">Semantic caching of repeated or near-identical queries. At 50% hit rate, you halve your API spend instantly.</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color:#818cf8;">99.5%</div>
+                        <div class="metric-label">API Availability</div>
+                        <div class="metric-note">LLM APIs have outages. Multi-provider routing with automatic fallback is essential for customer-facing features.</div>
+                    </div>
+                </div>
+            </section>
 
+            <!-- LLMOps Practices -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Core LLMOps Practices</h2>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h3>Prompt Version Control</h3>
+                        <p>Treat system prompts like code — commit to git, tag releases, use PRs for prompt changes. A single word change in a system prompt can degrade accuracy by 20%. Track which prompt version is running in production and enable instant rollback.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="cash-outline"></ion-icon></div>
+                        <h3>Token Budget Management</h3>
+                        <p>Set hard limits: max_tokens per request, monthly API budgets per team, cost attribution tags. Implement semantic caching with tools like GPTCache to return cached responses for similar queries — dramatically reduces spend.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="pulse-outline"></ion-icon></div>
+                        <h3>Latency Tracing</h3>
+                        <p>Instrument every step: time in queue, embedding latency, vector DB lookup, LLM TTFT, and total response time. When users complain "it's slow," traces tell you whether it's the DB, the LLM, or network — in seconds.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
+                        <h3>Provider Routing & Fallback</h3>
+                        <p>Use an AI Gateway (LiteLLM, Portkey) to route requests: primary model for quality, fallback to a cheaper model on timeout, local Ollama for non-sensitive data. Multi-provider setup achieves 99.99% availability vs single-provider 99.5%.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- The LLMOps Pipeline -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>The LLMOps CI/CD Pipeline</h2>
+                <div class="pipeline-visual">
+                    <div class="pipe-box">Prompt Change</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Eval Suite Run</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Quality Gate ≥ 85%</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Shadow Deploy (5%)</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Canary (20%)</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Full Rollout</div>
+                </div>
+                <p style="color:var(--text-secondary); font-size:0.88rem;">Just like code, prompt changes go through: automated evaluation, quality gates, shadow testing, canary rollout, and full production deployment. Any regression triggers automatic rollback.</p>
+            </section>
+
+            <!-- Tooling -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>LLMOps Tooling Landscape</h2>
+                <table class="tool-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Category</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>LangSmith</strong></td>
+                            <td><span class="badge-green">Observability</span></td>
+                            <td>Native LangChain/LangGraph tracing, prompt management, evals</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Langfuse</strong></td>
+                            <td><span class="badge-green">Observability</span></td>
+                            <td>Open-source, cost tracking, self-hostable, multi-model</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LiteLLM</strong></td>
+                            <td><span class="badge-blue">Gateway</span></td>
+                            <td>Unified API across 100+ providers, semantic caching, fallbacks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Helicone</strong></td>
+                            <td><span class="badge-blue">Gateway + Obs</span></td>
+                            <td>Proxy-based, zero-code integration, real-time cost dashboards</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weights &amp; Biases</strong></td>
+                            <td><span class="badge-purple">Experiment Tracking</span></td>
+                            <td>Prompt experimentation, fine-tuning runs, eval comparisons</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Arize Phoenix</strong></td>
+                            <td><span class="badge-green">RAG Observability</span></td>
+                            <td>Embedding visualization, RAG tracing, retrieval quality metrics</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Interview Q&A -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Interview Prep</div>
                 <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
                 <div class="qa-list">
-    <div class="qa-item">
-        <div class="qa-q">What is TTFT? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Time To First Token. It's the most critical metric for perceived performance. Users don't mind if an answer takes 10 seconds to finish, as long as the first word appears in under 1 second.</div>
-    </div>
-</div>
-
+                    <div class="qa-item">
+                        <div class="qa-q">What is TTFT and why is it more important than total latency? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Time To First Token (TTFT) is the delay between sending a request and receiving the first character of the response. Humans psychologically perceive "thinking delay" as more painful than "reading time." If TTFT is under 500ms, users feel the system is responsive even if the full response takes 10 seconds — because they can read while it streams. Always stream LLM responses in production and optimize for TTFT, not total completion time.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How do you control LLM API costs at scale? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Four levers: (1) Semantic caching — detect similar queries and return cached responses without calling the API. GPTCache and Redis with embedding similarity can achieve 40-60% cache hit rates. (2) Model routing — use a cheap/fast model (Haiku, GPT-4o-mini) for simple tasks, expensive models only when needed. (3) Prompt compression — tools like LLMLingua can compress prompts 2-5x with minimal quality loss. (4) Output length caps — set max_tokens aggressively; verbose outputs waste budget.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What does "prompt drift" mean in LLMOps? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Prompt drift is when the quality of an LLM's responses degrades over time without any code change. Causes: (1) Model updates — the LLM provider silently updates the underlying model, changing its behavior. (2) Data distribution shift — the types of user queries change over time. (3) Context window pollution — prompt templates grow as features are added, crowding out important instructions. Solution: maintain a frozen golden eval dataset and run it weekly; any accuracy drop below threshold triggers an alert.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is semantic caching, and how is it different from traditional caching? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Traditional caching does exact string matching — "What is the capital of France?" and "What's France's capital?" are different keys and get two separate API calls. Semantic caching embeds the query and looks for cached responses with high cosine similarity (threshold ~0.92). If found, return cached response instantly. This handles paraphrasing, typos, and minor variations. Tools like GPTCache and LiteLLM's built-in cache support this. For a high-traffic chatbot with lots of FAQ-style queries, 40-60% cache hit rates are common.</div>
+                    </div>
+                </div>
             </section>
-            
+
+            <!-- Next Steps -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Up Next</div>
                 <h2 style="margin-top:0; border:none;">Continue Learning</h2>
                 <div class="next-steps-grid">
-    <a href="observability-advanced.html" class="next-card">
-        <ion-icon name="eye-outline" style="color: #60a5fa;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Advanced Observability</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-</div>
-
+                    <a href="observability-advanced.html" class="next-card">
+                        <ion-icon name="eye-outline" style="color:#60a5fa;"></ion-icon>
+                        <div class="next-card-text"><h4>Advanced Observability</h4><p>Deep trace multi-step agents &rarr;</p></div>
+                    </a>
+                    <a href="evals.html" class="next-card">
+                        <ion-icon name="bar-chart-outline" style="color:#fbbf24;"></ion-icon>
+                        <div class="next-card-text"><h4>AI Evaluation</h4><p>Measure quality with RAGAS &rarr;</p></div>
+                    </a>
+                    <a href="ai-gateway.html" class="next-card">
+                        <ion-icon name="swap-horizontal-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>AI Gateways</h4><p>Multi-provider routing &amp; fallbacks &rarr;</p></div>
+                    </a>
+                </div>
             </section>
+
         </div>
     </main>
 </div>
-    <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
-    <script>mermaid.initialize({theme: "dark", startOnLoad: true});</script>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

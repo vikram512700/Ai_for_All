@@ -8,6 +8,31 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .rag-pipeline { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+        .rag-step { display: flex; align-items: flex-start; gap: 20px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 0; }
+        .rag-step:first-child { border-radius: 12px 12px 0 0; }
+        .rag-step:last-child { border-radius: 0 0 12px 12px; }
+        .rag-step:not(:last-child) { border-bottom: none; }
+        .rag-step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); color: #fff; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .rag-step-body h4 { margin: 0 0 4px; color: var(--text-primary); }
+        .rag-step-body p { margin: 0; font-size: 0.88rem; color: var(--text-secondary); }
+        .chunk-demo { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+        .chunk-pill { padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-family: 'Fira Code', monospace; }
+        .chunk-a { background: rgba(129,140,248,0.15); color: #818cf8; border: 1px solid rgba(129,140,248,0.3); }
+        .chunk-b { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+        .chunk-c { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+        .chunk-cut { background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); text-decoration: line-through; }
+        .vector-db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 20px; }
+        .vdb-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; text-align: center; }
+        .vdb-name { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 4px; }
+        .vdb-desc { font-size: 0.78rem; color: var(--text-secondary); }
+        .retrieval-compare { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
+        @media (max-width: 768px) { .retrieval-compare { grid-template-columns: 1fr; } }
+        .ret-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; }
+        .ret-card h4 { font-size: 0.9rem; margin-bottom: 8px; }
+        .ret-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-bottom: 8px; }
+    </style>
 </head>
 <body>
 <div class="app-container">
@@ -61,142 +86,237 @@
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
-            </div>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
         </header>
         <div class="content-area">
+
             <header class="page-header animate-on-scroll">
                 <span class="badge">Module 5</span>
-                <h1>RAG & <span class="text-gradient">Vector Search</span> <span class="text-gradient"></span></h1>
-                <p class="page-description">Connect LLMs to your private enterprise data using Vector Databases, embeddings, and hybrid search.</p>
+                <h1>RAG & <span class="text-gradient">Vector Search</span></h1>
+                <p class="page-description">Connect LLMs to private enterprise data using embeddings, vector databases, and advanced hybrid retrieval. The most deployed AI pattern in production.</p>
                 <div class="chip-strip">
-    <span class="chip ch-p">Embeddings</span>
-    <span class="chip ch-g">Vector DB</span>
-    <span class="chip ch-a">Cosine Similarity</span>
-    <span class="chip ch-b">Hybrid Search</span>
-</div>
-
+                    <span class="chip ch-p">Embeddings</span>
+                    <span class="chip ch-g">Vector DB</span>
+                    <span class="chip ch-a">Cosine Similarity</span>
+                    <span class="chip ch-b">Hybrid Search</span>
+                    <span class="chip ch-r">Chunking</span>
+                    <span class="chip ch-p">Re-ranking</span>
+                </div>
             </header>
-            
 
+            <!-- Why RAG -->
             <section class="animate-on-scroll">
                 <div class="eyebrow">The Knowledge Problem</div>
-                <h2 style="margin-top:0;">Why We Need RAG</h2>
+                <h2 style="margin-top:0;">Why LLMs Need RAG</h2>
                 <div class="info-box">
                     <ion-icon name="information-circle-outline"></ion-icon>
-                    <p>LLMs are frozen in time after training and only know public internet data. RAG (Retrieval-Augmented Generation) is how you let an LLM read your private enterprise PDFs, databases, and Confluence pages <strong>without</strong> retraining the model.</p>
+                    <p>LLMs are frozen in time after training — they know only public internet data up to a cutoff date. They cannot access your company's Confluence docs, Slack history, or internal databases. <strong>RAG (Retrieval-Augmented Generation)</strong> solves this by fetching relevant private data at query time and injecting it into the prompt context.</p>
                 </div>
-                
                 <div class="bento-grid">
                     <div class="bento-card">
-                        <div class="card-icon purple"><ion-icon name="document-text-outline"></ion-icon></div>
-                        <h3>1. Chunking</h3>
-                        <p>You can't fit a 1,000-page PDF in a prompt. You must split the document into small "chunks" (e.g., 500 words each).</p>
+                        <div class="card-icon red"><ion-icon name="close-circle-outline"></ion-icon></div>
+                        <h3>Without RAG</h3>
+                        <p>"What's our Q3 revenue?" → Model hallucinates an answer or says "I don't have that information." Useless for enterprise AI.</p>
                     </div>
                     <div class="bento-card">
-                        <div class="card-icon green"><ion-icon name="code-working-outline"></ion-icon></div>
-                        <h3>2. Embeddings</h3>
-                        <p>Convert each chunk into a mathematical Vector (an array of 1536 numbers) representing its semantic meaning.</p>
-                    </div>
-                    <div class="bento-card">
-                        <div class="card-icon blue"><ion-icon name="server-outline"></ion-icon></div>
-                        <h3>3. Vector Database</h3>
-                        <p>Store these vectors in a specialized DB like Pinecone, Qdrant, or Azure AI Search.</p>
-                    </div>
-                    <div class="bento-card">
-                        <div class="card-icon amber"><ion-icon name="search-outline"></ion-icon></div>
-                        <h3>4. Semantic Search</h3>
-                        <p>When a user asks a question, convert it to a vector, find the 5 closest chunks using Cosine Similarity, and send them to the LLM.</p>
+                        <div class="card-icon green"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
+                        <h3>With RAG</h3>
+                        <p>"What's our Q3 revenue?" → Retrieves the Q3 report PDF chunk → "Based on the Q3 report, revenue was $14.2M, up 23% YoY." Grounded and accurate.</p>
                     </div>
                 </div>
             </section>
 
+            <!-- The Pipeline -->
             <section class="animate-on-scroll" style="margin-top:40px;">
-                <h2>Advanced RAG Architectures</h2>
-                
-                <div class="embedding-visual">
-                    <div class="emb-word-row">
-                        <div class="emb-word" style="background: rgba(129,140,248,0.1); color: #818cf8; border-color: rgba(129,140,248,0.3);">Hybrid Search</div>
-                        <div class="emb-arrow">&rarr;</div>
-                        <div class="emb-vector" style="color: var(--text-primary);">Vector Search (Meaning) + BM25 (Keyword Match)</div>
+                <h2>The 5-Step RAG Pipeline</h2>
+                <div class="rag-pipeline">
+                    <div class="rag-step">
+                        <div class="rag-step-num">1</div>
+                        <div class="rag-step-body">
+                            <h4>Ingest & Parse Documents</h4>
+                            <p>Load PDFs, Word docs, Confluence pages, or database tables. Extract clean text (handle images with OCR, tables with special parsers). Tools: LlamaParse, Docling, Unstructured.io.</p>
+                        </div>
                     </div>
-                    <div class="emb-word-row">
-                        <div class="emb-word" style="background: rgba(52,211,153,0.1); color: #34d399; border-color: rgba(52,211,153,0.3);">Cross-Encoder Re-ranking</div>
-                        <div class="emb-arrow">&rarr;</div>
-                        <div class="emb-vector" style="color: var(--text-primary);">Using a second LLM to re-score and perfectly sort the top 10 search results.</div>
+                    <div class="rag-step">
+                        <div class="rag-step-num">2</div>
+                        <div class="rag-step-body">
+                            <h4>Chunk into Segments</h4>
+                            <p>Split documents into ~300–1000 token chunks with 10–15% overlap so sentences don't get cut mid-thought. Bad chunking is the #1 cause of poor RAG quality.</p>
+                        </div>
                     </div>
-                    <div class="emb-word-row">
-                        <div class="emb-word" style="background: rgba(251,191,36,0.1); color: #fbbf24; border-color: rgba(251,191,36,0.3);">Query Expansion</div>
-                        <div class="emb-arrow">&rarr;</div>
-                        <div class="emb-vector" style="color: var(--text-primary);">Having the LLM rewrite the user's bad prompt into 3 better prompts before searching.</div>
+                    <div class="rag-step">
+                        <div class="rag-step-num">3</div>
+                        <div class="rag-step-body">
+                            <h4>Embed Each Chunk</h4>
+                            <p>Pass each chunk through an embedding model (e.g., OpenAI text-embedding-3-large, Cohere Embed v3). Each chunk becomes a 1536-dimensional float vector representing semantic meaning.</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="warn-box">
-                    <ion-icon name="warning-outline"></ion-icon>
-                    <p><strong>Lost in the Middle:</strong> Research shows LLMs ignore information placed in the middle of a massive context window. Always put the most relevant RAG chunks at the very beginning or very end of the prompt.</p>
+                    <div class="rag-step">
+                        <div class="rag-step-num">4</div>
+                        <div class="rag-step-body">
+                            <h4>Store in Vector Database</h4>
+                            <p>Index vectors in a specialized database that supports Approximate Nearest Neighbor (ANN) search. Also store chunk text and metadata (source, page, date) for filtering.</p>
+                        </div>
+                    </div>
+                    <div class="rag-step">
+                        <div class="rag-step-num">5</div>
+                        <div class="rag-step-body">
+                            <h4>Retrieve &rarr; Augment &rarr; Generate</h4>
+                            <p>At query time: embed the user question → find top-K similar chunks → inject chunks into LLM prompt → LLM generates a grounded, cited answer.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
+            <!-- Chunking Strategies -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Chunking Strategies</h2>
+                <p style="color:var(--text-secondary); margin-bottom:16px;">How you split your documents is the single biggest lever on RAG quality.</p>
+                <div class="chunk-demo">
+                    <span class="chunk-pill chunk-a">Chunk 1: "The capital of France is Paris..."</span>
+                    <span class="chunk-pill chunk-b">Chunk 2: "...Paris is also the fashion capital..."</span>
+                    <span class="chunk-pill chunk-c">Chunk 3: "...known for the Eiffel Tower..."</span>
+                    <span class="chunk-pill chunk-cut">BAD: "...Paris is also the fashion cap | ital of..."</span>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="text-outline"></ion-icon></div>
+                        <h3>Fixed-Size (Naive)</h3>
+                        <p>Split every N characters. Fast, but blindly cuts sentences and paragraphs mid-way. Only acceptable for very homogeneous structured data.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="document-text-outline"></ion-icon></div>
+                        <h3>Recursive Semantic</h3>
+                        <p>Split on paragraphs first, then sentences, then words — only going smaller if the chunk is still too big. Best general-purpose strategy. Used in LangChain's RecursiveCharacterTextSplitter.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon amber"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h3>Document-Aware</h3>
+                        <p>Parse document structure (headings, sections, tables) and chunk along natural boundaries. A Markdown heading is a natural split point. Best for structured docs.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="analytics-outline"></ion-icon></div>
+                        <h3>Semantic Clustering</h3>
+                        <p>Embed sentences individually, then cluster semantically similar consecutive sentences into one chunk. Most accurate — no artificial cuts — but computationally expensive.</p>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Vector Databases -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Vector Database Landscape</h2>
+                <div class="vector-db-grid">
+                    <div class="vdb-card"><div class="vdb-name">Pinecone</div><div class="vdb-desc">Managed cloud, serverless, fastest time-to-production</div></div>
+                    <div class="vdb-card"><div class="vdb-name">Qdrant</div><div class="vdb-desc">Open-source, Rust-based, excellent filtering performance</div></div>
+                    <div class="vdb-card"><div class="vdb-name">Weaviate</div><div class="vdb-desc">Open-source, built-in embedding support, GraphQL API</div></div>
+                    <div class="vdb-card"><div class="vdb-name">Chroma</div><div class="vdb-desc">Local-first, perfect for prototyping and development</div></div>
+                    <div class="vdb-card"><div class="vdb-name">Azure AI Search</div><div class="vdb-desc">Enterprise managed, built-in hybrid search, strong compliance</div></div>
+                    <div class="vdb-card"><div class="vdb-name">pgvector</div><div class="vdb-desc">Postgres extension — vector search in your existing DB</div></div>
+                </div>
+            </section>
+
+            <!-- Advanced RAG -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Advanced RAG: Beyond Naive Retrieval</h2>
+                <div class="retrieval-compare">
+                    <div class="ret-card">
+                        <span class="ret-tag" style="background:rgba(129,140,248,0.2);color:#818cf8;">Standard</span>
+                        <h4>Dense Vector Search</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Query → embed → find nearest vectors by cosine similarity. Works great for semantic queries ("what is our refund policy?") but fails on exact keyword matches.</p>
+                    </div>
+                    <div class="ret-card">
+                        <span class="ret-tag" style="background:rgba(52,211,153,0.2);color:#34d399;">Better</span>
+                        <h4>Hybrid Search</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Combines dense vector search (meaning) with BM25 keyword search (exact terms). Scores fused via Reciprocal Rank Fusion (RRF). Best for product names, IDs, and acronyms that embeddings miss.</p>
+                    </div>
+                    <div class="ret-card">
+                        <span class="ret-tag" style="background:rgba(251,191,36,0.2);color:#fbbf24;">Best</span>
+                        <h4>Hybrid + Re-Ranking</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">After retrieving top-20 candidates, pass them to a cross-encoder re-ranker (e.g., Cohere Rerank) which scores each chunk against the query with full context. The top-5 re-ranked results are much more accurate.</p>
+                    </div>
+                </div>
+
+                <div class="embedding-visual" style="margin-top:24px;">
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(129,140,248,0.1);color:#818cf8;border-color:rgba(129,140,248,0.3);">Query Expansion</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector" style="color:var(--text-primary);">Use LLM to rewrite bad user queries into 3 better versions, then search with all 3 and merge results</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(52,211,153,0.1);color:#34d399;border-color:rgba(52,211,153,0.3);">HyDE</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector" style="color:var(--text-primary);">Hypothetical Document Embeddings — generate a fake answer, embed it, use the embedding to find real matching chunks</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.3);">Parent-Child Chunks</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector" style="color:var(--text-primary);">Index small chunks for precise retrieval, but return the full parent section to the LLM for complete context</div>
+                    </div>
+                </div>
+
+                <div class="warn-box" style="margin-top:20px;">
+                    <ion-icon name="warning-outline"></ion-icon>
+                    <p><strong>Lost in the Middle:</strong> Research shows LLMs perform poorly on information placed in the middle of long contexts. Always put the most relevant retrieved chunks at the very beginning or end of your RAG prompt — never bury the critical fact in the middle of 10 chunks.</p>
+                </div>
+            </section>
+
+            <!-- Interview Q&A -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Interview Prep</div>
                 <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
                 <div class="qa-list">
-    <div class="qa-item">
-        <div class="qa-q">Why use a Vector Database instead of a regular SQL database? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">SQL databases perform exact keyword matches (e.g., searching 'Dog' will not return 'Puppy'). Vector Databases perform semantic search by comparing the mathematical distance between concepts in multi-dimensional space, meaning 'Dog' and 'Puppy' will be matched instantly.</div>
-    </div>
-    <div class="qa-item">
-        <div class="qa-q">What is Hybrid Search? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Hybrid Search combines traditional BM25 keyword search (great for exact names, acronyms, or IDs) with Vector Search (great for concepts and intent). The scores are fused together using Reciprocal Rank Fusion (RRF) for the best possible results.</div>
-    </div>
-    <div class="qa-item">
-        <div class="qa-q">What is Chunking, and why is it hard? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Chunking is splitting a large document into smaller pieces for the LLM to read. It's hard because if you split arbitrarily (e.g., every 500 words), you might cut a sentence or paragraph in half, destroying the semantic meaning of that chunk.</div>
-    </div>
-</div>
-
+                    <div class="qa-item">
+                        <div class="qa-q">Why use a Vector Database instead of a regular SQL database? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">SQL performs exact keyword matching — searching "canine" won't return results for "dog." Vector databases compare mathematical distance between embedding vectors, so "dog" and "canine" land near each other in 1536-dimensional space. SQL is great for structured filters (date, price, category), which is why modern production systems combine both: use a vector DB for semantic search and filter results with SQL-like metadata constraints.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is cosine similarity and why use it over Euclidean distance? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Cosine similarity measures the angle between two vectors, not the distance. This makes it invariant to magnitude — a short sentence and a long document about the same topic will have the same angle even though their vector magnitudes differ. Euclidean distance is affected by vector length, making it unreliable for text of varying lengths. Cosine similarity ranges from -1 (opposite) to 1 (identical), with 0.8+ indicating strong semantic relevance.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is Hybrid Search and when would you use pure vector over it? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Hybrid search combines dense (vector) and sparse (BM25/keyword) retrieval. Use pure vector for: conversational queries, concept-level searches, multilingual content. Use hybrid for: product catalogs with SKU numbers, legal documents with exact citation references, code search where function names matter. Most production RAG systems use hybrid by default since it adds minimal latency but significantly improves recall for exact-match queries.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is Chunking and why is it the hardest part of RAG? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Chunking splits documents into retrieval units. It's the hardest part because: (1) Too small — individual sentences lack enough context for the embedding to represent meaning accurately. (2) Too large — retrieval becomes imprecise and you waste context window tokens on irrelevant text. (3) Structure matters — a financial table split in the middle is useless. (4) No universal optimal size — PDFs, code, chat logs, and legal documents each have different natural chunk units. The standard approach is recursive semantic splitting with ~500 tokens and 10% overlap.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How does re-ranking improve RAG accuracy? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">First-stage retrieval (ANN search) optimizes for speed — it finds approximate nearest neighbors using index structures. This can miss the truly most relevant chunk if it's slightly less similar by embedding distance. Re-ranking uses a cross-encoder that reads both the query and each candidate chunk together, making a holistic relevance judgment. Cross-encoders are slower (can't be pre-indexed) but much more accurate. The standard pattern: retrieve 20 candidates, re-rank to top 5, pass top 5 to the LLM.</div>
+                    </div>
+                </div>
             </section>
-            
+
+            <!-- Next Steps -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Up Next</div>
                 <h2 style="margin-top:0; border:none;">Continue Learning</h2>
                 <div class="next-steps-grid">
-    <a href="agents.html" class="next-card">
-        <ion-icon name="hardware-chip-outline" style="color: #f472b6;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Agentic AI</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-    <a href="graphrag.html" class="next-card">
-        <ion-icon name="analytics-outline" style="color: #2dd4bf;"></ion-icon>
-        <div class="next-card-text">
-            <h4>GraphRAG</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-</div>
-
+                    <a href="agents.html" class="next-card">
+                        <ion-icon name="hardware-chip-outline" style="color:#f472b6;"></ion-icon>
+                        <div class="next-card-text"><h4>Agentic AI</h4><p>Add tools and autonomy to RAG &rarr;</p></div>
+                    </a>
+                    <a href="graphrag.html" class="next-card">
+                        <ion-icon name="analytics-outline" style="color:#2dd4bf;"></ion-icon>
+                        <div class="next-card-text"><h4>GraphRAG</h4><p>Relationship-aware retrieval &rarr;</p></div>
+                    </a>
+                    <a href="evals.html" class="next-card">
+                        <ion-icon name="bar-chart-outline" style="color:#fbbf24;"></ion-icon>
+                        <div class="next-card-text"><h4>AI Evaluation</h4><p>Measure RAG quality with RAGAS &rarr;</p></div>
+                    </a>
+                </div>
             </section>
+
         </div>
     </main>
 </div>
-    <script src="script.js"></script>
-    <script>
-        // Q&A Accordion Logic
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

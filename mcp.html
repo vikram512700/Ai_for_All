@@ -8,6 +8,29 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .mcp-arch { display: flex; align-items: center; justify-content: center; gap: 0; margin: 24px 0; flex-wrap: wrap; }
+        .mcp-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; min-width: 160px; text-align: center; flex: 1; max-width: 200px; }
+        .mcp-box h4 { font-size: 0.9rem; margin-bottom: 4px; }
+        .mcp-box p { font-size: 0.78rem; color: var(--text-secondary); margin: 0; }
+        .mcp-arrow { font-size: 1.5rem; color: var(--text-secondary); padding: 0 8px; flex-shrink: 0; }
+        .mcp-arrow.bidirectional::after { display: block; content: '⟵'; margin-top: -10px; }
+        .capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+        @media (max-width: 640px) { .capability-grid { grid-template-columns: 1fr; } }
+        .cap-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; }
+        .cap-tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 10px; }
+        .cap-resources { background: rgba(129,140,248,0.2); color: #818cf8; }
+        .cap-tools { background: rgba(52,211,153,0.2); color: #34d399; }
+        .cap-prompts { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .server-examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 20px; }
+        .server-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; }
+        .server-card code { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--accent-primary); }
+        .server-card p { font-size: 0.82rem; color: var(--text-secondary); margin: 6px 0 0; }
+        .transport-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+        @media (max-width: 500px) { .transport-grid { grid-template-columns: 1fr; } }
+        .transport-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
+        .transport-card h4 { font-family: 'Fira Code', monospace; color: var(--accent-primary); margin-bottom: 8px; }
+    </style>
 </head>
 <body>
 <div class="app-container">
@@ -61,128 +84,189 @@
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
-            </div>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
         </header>
         <div class="content-area">
+
             <header class="page-header animate-on-scroll">
                 <span class="badge">Module 7</span>
-                <h1>Model Context <span class="text-gradient">Protocol</span> <span class="text-gradient"></span></h1>
-                <p class="page-description">Standardize how your AI models securely access external tools, APIs, and enterprise data sources.</p>
+                <h1>Model Context <span class="text-gradient">Protocol</span></h1>
+                <p class="page-description">The open standard that gives AI models secure, standardized access to tools, data, and enterprise systems. Called "USB-C for AI" — build once, works everywhere.</p>
                 <div class="chip-strip">
-    <span class="chip ch-b">MCP Client</span>
-    <span class="chip ch-g">MCP Server</span>
-    <span class="chip ch-r">Anthropic Standard</span>
-    <span class="chip ch-a">STDIO</span>
-</div>
-
+                    <span class="chip ch-b">MCP Client</span>
+                    <span class="chip ch-g">MCP Server</span>
+                    <span class="chip ch-r">Anthropic Standard</span>
+                    <span class="chip ch-a">STDIO / SSE</span>
+                    <span class="chip ch-p">Resources</span>
+                    <span class="chip ch-g">Tools</span>
+                </div>
             </header>
-            
 
+            <!-- Why MCP -->
             <section class="animate-on-scroll">
                 <div class="eyebrow">The USB-C of AI</div>
-                <h2 style="margin-top:0;">Model Context Protocol (MCP)</h2>
+                <h2 style="margin-top:0;">The Problem MCP Solves</h2>
                 <div class="info-box">
                     <ion-icon name="information-circle-outline"></ion-icon>
-                    <p>Created by Anthropic, MCP is an open standard that standardizes how AI applications connect to external data sources. Before MCP, you had to write custom tool-calling code for every API (Slack, GitHub, Postgres). Now, you just plug in an MCP Server.</p>
+                    <p>Before MCP, every AI tool (Cursor, GitHub Copilot, Claude Desktop) had to build <em>custom proprietary integrations</em> for every service (Slack, Jira, Postgres, GitHub). If 10 AI tools want to connect to 10 services, that's 100 custom integrations to maintain. MCP reduces this to 10 + 10 = 20 standard implementations.</p>
                 </div>
-                
                 <div class="bento-grid">
                     <div class="bento-card">
-                        <div class="card-icon blue"><ion-icon name="laptop-outline"></ion-icon></div>
-                        <h3>MCP Client (The AI)</h3>
-                        <p>The AI application (like Claude Desktop, Cursor, or an Agent). It maintains a 1:1 connection with the server and asks for tools/data.</p>
+                        <div class="card-icon red"><ion-icon name="close-circle-outline"></ion-icon></div>
+                        <h3>Before MCP</h3>
+                        <p>Each AI tool hardcodes custom API clients per service. Cursor has its own Jira plugin. Copilot has its own Jira plugin. Neither works for the other. 10 tools × 10 services = 100 integrations.</p>
                     </div>
                     <div class="bento-card">
-                        <div class="card-icon green"><ion-icon name="server-outline"></ion-icon></div>
-                        <h3>MCP Server (The Data)</h3>
-                        <p>A lightweight program running locally or remotely. It exposes Resources (files), Tools (actions), and Prompts to the Client over a secure STDIO or SSE connection.</p>
+                        <div class="card-icon green"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
+                        <h3>After MCP</h3>
+                        <p>Build one MCP Server for Jira. Every MCP-compatible client (Claude, Cursor, Windsurf, custom agents) instantly gets Jira integration for free. 10 + 10 = 20 total implementations.</p>
                     </div>
                 </div>
             </section>
 
+            <!-- Architecture -->
             <section class="animate-on-scroll" style="margin-top:40px;">
-                <h2>What does an MCP Server expose?</h2>
-                <div class="temp-grid">
-                    <div class="temp-card">
-                        <h4>Resources</h4>
-                        <p>File-like data that the AI can read. Example: Log files, database schemas, or internal API documentation.</p>
+                <h2>MCP Architecture: Client ↔ Server</h2>
+                <div class="mcp-arch">
+                    <div class="mcp-box" style="border-color:rgba(129,140,248,0.5);">
+                        <ion-icon name="sparkles-outline" style="font-size:1.5rem;color:#818cf8;"></ion-icon>
+                        <h4 style="color:#818cf8;">LLM App</h4>
+                        <p>Claude Desktop, Cursor, your custom agent</p>
                     </div>
-                    <div class="temp-card">
-                        <h4>Tools</h4>
-                        <p>Executable functions the AI can call. Example: <code>execute_sql_query</code>, <code>create_github_issue</code>, <code>fetch_weather</code>.</p>
+                    <div class="mcp-arrow">⟷</div>
+                    <div class="mcp-box" style="border-color:rgba(52,211,153,0.5);">
+                        <ion-icon name="laptop-outline" style="font-size:1.5rem;color:#34d399;"></ion-icon>
+                        <h4 style="color:#34d399;">MCP Client</h4>
+                        <p>Built into the host app. Manages server connections</p>
                     </div>
-                    <div class="temp-card">
-                        <h4>Prompts</h4>
-                        <p>Pre-written prompt templates that users can easily trigger. Example: "Review this pull request based on our company guidelines."</p>
+                    <div class="mcp-arrow">⟷</div>
+                    <div class="mcp-box" style="border-color:rgba(251,191,36,0.5);">
+                        <ion-icon name="server-outline" style="font-size:1.5rem;color:#fbbf24;"></ion-icon>
+                        <h4 style="color:#fbbf24;">MCP Server</h4>
+                        <p>Exposes your tools, resources, and prompts</p>
+                    </div>
+                    <div class="mcp-arrow">⟷</div>
+                    <div class="mcp-box" style="border-color:rgba(96,165,250,0.5);">
+                        <ion-icon name="cube-outline" style="font-size:1.5rem;color:#60a5fa;"></ion-icon>
+                        <h4 style="color:#60a5fa;">Data Source</h4>
+                        <p>Postgres, GitHub, Slack, Filesystem, APIs</p>
                     </div>
                 </div>
-                
                 <div class="key-box">
                     <ion-icon name="key-outline"></ion-icon>
-                    <p><strong>Security First:</strong> MCP Servers are fully controlled by the host. The LLM provider (OpenAI/Anthropic) NEVER gets direct access to your database. The LLM simply asks the local MCP Client to run a tool, and the local Client talks to the local Server.</p>
+                    <p><strong>Security by Design:</strong> The LLM provider (Anthropic, OpenAI) <em>never</em> touches your data. The MCP Client on your machine intermediates all requests. The LLM just outputs "call this tool with these args" — your local client executes it.</p>
                 </div>
             </section>
 
+            <!-- What Servers Expose -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>What an MCP Server Exposes</h2>
+                <div class="capability-grid">
+                    <div class="cap-card">
+                        <span class="cap-tag cap-resources">Resources</span>
+                        <h4>Read-Only Data</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">File-like data the AI can read. Log files, database schemas, API documentation, configuration files. Think of these as attachable context — the AI can request to read them.</p>
+                    </div>
+                    <div class="cap-card">
+                        <span class="cap-tag cap-tools">Tools</span>
+                        <h4>Executable Functions</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Functions the AI can call to take actions. <code>execute_sql_query</code>, <code>create_github_issue</code>, <code>send_slack_message</code>. You control exactly what's allowed — a read-only SQL server can block INSERT/UPDATE.</p>
+                    </div>
+                    <div class="cap-card">
+                        <span class="cap-tag cap-prompts">Prompts</span>
+                        <h4>Reusable Templates</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Pre-written prompt templates with arguments. "Review this PR against our security checklist." Users select these from a menu — powerful for standardizing team AI workflows.</p>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Transport Protocols -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Transport Protocols</h2>
+                <div class="transport-grid">
+                    <div class="transport-card">
+                        <h4>STDIO</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Standard Input/Output — the client spawns the MCP Server as a child process on the same machine. JSON-RPC messages flow over stdin/stdout. Used for local tools (filesystem, databases on localhost).</p>
+                        <div style="margin-top:12px; font-size:0.8rem; color:#34d399;">Best for: local development, desktop apps, Claude Desktop</div>
+                    </div>
+                    <div class="transport-card">
+                        <h4>HTTP + SSE</h4>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);">Server-Sent Events over HTTP. The MCP Server runs as a remote service. Enables cloud-hosted servers shared across multiple clients. Streaming responses via SSE for long-running operations.</p>
+                        <div style="margin-top:12px; font-size:0.8rem; color:#60a5fa;">Best for: enterprise servers, shared team infrastructure</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MCP Server Examples -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Popular MCP Servers (Ready to Use)</h2>
+                <div class="server-examples">
+                    <div class="server-card"><code>@modelcontextprotocol/server-filesystem</code><p>Read/write local files with configurable allowed directories. The simplest MCP server to start with.</p></div>
+                    <div class="server-card"><code>@modelcontextprotocol/server-github</code><p>Create issues, PRs, read repos, search code. Lets Claude manage your GitHub workflow.</p></div>
+                    <div class="server-card"><code>@modelcontextprotocol/server-postgres</code><p>Execute SQL against PostgreSQL. Read-only by default — Claude can query your production DB safely.</p></div>
+                    <div class="server-card"><code>@modelcontextprotocol/server-slack</code><p>Read channels, post messages, search history. Gives Claude full Slack context.</p></div>
+                    <div class="server-card"><code>mcp-server-puppeteer</code><p>Control a headless browser — Claude can navigate websites, fill forms, take screenshots.</p></div>
+                    <div class="server-card"><code>mcp-server-docker</code><p>Manage containers, run commands inside them, inspect logs. DevOps automation via Claude.</p></div>
+                </div>
+            </section>
+
+            <!-- Interview Q&A -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Interview Prep</div>
                 <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
                 <div class="qa-list">
-    <div class="qa-item">
-        <div class="qa-q">Why was MCP created? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Prior to MCP, every AI tool (Cursor, GitHub Copilot, ChatGPT) had to build custom, proprietary integrations for every service (Slack, Jira, Postgres). MCP provides a universal, open-source standard. If you build an MCP Server for your database, EVERY AI client can instantly use it.</div>
-    </div>
-    <div class="qa-item">
-        <div class="qa-q">How does the MCP Client communicate with the Server? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Locally, it uses STDIO (Standard Input/Output) by spawning a subprocess. Over a network, it uses SSE (Server-Sent Events) over HTTP.</div>
-    </div>
-    <div class="qa-item">
-        <div class="qa-q">Can an MCP Server execute dangerous code? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Only if you program it to! The MCP Server dictates exactly what tools are exposed. You can restrict an MCP PostgreSQL server to only allow `SELECT` queries, ensuring the AI can never drop a table.</div>
-    </div>
-</div>
-
+                    <div class="qa-item">
+                        <div class="qa-q">Why was MCP created if Function Calling already existed? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Function Calling lets one model call one custom function — it requires custom code per use case per model per application. MCP is a standardized protocol for the entire client-server communication lifecycle: discovery (what tools exist?), invocation (call this tool), and result handling. An MCP Server built for Claude Desktop works identically with Cursor, Windsurf, or any MCP client — no code changes. It's the difference between building a website vs. building the HTTP standard.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How does the LLM know what tools an MCP Server has? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">On startup, the MCP Client sends a `tools/list` request to the Server. The Server returns a JSON array of tool schemas: name, description, and input parameter types. The client injects these schemas into the LLM's system prompt. The LLM reads the schemas and knows what's available. This discovery is dynamic — add a new tool to the server, and all connected clients automatically see it without any code changes.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">Can an MCP Server execute dangerous operations like deleting files? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Only if you program it that way. The MCP Server is code you write (or install) — you control exactly which tools it exposes. A well-designed filesystem MCP Server might only expose `read_file` and `list_directory`, blocking write operations entirely. A database server might only allow SELECT queries. This is the "least privilege" principle — give the AI only the capabilities it genuinely needs for the task at hand.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is the difference between MCP Resources and MCP Tools? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Resources are passive, read-only data exposed as URIs (like `file:///logs/app.log` or `db://schema/users`). The AI application decides when to fetch them and attaches them to the context. Tools are active, callable functions that take arguments and produce side effects (creating, updating, deleting). Resources are like files on a network drive; Tools are like RPCs. The distinction matters for permission scoping: you might grant resource read access broadly but restrict tool write access to specific users.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How does MCP handle security when the server is remote? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Remote MCP Servers (HTTP+SSE transport) should implement standard web security: OAuth 2.0 for authentication, TLS for encryption in transit, rate limiting, and audit logging. The MCP spec includes an authorization framework. Enterprise deployments add API gateway policies (via LiteLLM or Kong) in front of MCP Servers. The key security invariant remains: the LLM provider never directly touches your server — all calls go through the client on the user's side of the trust boundary.</div>
+                    </div>
+                </div>
             </section>
-            
+
+            <!-- Next Steps -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Up Next</div>
                 <h2 style="margin-top:0; border:none;">Continue Learning</h2>
                 <div class="next-steps-grid">
-    <a href="agent-engineering.html" class="next-card">
-        <ion-icon name="construct-outline" style="color: #f472b6;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Agent Engineering</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-    <a href="llmops.html" class="next-card">
-        <ion-icon name="pulse-outline" style="color: #fbbf24;"></ion-icon>
-        <div class="next-card-text">
-            <h4>LLMOps & Observability</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-</div>
-
+                    <a href="agent-engineering.html" class="next-card">
+                        <ion-icon name="construct-outline" style="color:#f472b6;"></ion-icon>
+                        <div class="next-card-text"><h4>Agent Engineering</h4><p>Advanced agent memory &amp; patterns &rarr;</p></div>
+                    </a>
+                    <a href="llmops.html" class="next-card">
+                        <ion-icon name="pulse-outline" style="color:#fbbf24;"></ion-icon>
+                        <div class="next-card-text"><h4>LLMOps</h4><p>Monitor your agents in production &rarr;</p></div>
+                    </a>
+                    <a href="advanced-security.html" class="next-card">
+                        <ion-icon name="lock-closed-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text"><h4>Advanced Security</h4><p>Secure your MCP deployment &rarr;</p></div>
+                    </a>
+                </div>
             </section>
+
         </div>
     </main>
 </div>
-    <script src="script.js"></script>
-    <script>
-        // Q&A Accordion Logic
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

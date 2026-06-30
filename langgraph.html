@@ -8,6 +8,27 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .graph-visual { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 24px 0; }
+        .gv-row { display: flex; align-items: center; gap: 16px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .gv-node { background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 10px; padding: 12px 20px; text-align: center; font-size: 0.85rem; font-weight: 600; min-width: 120px; }
+        .gv-node.start { border-color: #34d399; color: #34d399; }
+        .gv-node.llm { border-color: #818cf8; color: #818cf8; }
+        .gv-node.tool { border-color: #fbbf24; color: #fbbf24; }
+        .gv-node.end { border-color: #60a5fa; color: #60a5fa; }
+        .gv-arrow { color: var(--text-secondary); font-size: 1.2rem; flex-shrink: 0; }
+        .gv-label { font-size: 0.75rem; color: var(--text-secondary); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+        .gv-separator { height: 32px; display: flex; align-items: center; justify-content: center; }
+        .code-block { background: rgba(15,15,25,0.9); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; font-family: 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.7; margin: 16px 0; overflow-x: auto; }
+        .kw { color: #818cf8; }
+        .fn { color: #34d399; }
+        .str { color: #fbbf24; }
+        .cm { color: #64748b; }
+        .ty { color: #60a5fa; }
+        .concept-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px; }
+        .cf-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; }
+        .cf-card h4 { font-size: 0.9rem; margin-bottom: 6px; }
+    </style>
 </head>
 <body>
 <div class="app-container">
@@ -61,130 +82,207 @@
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
-            </div>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
         </header>
         <div class="content-area">
+
             <header class="page-header animate-on-scroll">
                 <span class="badge">Module 13</span>
-                <h1>LangGraph <span class="text-gradient">Deep Dive</span> <span class="text-gradient"></span></h1>
-                <p class="page-description">Build highly controllable, stateful, multi-actor applications with LLMs using graphs.</p>
+                <h1>LangGraph <span class="text-gradient">Deep Dive</span></h1>
+                <p class="page-description">Build highly controllable, stateful, multi-actor agent systems using directed graphs — the production standard for enterprise AI agents.</p>
                 <div class="chip-strip">
-    <span class="chip ch-p">StateGraphs</span>
-    <span class="chip ch-g">Checkpointers</span>
-    <span class="chip ch-a">Conditional Edges</span>
-    <span class="chip ch-b">Time Travel</span>
-    <span class="chip ch-r">HITL</span>
-</div>
-
+                    <span class="chip ch-p">StateGraphs</span>
+                    <span class="chip ch-g">Checkpointers</span>
+                    <span class="chip ch-a">Conditional Edges</span>
+                    <span class="chip ch-b">Time Travel</span>
+                    <span class="chip ch-r">HITL</span>
+                    <span class="chip ch-p">Cyclic Graphs</span>
+                </div>
             </header>
-            
 
+            <!-- Why LangGraph -->
             <section class="animate-on-scroll">
                 <div class="eyebrow">Advanced Agent Orchestration</div>
-                <h2 style="margin-top:0;">Why LangGraph?</h2>
+                <h2 style="margin-top:0;">Why LangGraph Over Basic Agents?</h2>
                 <div class="info-box">
                     <ion-icon name="information-circle-outline"></ion-icon>
-                    <p>Standard agents (like basic ReAct agents) are unpredictable and hard to control in production. <strong>LangGraph</strong> solves this by treating agents as State Machines (Graphs). You define exactly which paths the agent is allowed to take.</p>
+                    <p>A basic ReAct agent is a while-loop with no structure. It can get stuck, consume infinite tokens, has no memory persistence, and can't be paused or inspected. <strong>LangGraph</strong> treats agents as explicit State Machines — every path, every transition, and every state is defined, observable, and controllable.</p>
                 </div>
-                
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon red"><ion-icon name="close-circle-outline"></ion-icon></div>
+                        <h3>Basic While-Loop Agent</h3>
+                        <p>No structure. Infinite loop risk. No state persistence. Can't pause for human review. No rollback on failure. No visibility into intermediate steps. Dies on restart.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon green"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
+                        <h3>LangGraph Agent</h3>
+                        <p>Explicit graph structure. max_steps guard. State persisted to DB after every node. Pause/resume for HITL. Time travel rollback. Full LangSmith trace visibility. Survives restarts.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Graph Structure -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>The Graph Structure: Nodes & Edges</h2>
+                <div class="graph-visual">
+                    <div class="gv-row"><div class="gv-node start">__START__</div></div>
+                    <div class="gv-separator"><span class="gv-arrow">↓</span></div>
+                    <div class="gv-row"><div class="gv-node llm">call_llm (Node)</div></div>
+                    <div class="gv-separator"><span class="gv-arrow">↓</span></div>
+                    <div class="gv-row">
+                        <span class="gv-label">if tool_call → tools</span>
+                        &nbsp;&nbsp;&nbsp;
+                        <span class="gv-label">if final_answer → end</span>
+                    </div>
+                    <div class="gv-separator">
+                        <span class="gv-arrow" style="margin-right:60px;">↙</span>
+                        <span class="gv-arrow" style="margin-left:60px;">↘</span>
+                    </div>
+                    <div class="gv-row" style="gap:60px;">
+                        <div class="gv-node tool">execute_tools (Node)</div>
+                        <div class="gv-node end">__END__</div>
+                    </div>
+                    <div class="gv-separator" style="align-self:flex-start; margin-left:25%;"><span class="gv-arrow" style="transform:rotate(180deg);">↙</span> <span style="font-size:0.75rem;color:var(--text-secondary);">loops back to call_llm</span></div>
+                </div>
                 <div class="bento-grid">
                     <div class="bento-card">
                         <div class="card-icon purple"><ion-icon name="git-commit-outline"></ion-icon></div>
-                        <h3>Nodes & Edges</h3>
-                        <p><strong>Nodes</strong> are Python functions (e.g., 'Call LLM', 'Run Tool'). <strong>Edges</strong> connect the nodes and control the flow of execution.</p>
+                        <h3>Nodes</h3>
+                        <p>Python functions that receive the current State and return an updated State. Examples: <code>call_llm()</code>, <code>execute_tool()</code>, <code>summarize_history()</code>. Each node is atomic and testable in isolation.</p>
                     </div>
                     <div class="bento-card">
                         <div class="card-icon blue"><ion-icon name="shuffle-outline"></ion-icon></div>
                         <h3>Conditional Edges</h3>
-                        <p>The magic of LangGraph. After a node runs, a conditional edge acts as an 'if/else' router. <em>If tool output is bad &rarr; loop back to LLM. If good &rarr; go to End.</em></p>
+                        <p>Router functions that examine the current State and return the name of the next node to visit. This is the "if/else" logic of the graph — <em>if the LLM output contains a tool_use block → route to tool executor, else → route to END.</em></p>
                     </div>
                 </div>
             </section>
 
+            <!-- State -->
             <section class="animate-on-scroll" style="margin-top:40px;">
-                <h2>The Power of State & Time Travel</h2>
-                
-                <div class="temp-grid">
-                    <div class="temp-card">
-                        <h4>Global State</h4>
-                        <p>Every node receives and updates a global <code>State</code> object (usually a Pydantic model). This ensures all agents share the exact same memory and context.</p>
-                    </div>
-                    <div class="temp-card">
-                        <h4>Checkpointers</h4>
-                        <p>LangGraph saves the State to a database (Postgres, SQLite) after every single node execution. This provides flawless memory persistence across sessions.</p>
-                    </div>
-                    <div class="temp-card">
-                        <h4>Time Travel & HITL</h4>
-                        <p>Because every state is saved, you can pause the graph for Human-in-the-Loop (HITL) approval, or literally 'rewind' the agent to a previous step if it made a mistake.</p>
-                    </div>
-                </div>
-                
-                <div class="warn-box">
-                    <ion-icon name="warning-outline"></ion-icon>
-                    <p><strong>Cyclic Graphs:</strong> Unlike traditional DAGs (Directed Acyclic Graphs) used in data engineering (like Airflow), LangGraph allows cycles (loops). This is essential for agents, which need to loop to correct their own mistakes.</p>
+                <h2>Typed State: The Shared Memory</h2>
+                <p style="color:var(--text-secondary); margin-bottom:16px;">Every node in the graph receives the same State object and can update it. State is defined as a TypedDict (or Pydantic model) — this gives you type safety and IDE autocomplete on your agent's memory.</p>
+                <div class="code-block">
+<span class="kw">from</span> typing <span class="kw">import</span> <span class="ty">Annotated</span>, <span class="ty">TypedDict</span>
+<span class="kw">from</span> langgraph.graph <span class="kw">import</span> <span class="ty">StateGraph</span>, <span class="ty">END</span>
+<span class="kw">from</span> langchain_core.messages <span class="kw">import</span> <span class="ty">AnyMessage</span>
+<span class="kw">import</span> operator
+
+<span class="cm"># Define what the agent remembers across every node</span>
+<span class="kw">class</span> <span class="ty">AgentState</span>(<span class="ty">TypedDict</span>):
+    messages: <span class="ty">Annotated</span>[list[<span class="ty">AnyMessage</span>], operator.add]  <span class="cm"># append-only</span>
+    steps_taken: int
+    final_answer: str | None
+
+<span class="cm"># Build the graph</span>
+graph = <span class="fn">StateGraph</span>(<span class="ty">AgentState</span>)
+graph.<span class="fn">add_node</span>(<span class="str">"call_llm"</span>, call_llm_node)
+graph.<span class="fn">add_node</span>(<span class="str">"run_tools"</span>, run_tools_node)
+graph.<span class="fn">add_conditional_edges</span>(<span class="str">"call_llm"</span>, should_continue)
+graph.<span class="fn">set_entry_point</span>(<span class="str">"call_llm"</span>)
+app = graph.<span class="fn">compile</span>(checkpointer=memory)
                 </div>
             </section>
 
+            <!-- Key Features -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Power Features</h2>
+                <div class="concept-flow">
+                    <div class="cf-card">
+                        <div class="card-icon" style="background:rgba(52,211,153,0.15); border-radius:10px; padding:10px; width:42px; height:42px; display:flex; align-items:center; justify-content:center; margin-bottom:12px;"><ion-icon name="save-outline" style="color:#34d399;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Checkpointers</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">LangGraph saves the entire State to a database (SQLite for dev, Postgres for prod) after every single node execution. An agent can be paused, the server can restart, and the agent resumes exactly where it left off — nothing is lost.</p>
+                    </div>
+                    <div class="cf-card">
+                        <div class="card-icon" style="background:rgba(129,140,248,0.15); border-radius:10px; padding:10px; width:42px; height:42px; display:flex; align-items:center; justify-content:center; margin-bottom:12px;"><ion-icon name="time-outline" style="color:#818cf8;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Time Travel</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Every state snapshot is addressable. You can rewind to any previous step, modify the state (fix a bad tool call), and replay from that point. Essential for debugging production agent failures without re-running the full workflow.</p>
+                    </div>
+                    <div class="cf-card">
+                        <div class="card-icon" style="background:rgba(251,191,36,0.15); border-radius:10px; padding:10px; width:42px; height:42px; display:flex; align-items:center; justify-content:center; margin-bottom:12px;"><ion-icon name="hand-right-outline" style="color:#fbbf24;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Human-in-the-Loop</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Define <code>interrupt_before=["execute_sql"]</code> when compiling the graph. Execution pauses before that node and returns control to the application. After human approval, call <code>graph.update_state()</code> and <code>graph.continue()</code> to resume.</p>
+                    </div>
+                    <div class="cf-card">
+                        <div class="card-icon" style="background:rgba(96,165,250,0.15); border-radius:10px; padding:10px; width:42px; height:42px; display:flex; align-items:center; justify-content:center; margin-bottom:12px;"><ion-icon name="people-outline" style="color:#60a5fa;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Multi-Agent Subgraphs</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Compose graphs within graphs. A Supervisor graph has nodes that themselves are compiled sub-graphs (Research Agent, Coding Agent). Each sub-graph manages its own state, enabling true hierarchical multi-agent orchestration.</p>
+                    </div>
+                </div>
+            </section>
 
+            <!-- LangGraph vs LangChain -->
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>LangGraph vs. LangChain: When to Use Each</h2>
+                <div class="embedding-visual">
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(96,165,250,0.1);color:#60a5fa;border-color:rgba(96,165,250,0.3);">LangChain</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector" style="color:var(--text-primary);">Linear pipelines: Document → Embed → Query → Generate. No loops needed. Simple RAG workflows.</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(52,211,153,0.1);color:#34d399;border-color:rgba(52,211,153,0.3);">LangGraph</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector" style="color:var(--text-primary);">Cyclic flows: loops, branching, self-correction, HITL. Any production agent that needs to retry or recover from errors.</div>
+                    </div>
+                    <div class="emb-word-row">
+                        <div class="emb-word" style="background:rgba(251,191,36,0.1);color:#fbbf24;border-color:rgba(251,191,36,0.3);">Both Together</div>
+                        <div class="emb-arrow">&rarr;</div>
+                        <div class="emb-vector" style="color:var(--text-primary);">LangGraph orchestrates the agent loop; LangChain components (retrievers, document loaders) are used inside the nodes.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interview Q&A -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Interview Prep</div>
                 <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
                 <div class="qa-list">
-    <div class="qa-item">
-        <div class="qa-q">Why use LangGraph instead of vanilla LangChain? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Vanilla LangChain is great for linear pipelines (Chain A -> Chain B). But agents require non-linear logic (loops, branching, decision making). LangGraph was built specifically to handle these cyclic flows reliably.</div>
-    </div>
-    <div class="qa-item">
-        <div class="qa-q">What is Time Travel in LangGraph? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Because LangGraph uses checkpointers to save the state after every node, you can fetch a previous state, modify it (e.g., fix a bad prompt that caused a crash), and resume the graph execution from that exact point in the past.</div>
-    </div>
-    <div class="qa-item">
-        <div class="qa-q">How does Human-in-the-Loop work? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">You can define an `interrupt_before` on a specific node (e.g., the `execute_sql` node). The graph will run, pause right before that node, and return control to the user. The user approves, and the graph resumes.</div>
-    </div>
-</div>
-
+                    <div class="qa-item">
+                        <div class="qa-q">Why use LangGraph instead of a simple Python while-loop? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">A while-loop works for demos but fails in production because: (1) No state persistence — restart the process and all agent progress is lost. (2) No observability — you can't inspect intermediate states without adding custom logging. (3) No HITL — pausing for human approval requires complex async machinery. (4) No time travel — can't rewind to a previous state for debugging. (5) No structured routing — conditional logic becomes messy if/else chains. LangGraph gives all of this for free through the StateGraph abstraction and checkpointer system.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is Time Travel in LangGraph and how does it help debugging? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Time Travel leverages checkpointers: every state snapshot after each node execution is stored with a thread_id and checkpoint_id. In production, if an agent makes a wrong tool call at step 7 of a 20-step workflow, you can fetch the checkpoint from step 6, modify the state (e.g., fix the bad tool arguments), and replay from step 6 forward — without re-running steps 1-6. This saves enormous debugging time for long-running agentic workflows. It's essentially git for agent state.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How do conditional edges work in LangGraph? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">A conditional edge is a Python function that takes the current State and returns a string (the name of the next node to route to). Example: `def should_continue(state): return "tools" if state["messages"][-1].tool_calls else END`. LangGraph calls this function after the preceding node completes, and routes execution accordingly. You can return any number of possible next nodes — the function acts as the routing logic. This replaces implicit if/else chains with explicit, named transitions that are visible in the graph visualization.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is Human-in-the-Loop and how is it implemented? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">HITL pauses the graph before a specified node and waits for human input. Implementation: `app = graph.compile(checkpointer=memory, interrupt_before=["execute_sql"])`. When the graph reaches the node before "execute_sql", it saves state and returns control to your application. Your UI shows the pending action to the user. If approved: `app.update_state(thread_config, {"approved": True})` then `app.stream(None, thread_config)` to resume. If rejected: update state with rejection reason and resume to trigger a different path. The agent never knows it was paused — from its perspective, the tool call result just arrived.</div>
+                    </div>
+                </div>
             </section>
-            
+
+            <!-- Next Steps -->
             <section class="animate-on-scroll" style="margin-top:40px;">
                 <div class="eyebrow">Up Next</div>
                 <h2 style="margin-top:0; border:none;">Continue Learning</h2>
                 <div class="next-steps-grid">
-    <a href="agent-engineering.html" class="next-card">
-        <ion-icon name="construct-outline" style="color: #f472b6;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Agent Engineering</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-    <a href="multi-agent.html" class="next-card">
-        <ion-icon name="people-outline" style="color: #34d399;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Multi-Agent Systems</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-</div>
-
+                    <a href="agent-engineering.html" class="next-card">
+                        <ion-icon name="construct-outline" style="color:#f472b6;"></ion-icon>
+                        <div class="next-card-text"><h4>Agent Engineering</h4><p>Memory systems &amp; planning patterns &rarr;</p></div>
+                    </a>
+                    <a href="multi-agent.html" class="next-card">
+                        <ion-icon name="people-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>Multi-Agent Systems</h4><p>LangGraph supervisor patterns &rarr;</p></div>
+                    </a>
+                </div>
             </section>
+
         </div>
     </main>
 </div>
-    <script src="script.js"></script>
-    <script>
-        // Q&A Accordion Logic
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

@@ -1,19 +1,42 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GraphRAG & Knowledge Graphs | AI for All</title>
+    <title>GraphRAG | AI for All</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .graph-demo { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; margin: 20px 0; }
+        .gd-nodes { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+        .gd-entity { border: 2px solid; border-radius: 50%; width: 86px; height: 86px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; text-align: center; padding: 6px; }
+        .gd-entity.person { border-color:#818cf8; color:#818cf8; background:rgba(129,140,248,0.1); }
+        .gd-entity.org    { border-color:#34d399; color:#34d399; background:rgba(52,211,153,0.1); }
+        .gd-entity.product{ border-color:#fbbf24; color:#fbbf24; background:rgba(251,191,36,0.1); }
+        .gd-entity.event  { border-color:#60a5fa; color:#60a5fa; background:rgba(96,165,250,0.1); }
+        .gd-relations { display: flex; flex-direction: column; gap: 6px; }
+        .gd-rel { font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; justify-content: center; }
+        .gd-rel .rel-label { background: rgba(255,255,255,0.06); border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; }
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        @media (max-width:640px) { .compare-grid { grid-template-columns: 1fr; } }
+        .cg-col { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
+        .cg-col h4 { margin-bottom: 12px; font-size: 0.92rem; }
+        .cg-col ul { list-style: none; padding: 0; margin: 0; }
+        .cg-col ul li { font-size: 0.83rem; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 8px; }
+        .cg-col ul li:last-child { border-bottom: none; }
+        .cg-col ul li::before { content: '→'; flex-shrink: 0; }
+        .pipeline-steps { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+        .ps-step { display: flex; align-items: flex-start; gap: 16px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; }
+        .ps-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; }
+        .ps-text h5 { font-size: 0.88rem; margin-bottom: 4px; }
+        .ps-text p { font-size: 0.82rem; color: var(--text-secondary); margin: 0; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder -->
-        <aside class="sidebar" id="sidebar">
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
         <a href="index.html" class="logo-container" style="text-decoration:none;">
             <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
             <div class="logo-text">AI for All</div>
@@ -59,75 +82,176 @@
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
     </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search GraphRAG..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
-            
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 18</span>
+                <h1>Graph<span class="text-gradient">RAG</span></h1>
+                <p class="page-description">Combine knowledge graphs with vector retrieval to answer multi-hop questions that require reasoning across connected entities — where standard RAG fundamentally fails.</p>
                 <div class="chip-strip">
-                    <span class="chip ch-p">V4.0 Optimized</span>
-                    <span class="chip ch-b">Core Concept</span>
+                    <span class="chip ch-p">Knowledge Graphs</span>
+                    <span class="chip ch-g">Entity Extraction</span>
+                    <span class="chip ch-a">Multi-Hop Queries</span>
+                    <span class="chip ch-b">Community Detection</span>
+                    <span class="chip ch-r">Neo4j</span>
+                    <span class="chip ch-p">Microsoft GraphRAG</span>
                 </div>
-</header>
+            </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 18</span>
-                    <h1>GraphRAG & <span class="text-gradient">Knowledge Graphs</span></h1>
-                    <p class="page-description">Overcoming the limitations of Vector RAG by understanding entity relationships and global context.</p>
-                </header>
+            <section class="animate-on-scroll">
+                <div class="eyebrow">The Core Problem</div>
+                <h2 style="margin-top:0;">Where Standard RAG Breaks Down</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>Standard RAG retrieves documents by semantic similarity to the query — it finds <em>nearby</em> documents, not <em>connected</em> documents. Multi-hop questions requiring reasoning across linked entities are fundamentally unsolvable with cosine similarity alone.</p>
+                </div>
+                <div class="bento-card" style="margin-top:16px;">
+                    <h3 style="font-size:0.95rem;">Example: Multi-Hop Question That Breaks Standard RAG</h3>
+                    <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:14px;margin:12px 0;font-size:0.85rem;">
+                        <strong style="color:#f87171;">Question:</strong> "What are the regulatory compliance implications of Project Falcon's data partnership with VendorX, given VendorX's recent breach history and our current SOC 2 obligations?"
+                    </div>
+                    <p style="font-size:0.85rem;color:var(--text-secondary);">This requires: Project Falcon docs → VendorX relationship → VendorX breach history → SOC 2 requirements → reasoning across 4 document clusters. Standard RAG returns top-k similar documents, but the relationships between them are invisible to cosine similarity.</p>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>1. Traditional RAG vs GraphRAG</h2>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>Traditional Vector RAG</h3>
-                            <p>Great at finding specific facts ("What is the CEO's name?"). Fails at connecting dots across multiple documents or understanding overarching themes.</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>GraphRAG</h3>
-                            <p>Uses an LLM to build a Knowledge Graph of Entities (Nodes) and Relationships (Edges) from your data. Great at global questions ("What is the overall sentiment of these 50 reports?").</p>
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>What Is a Knowledge Graph?</h2>
+                <div class="graph-demo">
+                    <div class="gd-nodes">
+                        <div class="gd-entity person">Sam Altman (Person)</div>
+                        <div class="gd-entity org">OpenAI (Org)</div>
+                        <div class="gd-entity product">GPT-4 (Product)</div>
+                        <div class="gd-entity event">GPT-4 Launch Mar 2023</div>
+                        <div class="gd-entity org">Microsoft (Org)</div>
+                    </div>
+                    <div class="gd-relations">
+                        <div class="gd-rel"><span>Sam Altman</span><span class="rel-label">CEO_OF</span><span>OpenAI</span></div>
+                        <div class="gd-rel"><span>OpenAI</span><span class="rel-label">DEVELOPED</span><span>GPT-4</span></div>
+                        <div class="gd-rel"><span>GPT-4</span><span class="rel-label">RELEASED_AT</span><span>GPT-4 Launch Event</span></div>
+                        <div class="gd-rel"><span>Microsoft</span><span class="rel-label">INVESTED_IN ($10B)</span><span>OpenAI</span></div>
+                    </div>
+                </div>
+                <p style="color:var(--text-secondary);">A knowledge graph stores entities (nodes) and their typed relationships (edges) with metadata. Unlike a vector DB that answers "what is similar to X?", a knowledge graph answers "what is connected to X through relationship Y?"</p>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Standard RAG vs. GraphRAG</h2>
+                <div class="compare-grid">
+                    <div class="cg-col" style="border-top:3px solid rgba(239,68,68,0.5);">
+                        <h4 style="color:#f87171;">Standard Vector RAG</h4>
+                        <ul>
+                            <li>Retrieves by cosine similarity</li>
+                            <li>Documents are independent — no relationship data</li>
+                            <li>Single-hop: finds docs relevant to query</li>
+                            <li>Cannot traverse relationships</li>
+                            <li>Struggles with global corpus themes</li>
+                            <li>Fast to set up — chunk, embed, query</li>
+                        </ul>
+                    </div>
+                    <div class="cg-col" style="border-top:3px solid rgba(52,211,153,0.5);">
+                        <h4 style="color:#34d399;">GraphRAG</h4>
+                        <ul>
+                            <li>Retrieves via graph traversal + semantic search</li>
+                            <li>Entities and relationships are explicit, typed</li>
+                            <li>Multi-hop: follows paths across entities</li>
+                            <li>Excellent at relationship and reasoning queries</li>
+                            <li>Community summaries enable global questions</li>
+                            <li>Expensive to build — entity extraction + graph indexing</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Microsoft GraphRAG: Indexing Pipeline</h2>
+                <div class="pipeline-steps">
+                    <div class="ps-step">
+                        <div class="ps-num" style="background:rgba(129,140,248,0.2);color:#818cf8;">1</div>
+                        <div class="ps-text">
+                            <h5>Document Chunking</h5>
+                            <p>Split corpus into overlapping chunks (typically 600 tokens). Standard RAG step — required before any LLM can process documents.</p>
                         </div>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>2. The Knowledge Graph Structure</h2>
-                    <div class="bento-card" style="text-align: center; margin-bottom: 24px;">
-                        <div class="mermaid">
-                        graph TD
-                            Company[Microsoft]:::node
-                            Person[Satya Nadella]:::node
-                            Product[Azure]:::node
-                            
-                            Person -- "is CEO of" --> Company
-                            Company -- "owns" --> Product
-                            
-                            classDef node fill:#10b981,stroke:#047857,color:#fff;
+                    <div class="ps-step">
+                        <div class="ps-num" style="background:rgba(52,211,153,0.2);color:#34d399;">2</div>
+                        <div class="ps-text">
+                            <h5>Entity &amp; Relationship Extraction</h5>
+                            <p>An LLM processes each chunk and extracts: entities (name, type, description), relationships (source → type → target), and key claims. The expensive step — 1M tokens of docs can cost $50–$200 in API calls.</p>
                         </div>
                     </div>
-                    <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>Entities (Nodes):</strong> Nouns extracted from text (People, Places, Organizations).</li>
-                        <li><strong>Relationships (Edges):</strong> Verbs connecting the nouns (owns, works_for, located_in).</li>
-                        <li><strong>Ontologies:</strong> The strict schema defining what types of entities and relationships are allowed.</li>
-                    </ul>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
-    <script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+                    <div class="ps-step">
+                        <div class="ps-num" style="background:rgba(251,191,36,0.2);color:#fbbf24;">3</div>
+                        <div class="ps-text">
+                            <h5>Graph Construction &amp; Deduplication</h5>
+                            <p>Merge entities referring to the same object ("Sam Altman" + "the OpenAI CEO" → one node). Build the graph in Neo4j, ArangoDB, or as a local edge list.</p>
+                        </div>
+                    </div>
+                    <div class="ps-step">
+                        <div class="ps-num" style="background:rgba(96,165,250,0.2);color:#60a5fa;">4</div>
+                        <div class="ps-text">
+                            <h5>Community Detection</h5>
+                            <p>Run the Leiden algorithm to find clusters of highly-connected entities (e.g., all AI lab entities, all regulatory entities). Generate LLM-written summary reports for each community — these enable global question answering.</p>
+                        </div>
+                    </div>
+                    <div class="ps-step">
+                        <div class="ps-num" style="background:rgba(244,114,182,0.2);color:#f472b6;">5</div>
+                        <div class="ps-text">
+                            <h5>Dual Query: Local + Global</h5>
+                            <p>Local search: traverse the graph from query entities. Global search: use community summaries for thematic questions. The query engine selects the strategy based on question type.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q">What is GraphRAG and when should you use it over standard RAG? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">GraphRAG (popularized by Microsoft Research, 2024) combines knowledge graphs with LLM retrieval to answer multi-hop questions requiring reasoning across connected entities. Use it when: (1) Queries require traversing relationships ("show all subsidiaries of Company X with regulatory violations"); (2) You need global thematic questions across a large corpus ("what are the main themes in 10,000 earnings reports?"); (3) Entity relationships are valuable in your domain (biomedical, legal, financial). Don't use it when: queries are simple semantic lookups, you need fast time-to-production, or your corpus changes frequently (graph re-indexing is expensive).</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How does community detection in GraphRAG enable global questions? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Global questions like "what are the main themes in all our documents?" are impossible for standard RAG — you'd need to retrieve and summarize the entire corpus. GraphRAG's community detection runs the Leiden algorithm to find tightly-connected entity clusters. For each community, an LLM generates a natural-language summary of themes, key entities, and relationships. These community summaries are indexed separately. When a global question arrives, the engine retrieves relevant summaries (not raw documents) and synthesizes an answer — turning a corpus-wide question into a manageable lookup of pre-computed summaries.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What are the main costs and limitations of GraphRAG? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Three main costs: (1) Indexing cost — entity extraction via LLM is expensive; a 10M token corpus can cost $500–$2000 in API calls just to build the initial graph. (2) Indexing time — rate-limited by the LLM; a large corpus can take hours or days. (3) Maintenance cost — when documents change, affected graph portions must be re-extracted and re-indexed. Key limitations: entity deduplication is imperfect; relationship extraction accuracy depends on LLM quality; the graph schema must be domain-specific. Best for stable, domain-specific corpora where upfront cost is amortized over many queries.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+                    <a href="rag.html" class="next-card">
+                        <ion-icon name="search-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text"><h4>Standard RAG</h4><p>Review vector-based retrieval first &rarr;</p></div>
+                    </a>
+                    <a href="observability-advanced.html" class="next-card">
+                        <ion-icon name="eye-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>Advanced Observability</h4><p>Monitor and trace GraphRAG pipelines &rarr;</p></div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

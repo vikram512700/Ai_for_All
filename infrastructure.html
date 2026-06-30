@@ -1,18 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Infrastructure & Model Serving | AI for All</title>
+    <title>Infrastructure & Serving | AI for All</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .serving-compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 20px 0; }
+        .srv-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; border-top: 3px solid; }
+        .srv-card h4 { font-size: 0.92rem; margin-bottom: 8px; }
+        .srv-card .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+        .srv-badge { font-size: 0.72rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+        .badge-green { background: rgba(52,211,153,0.15); color: #34d399; }
+        .badge-blue  { background: rgba(96,165,250,0.15); color: #60a5fa; }
+        .badge-amber { background: rgba(251,191,36,0.15); color: #fbbf24; }
+        .quant-visual { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
+        .quant-cell { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; text-align: center; }
+        .quant-cell .q-label { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+        .quant-cell .q-sub { font-size: 0.78rem; color: var(--text-secondary); }
+        .quant-cell .q-bar-wrap { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; margin: 10px 0 6px; }
+        .quant-cell .q-bar { height: 100%; border-radius: 3px; }
+        .quant-cell .q-meta { font-size: 0.75rem; color: var(--text-secondary); display: flex; justify-content: space-between; }
+        .kv-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+        .kv-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 16px; font-size: 0.85rem; text-align: center; flex: 1; min-width: 120px; }
+        .kv-box.cached { border-color: #34d399; color: #34d399; font-weight: 600; }
+        .kv-box.new { border-color: #fbbf24; color: #fbbf24; font-weight: 600; }
+        .kv-arrow { color: var(--text-secondary); font-size: 1.2rem; flex-shrink: 0; }
+        .gpu-stack { display: flex; flex-direction: column; gap: 8px; margin: 20px 0; }
+        .gpu-layer { border-radius: 8px; padding: 12px 20px; font-size: 0.88rem; font-weight: 600; text-align: center; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder -->
-        <aside class="sidebar" id="sidebar">
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
         <a href="index.html" class="logo-container" style="text-decoration:none;">
             <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
             <div class="logo-text">AI for All</div>
@@ -58,78 +81,199 @@
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
     </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Infra & Serving..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
-            
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 16</span>
+                <h1>Infrastructure <span class="text-gradient">&amp; Serving</span></h1>
+                <p class="page-description">Run large language models at production scale: inference servers, quantization, KV caching, GPU clusters, and cost-effective throughput optimization.</p>
                 <div class="chip-strip">
-                    <span class="chip ch-p">V4.0 Optimized</span>
-                    <span class="chip ch-b">Core Concept</span>
+                    <span class="chip ch-p">vLLM</span>
+                    <span class="chip ch-g">Triton Inference</span>
+                    <span class="chip ch-a">Quantization</span>
+                    <span class="chip ch-b">KV Cache</span>
+                    <span class="chip ch-r">PagedAttention</span>
+                    <span class="chip ch-p">GPU Scheduling</span>
                 </div>
-</header>
+            </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 16</span>
-                    <h1>Infrastructure & <span class="text-gradient">Model Serving</span></h1>
-                    <p class="page-description">The hardware and software required to serve open-source LLMs in production efficiently.</p>
-                </header>
-
-                <section class="animate-on-scroll">
-                    <h2>1. Model Serving Engines</h2>
-                    <p>You don't just run a Python script in production. You need high-throughput serving engines.</p>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <div class="card-icon blue"><ion-icon name="flash-outline"></ion-icon></div>
-                            <h3>vLLM</h3>
-                            <p>The industry standard for high-throughput memory-efficient LLM serving. Uses PagedAttention to manage KV cache.</p>
-                        </div>
-                        <div class="bento-card">
-                            <div class="card-icon green"><ion-icon name="server-outline"></ion-icon></div>
-                            <h3>Triton & TGI</h3>
-                            <p><strong>Nvidia Triton</strong> supports multiple frameworks (TensorRT, ONNX). <strong>Hugging Face TGI</strong> is optimized for Llama and Mistral models.</p>
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Production Inference</div>
+                <h2 style="margin-top:0;">Inference Serving Frameworks</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>A model file on disk is useless without an inference server. The server receives HTTP requests, batches them onto GPU memory, runs the forward pass, and streams tokens back. The choice of serving framework can mean 2–5× difference in throughput and cost.</p>
+                </div>
+                <div class="serving-compare">
+                    <div class="srv-card" style="border-color:#818cf8;">
+                        <div class="card-icon purple" style="margin-bottom:10px;"><ion-icon name="rocket-outline"></ion-icon></div>
+                        <h4>vLLM</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Industry standard for GPU inference. Implements PagedAttention — serves 2–4× more concurrent requests than naive batching. OpenAI-compatible API. Multi-GPU tensor parallelism. Best throughput for most open-weight models.</p>
+                        <div class="badge-row">
+                            <span class="srv-badge badge-green">PagedAttention</span>
+                            <span class="srv-badge badge-blue">OpenAI API</span>
+                            <span class="srv-badge badge-amber">Multi-GPU</span>
                         </div>
                     </div>
-                </section>
-
-                <section class="animate-on-scroll">
-                    <h2>2. Inference Optimization</h2>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>Quantization & Distillation</h3>
-                            <p><strong>Quantization</strong> reduces precision (e.g. from 16-bit to 4-bit) to fit large models on smaller GPUs. <strong>Distillation</strong> trains a smaller model to mimic a larger one.</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>KV Cache & Flash Attention</h3>
-                            <p><strong>KV Cache:</strong> Storing past token calculations so you don't recompute them. <strong>Flash Attention:</strong> Optimizing GPU memory reads/writes to speed up transformers.</p>
+                    <div class="srv-card" style="border-color:#60a5fa;">
+                        <div class="card-icon blue" style="margin-bottom:10px;"><ion-icon name="server-outline"></ion-icon></div>
+                        <h4>NVIDIA Triton</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">NVIDIA's enterprise platform. Supports multiple backends: TensorRT, PyTorch, ONNX. Dynamic batching, model ensembles, A/B serving. Best for enterprise GPU clusters and maximum hardware utilization.</p>
+                        <div class="badge-row">
+                            <span class="srv-badge badge-blue">Multi-backend</span>
+                            <span class="srv-badge badge-green">TensorRT</span>
+                            <span class="srv-badge badge-amber">Enterprise</span>
                         </div>
                     </div>
-                </section>
+                    <div class="srv-card" style="border-color:#34d399;">
+                        <div class="card-icon green" style="margin-bottom:10px;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h4>Text Generation Inference (TGI)</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Hugging Face's production serving library. First-class support for all HF Hub models. Continuous batching, quantization (GPTQ, AWQ), Safetensors. Easiest path from HF Hub to production. Used in HuggingChat.</p>
+                        <div class="badge-row">
+                            <span class="srv-badge badge-green">HF Native</span>
+                            <span class="srv-badge badge-blue">Continuous Batching</span>
+                            <span class="srv-badge badge-amber">Streaming</span>
+                        </div>
+                    </div>
+                    <div class="srv-card" style="border-color:#fbbf24;">
+                        <div class="card-icon amber" style="margin-bottom:10px;"><ion-icon name="laptop-outline"></ion-icon></div>
+                        <h4>Ollama / llama.cpp</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">CPU + consumer GPU inference. llama.cpp enables GGUF quantized models on laptops and M-series Macs. Ollama wraps it with a Docker-style CLI. Not for production scale — essential for development and edge deployment.</p>
+                        <div class="badge-row">
+                            <span class="srv-badge badge-amber">CPU Inference</span>
+                            <span class="srv-badge badge-green">GGUF Models</span>
+                            <span class="srv-badge badge-blue">Dev Friendly</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>3. Kubernetes AI Stack</h2>
-                    <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>KServe:</strong> Serverless inferencing on Kubernetes. Handles autoscaling (even to zero).</li>
-                        <li><strong>Ray:</strong> Distributed computing framework. Perfect for running massive model training or serving clusters.</li>
-                        <li><strong>GPU Scheduling:</strong> Using Kubernetes Device Plugins to allocate fractional GPUs (MIG) to pods.</li>
-                    </ul>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Quantization: Shrink Models Without Breaking Them</h2>
+                <p style="color:var(--text-secondary); margin-bottom:16px;">Quantization converts model weights from 32-bit floats to lower-precision integers — dramatically reducing memory and increasing inference speed with acceptable quality trade-offs.</p>
+                <div class="quant-visual">
+                    <div class="quant-cell">
+                        <div class="q-label" style="color:#ef4444;">FP32</div>
+                        <div class="q-sub">Full precision</div>
+                        <div class="q-bar-wrap"><div class="q-bar" style="background:#ef4444;width:100%;"></div></div>
+                        <div class="q-meta"><span>140 GB</span><span>Llama 70B</span></div>
+                    </div>
+                    <div class="quant-cell">
+                        <div class="q-label" style="color:#fbbf24;">FP16</div>
+                        <div class="q-sub">Half precision</div>
+                        <div class="q-bar-wrap"><div class="q-bar" style="background:#fbbf24;width:50%;"></div></div>
+                        <div class="q-meta"><span>70 GB</span><span>Training std</span></div>
+                    </div>
+                    <div class="quant-cell">
+                        <div class="q-label" style="color:#34d399;">INT8 (GPTQ)</div>
+                        <div class="q-sub">8-bit weights</div>
+                        <div class="q-bar-wrap"><div class="q-bar" style="background:#34d399;width:25%;"></div></div>
+                        <div class="q-meta"><span>35 GB</span><span>~0.5% drop</span></div>
+                    </div>
+                    <div class="quant-cell">
+                        <div class="q-label" style="color:#818cf8;">INT4 (AWQ)</div>
+                        <div class="q-sub">4-bit weights</div>
+                        <div class="q-bar-wrap"><div class="q-bar" style="background:#818cf8;width:12.5%;"></div></div>
+                        <div class="q-meta"><span>~18 GB</span><span>~1-2% drop</span></div>
+                    </div>
+                    <div class="quant-cell">
+                        <div class="q-label" style="color:#60a5fa;">Q4_K_M</div>
+                        <div class="q-sub">GGUF / llama.cpp</div>
+                        <div class="q-bar-wrap"><div class="q-bar" style="background:#60a5fa;width:10%;"></div></div>
+                        <div class="q-meta"><span>~14 GB</span><span>M3 Mac ready</span></div>
+                    </div>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="card-icon blue"><ion-icon name="layers-outline"></ion-icon></div>
+                        <h3>GPTQ — Post-Training Quantization</h3>
+                        <p>One-shot quantization applying a correction factor after compressing each weight. Works on any model without retraining. Standard for INT4/INT8 serving. Best quality under 13B parameters.</p>
+                    </div>
+                    <div class="bento-card">
+                        <div class="card-icon purple"><ion-icon name="trending-up-outline"></ion-icon></div>
+                        <h3>AWQ — Activation-Aware Quantization</h3>
+                        <p>Identifies the most important weights by analyzing activation magnitudes and protects them during quantization. Better quality than GPTQ at the same bit depth, especially for 70B+ models. Now the standard for INT4 production serving.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>KV Cache &amp; PagedAttention</h2>
+                <div class="kv-row">
+                    <div class="kv-box cached">System Prompt<br/><small>Cached in GPU VRAM</small></div>
+                    <span class="kv-arrow">→</span>
+                    <div class="kv-box cached">Previous Messages<br/><small>KV pairs pre-computed</small></div>
+                    <span class="kv-arrow">→</span>
+                    <div class="kv-box new">New User Message<br/><small>Compute ONLY this</small></div>
+                </div>
+                <p style="color:var(--text-secondary);">Without KV cache, every new token requires re-computing attention over the full prompt from scratch. KV cache stores key-value attention matrices in GPU memory and reuses them — turning O(n²) re-computation into O(n) incremental updates.</p>
+                <div class="info-box" style="border-color:rgba(251,191,36,0.3); background:rgba(251,191,36,0.06);">
+                    <ion-icon name="warning-outline" style="color:#fbbf24; flex-shrink:0;"></ion-icon>
+                    <p><strong>PagedAttention</strong> (vLLM's key innovation): KV cache is allocated in fixed-size pages — like OS virtual memory. Multiple requests share GPU memory non-contiguously, eliminating fragmentation. Traditional serving wastes ~30% VRAM in gaps; PagedAttention uses nearly all of it, enabling 2–4× more concurrent users per GPU.</p>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Production GPU Serving Stack</h2>
+                <div class="gpu-stack">
+                    <div class="gpu-layer" style="background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);color:#60a5fa;">Load Balancer — Routes requests, health checks, rate limiting</div>
+                    <div class="gpu-layer" style="background:rgba(129,140,248,0.15);border:1px solid rgba(129,140,248,0.3);color:#818cf8;">AI Gateway — Auth, cost tracking, model routing, semantic cache</div>
+                    <div class="gpu-layer" style="background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:#34d399;">vLLM / TGI Pods (Kubernetes, GPU node pool)</div>
+                    <div class="gpu-layer" style="background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;">CUDA + GPU Drivers (NVIDIA A100 / H100 hardware)</div>
+                    <div class="gpu-layer" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;">Kubernetes + Node Auto-Provisioner — Scale GPU nodes on demand</div>
+                    <div class="gpu-layer" style="background:rgba(100,116,139,0.15);border:1px solid rgba(100,116,139,0.3);color:#94a3b8;">Cloud Provider (AWS p4d, GCP A100 VMs, Azure ND A100)</div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q">What is PagedAttention and why does it matter for GPU serving? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">PagedAttention is vLLM's key innovation: instead of allocating a large contiguous VRAM block per request's KV cache, it divides the KV cache into fixed-size "pages" (blocks of typically 16 tokens). Pages for different requests are scattered non-contiguously in VRAM — just like OS virtual memory. This eliminates fragmentation: traditional serving wasted ~30% of VRAM in fragmented gaps. With PagedAttention, nearly all VRAM is used efficiently, enabling 2–4× more concurrent requests per GPU — a direct 2–4× reduction in infrastructure cost per active user.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">When should you use INT4 quantization vs. FP16? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Use FP16 when quality is paramount (medical, legal, financial), you have A100/H100 GPUs available, and the model is under 13B (FP16 fits fewer GPUs). Use INT4 (AWQ preferred) when deploying 70B+ models on available hardware, cost reduction is a priority, and a 1–2% quality drop is acceptable. Practical rule: run your eval suite on both quantization levels; use the cheaper one if scores are within 2%. For chat/summarization, INT4 is usually indistinguishable to humans. For complex reasoning or code, FP16 often noticeably outperforms INT4.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How does continuous batching differ from static batching? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Static batching waits for a fixed batch size before starting — if one request finishes early, the GPU idles until all batch members complete. Continuous batching (iteration-level scheduling) processes each generation step independently: once a request finishes, a new one immediately fills its GPU slot. GPU utilization goes from ~50–60% with static batching to ~80–95% with continuous batching, improving throughput 40–60%. Both TGI and vLLM implement continuous batching by default.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+                    <a href="observability-advanced.html" class="next-card">
+                        <ion-icon name="eye-outline" style="color:#60a5fa;"></ion-icon>
+                        <div class="next-card-text"><h4>Advanced Observability</h4><p>Monitor GPU clusters &amp; LLM metrics &rarr;</p></div>
+                    </a>
+                    <a href="ai-gateway.html" class="next-card">
+                        <ion-icon name="swap-horizontal-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>AI Gateways</h4><p>Route and manage LLM traffic &rarr;</p></div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>

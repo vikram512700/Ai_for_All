@@ -1,18 +1,40 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Observability | AI for All</title>
+    <title>Advanced Observability | AI for All</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        .trace-waterfall { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .tw-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .tw-label { font-size: 0.8rem; color: var(--text-secondary); min-width: 180px; }
+        .tw-bar-wrap { flex: 1; height: 20px; background: rgba(255,255,255,0.04); border-radius: 4px; position: relative; overflow: hidden; }
+        .tw-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+        .tw-ms { font-size: 0.75rem; color: var(--text-secondary); min-width: 50px; text-align: right; }
+        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+        .pillar-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; border-top: 3px solid; }
+        .pillar-card h4 { font-size: 0.92rem; margin-bottom: 8px; }
+        .tool-compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+        .tc-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; }
+        .tc-card h4 { font-size: 0.88rem; margin-bottom: 6px; }
+        .tc-card .tc-badge { font-size: 0.72rem; padding: 2px 7px; border-radius: 4px; font-weight: 600; margin-bottom: 10px; display: inline-block; }
+        .alert-types { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .alert-row { display: flex; gap: 12px; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; }
+        .alert-sev { font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; flex-shrink: 0; }
+        .sev-p1 { background: rgba(239,68,68,0.2); color: #f87171; }
+        .sev-p2 { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .sev-p3 { background: rgba(96,165,250,0.2); color: #60a5fa; }
+        .alert-text h5 { font-size: 0.85rem; margin-bottom: 2px; }
+        .alert-text p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar placeholder -->
-        <aside class="sidebar" id="sidebar">
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
         <a href="index.html" class="logo-container" style="text-decoration:none;">
             <div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div>
             <div class="logo-text">AI for All</div>
@@ -58,63 +80,206 @@
             <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
         </div>
     </aside>
-        
-        <div class="mobile-overlay" id="mobile-overlay"></div>
-        
-        <main class="main-content">
-            <header class="topbar">
-                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Observability..."></div>
-                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
-            
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
+        </header>
+        <div class="content-area">
+
+            <header class="page-header animate-on-scroll">
+                <span class="badge">Module 19</span>
+                <h1>Advanced <span class="text-gradient">Observability</span></h1>
+                <p class="page-description">Production-grade monitoring, distributed tracing, and alerting for LLM applications — see inside the black box and catch issues before users do.</p>
                 <div class="chip-strip">
-                    <span class="chip ch-p">V4.0 Optimized</span>
-                    <span class="chip ch-b">Core Concept</span>
+                    <span class="chip ch-p">Distributed Tracing</span>
+                    <span class="chip ch-g">LangSmith</span>
+                    <span class="chip ch-a">Langfuse</span>
+                    <span class="chip ch-b">OpenTelemetry</span>
+                    <span class="chip ch-r">Prompt Drift</span>
+                    <span class="chip ch-p">SLOs</span>
                 </div>
-</header>
+            </header>
 
-            <div class="content-area">
-                <header class="page-header animate-on-scroll">
-                    <span class="badge">Module 19</span>
-                    <h1>Advanced AI <span class="text-gradient">Observability</span></h1>
-                    <p class="page-description">Tracing multi-step agent executions and managing token usage across distributed systems.</p>
-                </header>
+            <section class="animate-on-scroll">
+                <div class="eyebrow">Why LLM Observability Is Different</div>
+                <h2 style="margin-top:0;">Three Pillars of LLM Observability</h2>
+                <div class="info-box">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <p>Traditional APM tools (Datadog, New Relic) track metrics, logs, and traces for deterministic software. LLM systems add a fourth dimension: <strong>quality</strong>. Two requests with identical latency and zero errors can produce one excellent and one completely wrong answer. You need LLM-aware tooling that understands prompts, token counts, and model outputs as first-class observability primitives.</p>
+                </div>
+                <div class="pillars">
+                    <div class="pillar-card" style="border-color:#818cf8;">
+                        <div class="card-icon purple" style="margin-bottom:10px;"><ion-icon name="bar-chart-outline"></ion-icon></div>
+                        <h4>Metrics</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Quantitative signals aggregated over time. TTFT (Time To First Token), tokens/request, cost/request, cache hit rate, error rate, p50/p95/p99 latency. Stored in time-series DBs (Prometheus, InfluxDB). Queried via Grafana dashboards.</p>
+                    </div>
+                    <div class="pillar-card" style="border-color:#34d399;">
+                        <div class="card-icon green" style="margin-bottom:10px;"><ion-icon name="document-text-outline"></ion-icon></div>
+                        <h4>Logs</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Structured records of individual events. Every prompt, every completion, every tool call — logged with metadata (user_id, session_id, model, timestamp). Stored in ElasticSearch or Loki. Queryable for specific request forensics.</p>
+                    </div>
+                    <div class="pillar-card" style="border-color:#fbbf24;">
+                        <div class="card-icon amber" style="margin-bottom:10px;"><ion-icon name="git-network-outline"></ion-icon></div>
+                        <h4>Traces</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">Distributed trace spanning the full request lifecycle: API call → prompt construction → LLM call → tool execution → response. Each span records timing, inputs, outputs. Visualized as a waterfall. The gold standard for debugging complex agent workflows.</p>
+                    </div>
+                    <div class="pillar-card" style="border-color:#f472b6;">
+                        <div class="card-icon" style="background:rgba(244,114,182,0.15);border-radius:10px;padding:10px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><ion-icon name="star-outline" style="color:#f472b6;font-size:1.2rem;"></ion-icon></div>
+                        <h4>Quality / Evals</h4>
+                        <p style="font-size:0.83rem;color:var(--text-secondary);">LLM-specific fourth pillar. Online evaluation of production outputs: faithfulness scores, toxicity checks, PII detection, hallucination flags. Separate from technical metrics — a request can succeed technically while completely failing the user's intent.</p>
+                    </div>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>1. OpenTelemetry for AI</h2>
-                    <p>OpenTelemetry (OTel) is the open standard for observability. AI applications map perfectly to it.</p>
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <h3>Traces & Spans</h3>
-                            <p>A <strong>Trace</strong> represents a full user request. A <strong>Span</strong> represents a single step (e.g. calling an LLM API, querying a Vector DB).</p>
-                        </div>
-                        <div class="bento-card">
-                            <h3>Metrics & Logs</h3>
-                            <p>Tracking Token Usage (input/output), Latency (Time to First Token), and logging exact prompts and responses.</p>
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Distributed Trace Waterfall</h2>
+                <p style="color:var(--text-secondary); margin-bottom:8px;">A single agent request spawns dozens of nested spans. The waterfall reveals where time is being spent and what's happening inside the "black box".</p>
+                <div class="trace-waterfall">
+                    <div class="tw-row">
+                        <div class="tw-label">user_request</div>
+                        <div class="tw-bar-wrap"><div class="tw-bar" style="background:#818cf8;width:100%;color:white;">total span</div></div>
+                        <div class="tw-ms">2,847 ms</div>
+                    </div>
+                    <div class="tw-row">
+                        <div class="tw-label" style="padding-left:16px;">► prompt_construction</div>
+                        <div class="tw-bar-wrap"><div class="tw-bar" style="background:#60a5fa;width:8%;margin-left:0%;color:white;">···</div></div>
+                        <div class="tw-ms">224 ms</div>
+                    </div>
+                    <div class="tw-row">
+                        <div class="tw-label" style="padding-left:16px;">► retrieval (RAG)</div>
+                        <div class="tw-bar-wrap"><div class="tw-bar" style="background:#34d399;width:14%;margin-left:8%;color:white;">···</div></div>
+                        <div class="tw-ms">400 ms</div>
+                    </div>
+                    <div class="tw-row">
+                        <div class="tw-label" style="padding-left:16px;">► llm_call (claude-3-7)</div>
+                        <div class="tw-bar-wrap"><div class="tw-bar" style="background:#f472b6;width:48%;margin-left:22%;color:white;">TTFT: 410ms</div></div>
+                        <div class="tw-ms">1,360 ms</div>
+                    </div>
+                    <div class="tw-row">
+                        <div class="tw-label" style="padding-left:32px;">▸ tool_call: web_search</div>
+                        <div class="tw-bar-wrap"><div class="tw-bar" style="background:#fbbf24;width:25%;margin-left:70%;color:rgba(0,0,0,0.8);">···</div></div>
+                        <div class="tw-ms">710 ms</div>
+                    </div>
+                    <div class="tw-row">
+                        <div class="tw-label" style="padding-left:16px;">► response_formatting</div>
+                        <div class="tw-bar-wrap"><div class="tw-bar" style="background:#a78bfa;width:4%;margin-left:95%;color:white;"></div></div>
+                        <div class="tw-ms">95 ms</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Observability Tooling: What to Use When</h2>
+                <div class="tool-compare">
+                    <div class="tc-card">
+                        <h4>LangSmith</h4>
+                        <span class="tc-badge" style="background:rgba(96,165,250,0.15);color:#60a5fa;">LangChain Ecosystem</span>
+                        <p style="font-size:0.82rem;color:var(--text-secondary);">Deep integration with LangChain and LangGraph. Best-in-class trace waterfall visualization. Annotation tools for human review. Dataset management for offline evals. First choice if you use LangChain.</p>
+                    </div>
+                    <div class="tc-card">
+                        <h4>Langfuse</h4>
+                        <span class="tc-badge" style="background:rgba(52,211,153,0.15);color:#34d399;">Open Source</span>
+                        <p style="font-size:0.82rem;color:var(--text-secondary);">Open-source, self-hostable alternative to LangSmith. Framework-agnostic — works with any LLM via SDK or OpenTelemetry. Cost analytics, prompt versioning, user feedback collection. Best for teams needing data sovereignty.</p>
+                    </div>
+                    <div class="tc-card">
+                        <h4>Helicone</h4>
+                        <span class="tc-badge" style="background:rgba(251,191,36,0.15);color:#fbbf24;">Proxy-Based</span>
+                        <p style="font-size:0.82rem;color:var(--text-secondary);">Works as an OpenAI-compatible proxy — add one URL change to capture all requests. Zero-code integration. Cost breakdown by user, team, or project. Prompt experiments. Best for instant observability without SDK changes.</p>
+                    </div>
+                    <div class="tc-card">
+                        <h4>Arize / Phoenix</h4>
+                        <span class="tc-badge" style="background:rgba(129,140,248,0.15);color:#818cf8;">ML Platform</span>
+                        <p style="font-size:0.82rem;color:var(--text-secondary);">Full ML observability platform extending to LLMs. Strong on data drift detection, embedding visualization, model performance monitoring. Best for teams already using Arize for traditional ML models.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <h2>Alerting Strategy: What to Page On</h2>
+                <div class="alert-types">
+                    <div class="alert-row">
+                        <div class="alert-sev sev-p1">P1</div>
+                        <div class="alert-text">
+                            <h5>LLM API Error Rate &gt; 5% (5 min window)</h5>
+                            <p>Model provider outage or auth failure. Immediate page to on-call. Trigger automatic failover to secondary model provider.</p>
                         </div>
                     </div>
-                </section>
+                    <div class="alert-row">
+                        <div class="alert-sev sev-p1">P1</div>
+                        <div class="alert-text">
+                            <h5>P99 TTFT &gt; 5 seconds (sustained &gt; 2 min)</h5>
+                            <p>Severe latency degradation. Users experiencing unacceptable response times. Immediate investigation of serving infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="alert-row">
+                        <div class="alert-sev sev-p2">P2</div>
+                        <div class="alert-text">
+                            <h5>Hourly Cost &gt; 3× 7-day average</h5>
+                            <p>Abnormal token usage spike — possible runaway agent loop or cost abuse. Investigate and optionally pause affected user accounts.</p>
+                        </div>
+                    </div>
+                    <div class="alert-row">
+                        <div class="alert-sev sev-p2">P2</div>
+                        <div class="alert-text">
+                            <h5>Cache Hit Rate drops below 20% (1 hr avg)</h5>
+                            <p>Semantic cache degradation — prompts no longer matching. Review recent prompt template changes or cache key configuration.</p>
+                        </div>
+                    </div>
+                    <div class="alert-row">
+                        <div class="alert-sev sev-p3">P3</div>
+                        <div class="alert-text">
+                            <h5>Quality Score drops &gt; 10% week-over-week</h5>
+                            <p>Prompt drift or model regression. Not immediate — schedule investigation within the day. Compare prompt versions and model outputs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                <section class="animate-on-scroll">
-                    <h2>2. Major Platforms</h2>
-                    <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>LangSmith:</strong> Native to LangChain. Incredible for tracing complex LangGraph agent executions.</li>
-                        <li><strong>Langfuse:</strong> Open-source observability, great for prompt management and cost tracking.</li>
-                        <li><strong>Arize Phoenix:</strong> Focuses heavily on RAG evaluation and embedding visualizations.</li>
-                        <li><strong>Helicone:</strong> Focuses on API proxying, caching, and rate limiting.</li>
-                    </ul>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Interview Prep</div>
+                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <div class="qa-list">
+                    <div class="qa-item">
+                        <div class="qa-q">What are the four pillars of LLM observability and why is the fourth unique? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">The four pillars are: (1) Metrics — aggregated quantitative signals (latency, cost, error rate, cache hit rate) stored in time-series DBs; (2) Logs — structured records of individual events including full prompt/completion pairs; (3) Traces — distributed spans showing the full lifecycle of a request across all services; (4) Quality/Evals — LLM-specific: online evaluation of output quality, faithfulness, toxicity, and hallucination. The fourth is unique because traditional software can be verified correct through tests alone — but LLMs are probabilistic. A request can succeed with HTTP 200 and zero latency while generating a completely wrong, harmful, or hallucinated response. Quality monitoring is the only way to catch this class of failure in production.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How do you detect prompt drift in production? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Prompt drift occurs when model behavior changes despite the same prompt template — usually because the model provider updated the underlying model, or because input data distribution shifted. Detection strategies: (1) Golden set monitoring — maintain a fixed set of 50-100 representative inputs with expected outputs; run them weekly against production and track quality scores over time. Any significant drop signals drift. (2) Output distribution analysis — track statistical properties of outputs (average response length, vocabulary diversity, sentiment scores). Sudden changes indicate model behavior change. (3) Semantic embedding drift — embed all production outputs and track the centroid over time; cluster drift signals distribution shift. (4) A/B shadow testing — keep a shadow version on the previous model checkpoint and compare response quality for the same inputs.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">What is the difference between LangSmith and OpenTelemetry for LLM tracing? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">OpenTelemetry (OTel) is the CNCF standard for distributed tracing across all software — it defines spans, attributes, and exporters in a vendor-neutral way. LLM providers (Anthropic, OpenAI) are adding OTel instrumentation to emit spans for every API call. OTel traces flow to any compatible backend (Jaeger, Zipkin, Datadog, Grafana Tempo). LangSmith is an opinionated, LLM-specific observability platform built on top of higher-level concepts: it understands "runs" (LangChain executions), "chains", "agents", and knows how to visualize prompt templates and compare output versions. LangSmith is a Saas product; OTel is a protocol. In practice: use OTel for baseline infrastructure traces, and use LangSmith/Langfuse on top for LLM-specific analytics, annotation, and evaluation workflows.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-scroll" style="margin-top:40px;">
+                <div class="eyebrow">Up Next</div>
+                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+                <div class="next-steps-grid">
+                    <a href="ai-gateway.html" class="next-card">
+                        <ion-icon name="swap-horizontal-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>AI Gateways</h4><p>Route traffic and enforce policies &rarr;</p></div>
+                    </a>
+                    <a href="llmops.html" class="next-card">
+                        <ion-icon name="server-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text"><h4>LLMOps</h4><p>Review core metrics and CI/CD &rarr;</p></div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>
