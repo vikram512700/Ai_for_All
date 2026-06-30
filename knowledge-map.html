@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Knowledge Map | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <style>
+        .map-container { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; overflow-x: auto; }
+        .mermaid { text-align: center; }
+        .mermaid svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder -->
+        <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div>
+                <a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a>
+                <a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a>
+            </div>
+            
+            <div class="nav-section"><div class="nav-section-title">Core Concepts</div>
+                <a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI Fundamentals</a>
+                <a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompts</a>
+                <a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> Vector RAG</a>
+                <a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a>
+                <a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> MCP</a>
+            </div>
+            
+            <div class="nav-section"><div class="nav-section-title">Advanced Agents</div>
+                <a href="langgraph.html" class="nav-item"><ion-icon name="git-commit-outline"></ion-icon> LangGraph</a>
+                <a href="agent-engineering.html" class="nav-item"><ion-icon name="brain-outline"></ion-icon> Agent Engineering</a>
+                <a href="multi-agent.html" class="nav-item"><ion-icon name="people-circle-outline"></ion-icon> Multi-Agent Systems</a>
+            </div>
+            
+            <div class="nav-section"><div class="nav-section-title">Advanced Data</div>
+                <a href="graphrag.html" class="nav-item"><ion-icon name="analytics-outline"></ion-icon> GraphRAG</a>
+            </div>
+            
+            <div class="nav-section"><div class="nav-section-title">Arch & Infra</div>
+                <a href="architecture-patterns.html" class="nav-item"><ion-icon name="layers-outline"></ion-icon> Architecture Patterns</a>
+                <a href="infrastructure.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> Infra & Serving</a>
+                <a href="ai-gateway.html" class="nav-item"><ion-icon name="git-branch-outline"></ion-icon> AI Gateways</a>
+            </div>
+            
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div>
+                <a href="llmops.html" class="nav-item"><ion-icon name="pulse-outline"></ion-icon> LLMOps</a>
+                <a href="observability-advanced.html" class="nav-item"><ion-icon name="eye-outline"></ion-icon> Observability</a>
+                <a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a>
+                <a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> App Security</a>
+                <a href="advanced-security.html" class="nav-item"><ion-icon name="skull-outline"></ion-icon> Adv Security</a>
+                <a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a>
+            </div>
+            
+            <div class="nav-section"><div class="nav-section-title">Resources</div>
+                <a href="knowledge-map.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Knowledge Map</a>
+                <a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a>
+            </div>
+        </aside>
+        
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+        
+        <main class="main-content">
+            <header class="topbar">
+                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+                <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Map..."></div>
+                <div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div>
+            </header>
+
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 22</span>
+                    <h1>AI Relationship <span class="text-gradient">Map</span></h1>
+                    <p class="page-description">An interactive, clickable visual graph of how all the AI Engineering concepts connect.</p>
+                </header>
+
+                <div class="map-container animate-on-scroll">
+                    <div class="mermaid">
+                    graph TD
+                        classDef llmNode fill:#6366f1,stroke:#4338ca,stroke-width:2px,color:#fff;
+                        classDef ragNode fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
+                        classDef agentNode fill:#f43f5e,stroke:#be123c,stroke-width:2px,color:#fff;
+                        classDef opsNode fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:#fff;
+
+                        LLM[Large Language Models]:::llmNode
+                        Tokens[Tokens]:::llmNode
+                        Context[Context Window]:::llmNode
+                        Prompting[Prompt Engineering]:::llmNode
+                        FuncCalling[Function Calling]:::llmNode
+                        Structured[Structured Output]:::llmNode
+
+                        RAG[Retrieval-Augmented Generation]:::ragNode
+                        Embeddings[Embeddings]:::ragNode
+                        Chunking[Chunking]:::ragNode
+                        VectorDB[Vector Database]:::ragNode
+                        Hybrid[Hybrid Search]:::ragNode
+                        GraphRAG[GraphRAG]:::ragNode
+
+                        Agents[Agentic AI]:::agentNode
+                        LangGraph[LangGraph]:::agentNode
+                        MCP[Model Context Protocol]:::agentNode
+                        MultiAgent[Multi-Agent Systems]:::agentNode
+
+                        Ops[LLMOps & Infra]:::opsNode
+                        Gateway[AI Gateways]:::opsNode
+                        Observability[Observability]:::opsNode
+                        Security[AI Security]:::opsNode
+                        Evals[Evaluation]:::opsNode
+
+                        LLM --> Tokens
+                        LLM --> Context
+                        LLM --> Prompting
+                        Prompting --> FuncCalling
+                        FuncCalling --> Structured
+                        FuncCalling --> Agents
+
+                        Agents --> LangGraph
+                        Agents --> MCP
+                        Agents --> MultiAgent
+                        Agents --> RAG
+
+                        RAG --> Embeddings
+                        Embeddings --> VectorDB
+                        RAG --> Chunking
+                        VectorDB --> Hybrid
+                        RAG --> GraphRAG
+
+                        Ops --> Gateway
+                        Ops --> Observability
+                        Ops --> Security
+                        Ops --> Evals
+
+                        %% Clickable Links
+                        click LLM "fundamentals.html"
+                        click Tokens "fundamentals.html"
+                        click Context "fundamentals.html"
+                        click Prompting "claude.html"
+                        click Agents "agents.html"
+                        click LangGraph "langgraph.html"
+                        click MCP "mcp.html"
+                        click MultiAgent "multi-agent.html"
+                        click RAG "rag.html"
+                        click GraphRAG "graphrag.html"
+                        click Gateway "ai-gateway.html"
+                        click Observability "observability-advanced.html"
+                        click Security "advanced-security.html"
+                        click Evals "evals.html"
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 16px; color: var(--text-muted); font-size: 0.9rem;">
+                    <em>Click on any colored node in the graph above to jump directly to its learning module!</em>
+                </p>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>mermaid.initialize({theme: 'dark', startOnLoad: true});</script>
+</body>
+</html>
