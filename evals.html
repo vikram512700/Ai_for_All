@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Evaluation | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search Evaluations...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 11</span>
+                    <h1>AI Evaluation & RAGAS</h1>
+                    <p class="page-description">Learn how to rigorously test AI outputs. Because LLMs generate free-form text, standard Unit Tests (assert x == y) do not work. You need "LLM-as-a-Judge" evaluation.</p>
+                </header>
+
+                <section class="animate-on-scroll">
+                    <h2>1. What is AI Evaluation?</h2>
+                    <p>When you update a system prompt or change your Vector DB chunk size, how do you know if your RAG pipeline got better or worse? AI Evaluation uses programmatic frameworks and LLMs to score answers across a Golden Dataset based on metrics like Relevance and Faithfulness.</p>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>2. Real World Analogy</h2>
+                    <div class="bento-grid" style="margin-top: 16px;">
+                        <div class="bento-card">
+                            <h3><ion-icon name="school-outline"></ion-icon> Grading an Essay</h3>
+                            <p>You can't grade a college essay with a simple True/False key. You use a Rubric. AI Evals use a larger, smarter model (like GPT-4) as the Teacher to grade the output of your smaller model (like GPT-3.5) against a specific Rubric.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>3. Core RAG Metrics</h2>
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        graph TD
+                            Query --> Retrieval
+                            Retrieval --> Generation
+                            
+                            subgraph RAGAS Metrics
+                                Retrieval --> Context_Relevance[Context Relevance<br>Did we retrieve the right docs?]
+                                Retrieval --> Context_Recall[Context Recall<br>Did we miss any facts?]
+                                Generation --> Faithfulness[Faithfulness<br>Is the answer derived ONLY from the context?]
+                                Generation --> Answer_Relevance[Answer Relevance<br>Does it actually answer the user's question?]
+                            end
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="animate-on-scroll">
+                    <h2>4. Common Mistakes</h2>
+                    <div class="bento-card" style="border-left: 4px solid var(--error); margin-bottom: 24px;">
+                        <h3>X  Vibes-Based Engineering</h3>
+                        <p>Deploying a new prompt because you tested it with 3 manual queries and "the vibes were good."</p>
+                        <p><strong>OK Fix:</strong> Maintain a Golden Dataset of 100+ diverse questions and run an automated evaluation pipeline via DeepEval or RAGAS on every PR.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

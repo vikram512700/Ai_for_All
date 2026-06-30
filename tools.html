@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source AI & FinOps | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search Tools...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 14 & 15</span>
+                    <h1>Open Source AI & FinOps</h1>
+                    <p class="page-description">Learn how to run models locally to secure data and how to calculate and optimize the expensive API costs of cloud LLMs.</p>
+                </header>
+
+                <section class="animate-on-scroll">
+                    <h2>1. Open Source Local AI</h2>
+                    <p>Not everything needs to hit an API. By using open-source tools like <strong>Ollama</strong> or <strong>vLLM</strong>, you can run powerful models (like Llama-3 or Mistral) entirely on your local machine or private cloud infrastructure. This ensures zero data leakage and free inference.</p>
+                    
+                    <div class="bento-grid">
+                        <div class="bento-card">
+                            <h3>Ollama</h3>
+                            <p>The easiest way to run local LLMs on your Mac/Windows PC. It runs in the terminal and provides a local REST API that perfectly mimics the OpenAI API format.</p>
+                        </div>
+                        <div class="bento-card">
+                            <h3>vLLM</h3>
+                            <p>An enterprise-grade, high-throughput LLM serving engine. It uses techniques like PagedAttention to maximize GPU memory utilization for production workloads.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>2. AI FinOps (Cost Optimization)</h2>
+                    <p>API costs can spiral out of control. Calculating tokens effectively is a mandatory skill for AI Engineers.</p>
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        pie title Enterprise LLM Cost Breakdown
+                            "Prompt Tokens (Input)" : 30
+                            "Generation Tokens (Output)" : 60
+                            "Embedding Models" : 5
+                            "Vector DB Storage" : 5
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="animate-on-scroll">
+                    <h2>3. Dynamic Model Routing</h2>
+                    <p>Don't use GPT-4/Claude 3.5 Sonnet for everything.</p>
+                    <div class="bento-card">
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Simple Tasks:</strong> (e.g., formatting JSON, extracting an email address). Route these to <code>gpt-4o-mini</code> or local <code>Llama-3-8B</code>. Costs $0.15 / 1M tokens.</li>
+                            <li><strong>Complex Reasoning:</strong> (e.g., Agent planning, coding, multi-step math). Route to <code>gpt-4o</code>. Costs $15.00 / 1M tokens (100x more expensive!).</li>
+                        </ol>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

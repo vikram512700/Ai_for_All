@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI Systems | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .agent-loop { display: flex; align-items: center; justify-content: center; gap: 0; margin: 32px 0; flex-wrap: wrap; }
+        .loop-node { background: var(--bg-card); border: 2px solid var(--border-color); padding: 24px; border-radius: 50%; width: 130px; height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: all 0.4s ease; }
+        .loop-node ion-icon { font-size: 2rem; margin-bottom: 6px; }
+        .loop-node span { font-weight: 600; font-size: 0.85rem; }
+        .loop-node:nth-child(1) { animation: glowCycle 4s infinite; }
+        .loop-node:nth-child(3) { animation: glowCycle 4s 1.3s infinite; }
+        .loop-node:nth-child(5) { animation: glowCycle 4s 2.6s infinite; }
+        @keyframes glowCycle { 0%, 100% { border-color: var(--border-color); box-shadow: none; } 25%, 50% { border-color: var(--accent-primary); box-shadow: 0 0 25px var(--accent-glow-strong); } }
+        .loop-arrow { font-size: 1.5rem; color: var(--accent-primary); padding: 0 12px; }
+        .llm-center { background: var(--gradient-primary); color: white; padding: 12px 28px; border-radius: 30px; font-weight: 700; font-size: 0.9rem; margin: 16px auto; display: table; box-shadow: 0 8px 24px var(--accent-glow-strong); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI & LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG & Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+        <main class="main-content">
+            <header class="topbar"><button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button><div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Agent concepts..."></div><div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div></header>
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 7</span>
+                    <h1>Agentic <span class="text-gradient">AI Systems</span></h1>
+                    <p class="page-description">Go beyond simple chat. Build autonomous AI agents that reason, plan, execute tools, and iteratively solve complex multi-step problems.</p>
+                </header>
+
+                <section class="animate-on-scroll">
+                    <h2>1. What is an AI Agent?</h2>
+                    <p>An <strong>AI Agent</strong> is an LLM equipped with a system prompt that encourages reasoning, paired with a set of tools (functions) it can execute. Unlike standard LLMs which just output text, an agent outputs <em>actions</em>, observes the result, and loops until the goal is met.</p>
+                    <div class="bento-card"><h3>&#127919; Problem it solves</h3><p>LLMs cannot act on the world (run code, fetch weather, send emails). Agents bridge the gap between "thinking" and "doing".</p></div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>2. Real World Analogies</h2>
+                    <div class="bento-grid">
+                        <div class="bento-card"><div class="card-icon amber"><ion-icon name="restaurant-outline"></ion-icon></div><h3>Kitchen Analogy</h3><p>An LLM is a cookbook. An Agent is a Chef. The Chef reads the recipe (planning), grabs pans (tools), cuts veggies (action), tastes the soup (observation), and adds salt if needed (reflection).</p></div>
+                        <div class="bento-card"><div class="card-icon blue"><ion-icon name="terminal-outline"></ion-icon></div><h3>DevOps Analogy</h3><p>An Agent is like an autonomous CI/CD runner. If a build fails, it reads the error logs (observation), rewrites the broken dependency (action), and retries the build (looping).</p></div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>3. Interactive Agent Loop (ReAct Pattern)</h2>
+                    <div class="llm-center">&#129504; LLM Brain</div>
+                    <div class="agent-loop">
+                        <div class="loop-node"><ion-icon name="bulb-outline" style="color: var(--accent-primary);"></ion-icon><span>Thought</span></div>
+                        <span class="loop-arrow">&#8594;</span>
+                        <div class="loop-node"><ion-icon name="construct-outline" style="color: var(--warning);"></ion-icon><span>Action</span></div>
+                        <span class="loop-arrow">&#8594;</span>
+                        <div class="loop-node"><ion-icon name="eye-outline" style="color: var(--success);"></ion-icon><span>Observation</span></div>
+                        <span class="loop-arrow">&#8635;</span>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>4. Step-by-Step Tool Calling Workflow</h2>
+                    <p>When you ask an agent: <code>"What is the weather in Tokyo?"</code></p>
+                    <div class="bento-card">
+                        <ol>
+                            <li><strong>System Prompt:</strong> LLM is given a list of available tools (e.g., <code>get_weather(location)</code>).</li>
+                            <li><strong>Thought:</strong> The LLM thinks: <em>"I need to use the get_weather tool for Tokyo."</em></li>
+                            <li><strong>Action (Tool Call):</strong> The LLM outputs JSON: <code>{"name": "get_weather", "arguments": {"location": "Tokyo"}}</code></li>
+                            <li><strong>Execution:</strong> Your backend runs the actual API request, gets: <code>{"temp": "22C", "condition": "Sunny"}</code></li>
+                            <li><strong>Observation:</strong> The result is appended back to the LLM's context as a Tool Response message.</li>
+                            <li><strong>Final Answer:</strong> The LLM generates: <em>"It is currently 22Â°C and sunny in Tokyo!"</em></li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>5. Multi-Agent Architecture (LangGraph)</h2>
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        stateDiagram-v2
+                            User --> RouterAgent
+                            RouterAgent --> ResearcherAgent: Complex Query
+                            RouterAgent --> ChatAgent: Simple Query
+                            ResearcherAgent --> WebSearchTool
+                            WebSearchTool --> ResearcherAgent
+                            ResearcherAgent --> ReviewerAgent
+                            ReviewerAgent --> ResearcherAgent: Needs revision
+                            ReviewerAgent --> User: Approved Draft
+                            ChatAgent --> User
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>6. Common Mistakes</h2>
+                    <div class="bento-grid">
+                        <div class="bento-card" style="border-left: 4px solid var(--error);"><h3>X  Infinite Loops</h3><p>Agent keeps calling the same failing tool because it doesn't understand the error.</p><p><strong>OK Fix:</strong> Implement a <code>max_iterations</code> cap and force a specific failure message.</p></div>
+                        <div class="bento-card" style="border-left: 4px solid var(--error);"><h3>X  Tool Overload</h3><p>Giving one agent 50 tools confuses the LLM and degrades prompt context.</p><p><strong>OK Fix:</strong> Use a Multi-Agent architecture. One Supervisor routes to specialized sub-agents with 3-5 tools each.</p></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

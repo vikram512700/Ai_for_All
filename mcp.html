@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Context Protocol (MCP) | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search MCP concepts...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 8</span>
+                    <h1>Model Context Protocol (MCP)</h1>
+                    <p class="page-description">An open standard that enables secure, two-way connections between AI models and local or remote data sources, standardizing how AI tools are built and consumed.</p>
+                </header>
+
+                <!-- 1. Definition -->
+                <section class="animate-on-scroll">
+                    <h2>1. What is MCP?</h2>
+                    <p>The <strong>Model Context Protocol</strong> is an open-source standard introduced by Anthropic. It standardizes how AI applications (Clients) interact with external data sources and tools (Servers). Instead of writing custom API wrappers for every LLM and every tool, MCP provides a unified JSON-RPC protocol.</p>
+                    <div class="bento-card">
+                        <h3>Problem it solves:</h3>
+                        <p>Before MCP, if you wanted ChatGPT, Claude, and your custom LangChain agent to all read your GitHub repos, you had to write 3 different integrations. With MCP, you write <strong>one</strong> MCP Server for GitHub, and any MCP-compliant client can instantly use it.</p>
+                    </div>
+                </section>
+
+                <!-- 2. Real World Analogy -->
+                <section class="animate-on-scroll">
+                    <h2>2. Real World Analogy</h2>
+                    <div class="bento-grid" style="margin-top: 16px;">
+                        <div class="bento-card">
+                            <h3><ion-icon name="usb-outline"></ion-icon> Hardware Analogy (USB)</h3>
+                            <p>MCP is like the USB-C standard for AI. Before USB, every phone and laptop had a proprietary charger. USB-C standardized it. MCP standardizes the "plug" between AI models and data sources.</p>
+                        </div>
+                        <div class="bento-card">
+                            <h3><ion-icon name="server-outline"></ion-icon> Cloud Analogy (LSP)</h3>
+                            <p>It is identical in philosophy to the Language Server Protocol (LSP) which standardized how IDEs (VSCode, IntelliJ) communicate with language linters (Python, TypeScript).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3 & 4. Visual Diagram & Architecture -->
+                <section class="animate-on-scroll">
+                    <h2>3. MCP Client-Server Architecture</h2>
+                    <p>The protocol communicates over Stdio (local command execution) or SSE (Server-Sent Events for remote connections).</p>
+                    
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        flowchart LR
+                            subgraph AI Application
+                                Client[MCP Client<br>Claude Desktop / IDE]
+                            end
+                            
+                            subgraph MCP Servers
+                                S1[GitHub Server]
+                                S2[Postgres Server]
+                                S3[File System Server]
+                            end
+                            
+                            Client <-->|JSON-RPC via Stdio / SSE| S1
+                            Client <-->|JSON-RPC via Stdio / SSE| S2
+                            Client <-->|JSON-RPC via Stdio / SSE| S3
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Step by Step Workflow -->
+                <section class="animate-on-scroll">
+                    <h2>4. How MCP Exposes Data</h2>
+                    <p>An MCP server exposes three main primitives to the AI Client:</p>
+                    <div class="bento-card">
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Resources:</strong> Static data that the AI can read. Like file contents, database schemas, or API documentation. The client requests a URI (e.g., <code>file:///logs/app.log</code>) and reads it.</li>
+                            <li><strong>Tools:</strong> Executable functions the AI can call. The Server lists available tools (e.g., <code>query_database</code>) and their expected JSON schema. The LLM generates the JSON, and the Server executes it.</li>
+                            <li><strong>Prompts:</strong> Reusable prompt templates provided by the server. The client can ask the server for a specific prompt template, fill in the variables, and send it to the LLM.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- 6. Hands-On Lab -->
+                <section class="animate-on-scroll">
+                    <h2>5. Hands-On Lab: Build an MCP Server</h2>
+                    <p>A simple Python MCP Server that exposes a tool to fetch weather data, using the <code>mcp</code> python SDK.</p>
+                    <pre><code>from mcp.server.fastmcp import FastMCP
+
+# Initialize the server
+mcp = FastMCP("Weather Server")
+
+# Expose a tool to the LLM
+@mcp.tool()
+def get_weather(city: str) -> str:
+    """Get the current weather for a specific city."""
+    # Mock implementation
+    weather_data = {"London": "Rainy, 12C", "Tokyo": "Sunny, 22C"}
+    return weather_data.get(city, "Unknown city")
+
+if __name__ == "__main__":
+    # Start the server listening on Stdio
+    mcp.run()
+</code></pre>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

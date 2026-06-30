@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI for All | Master Modern AI</title>
+    <meta name="description" content="A world-class interactive learning platform for AI Engineering, GenAI, RAG, Agentic AI, MCP, LLMOps and more.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;">
+                <div class="logo-icon">
+                    <ion-icon name="cube-outline"></ion-icon>
+                </div>
+                <div class="logo-text">AI for All</div>
+            </a>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Getting Started</div>
+                <a href="index.html" class="nav-item active">
+                    <ion-icon name="home-outline"></ion-icon> Home Overview
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <ion-icon name="map-outline"></ion-icon> Career Roadmap
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Core Modules</div>
+                <a href="fundamentals.html" class="nav-item">
+                    <ion-icon name="bulb-outline"></ion-icon> AI & LLM Fundamentals
+                </a>
+                <a href="claude.html" class="nav-item">
+                    <ion-icon name="sparkles-outline"></ion-icon> Claude & Prompt Eng
+                </a>
+                <a href="rag.html" class="nav-item">
+                    <ion-icon name="search-outline"></ion-icon> RAG & Vector Search
+                </a>
+                <a href="agents.html" class="nav-item">
+                    <ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI
+                </a>
+                <a href="mcp.html" class="nav-item">
+                    <ion-icon name="git-network-outline"></ion-icon> Model Context Protocol
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Production Ops</div>
+                <a href="llmops.html" class="nav-item">
+                    <ion-icon name="server-outline"></ion-icon> LLMOps
+                </a>
+                <a href="evals.html" class="nav-item">
+                    <ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation
+                </a>
+                <a href="security.html" class="nav-item">
+                    <ion-icon name="shield-checkmark-outline"></ion-icon> AI Security
+                </a>
+                <a href="tools.html" class="nav-item">
+                    <ion-icon name="build-outline"></ion-icon> OS Tools & FinOps
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Resources</div>
+                <a href="glossary.html" class="nav-item">
+                    <ion-icon name="book-outline"></ion-icon> Glossary
+                </a>
+            </div>
+        </aside>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <button class="icon-btn mobile-toggle" id="mobile-toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </button>
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search modules, concepts, labs...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" id="theme-toggle" title="Toggle theme">
+                        <ion-icon name="moon-outline"></ion-icon>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Hero Banner -->
+                <div class="hero-banner animate-on-scroll">
+                    <span class="badge">&#10024; Version 2.0 &mdash; Free & Open Source</span>
+                    <h1>Master Modern <span class="text-gradient">AI Engineering</span></h1>
+                    <p class="page-description">A world-class interactive learning platform designed for Cloud, DevOps, and Platform Engineers. Go from zero AI knowledge to building production-grade Agentic AI and RAG systems.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Modules</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Concepts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">16</div>
+                            <div class="stat-label">Topics</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Core Learning Modules</h2>
+                <img src="concept1.png" alt="Generative AI Modules" class="section-banner">
+
+                <div class="bento-grid">
+                    <!-- Fundamentals -->
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon purple">
+                            <ion-icon name="bulb-outline"></ion-icon>
+                        </div>
+                        <h3>AI & LLM Fundamentals</h3>
+                        <p>Understand Tokens, Transformers, Embeddings, Temperature, and how an LLM actually generates text.</p>
+                        <a href="fundamentals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <!-- Claude & Prompt Engineering -->
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon amber">
+                            <ion-icon name="sparkles-outline"></ion-icon>
+                        </div>
+                        <h3>Claude & Prompt Engineering</h3>
+                        <p>Master Claude Code, understand tokens & context, write SKILL.md files, and connect Claude with open-source agents.</p>
+                        <a href="claude.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <!-- RAG Module -->
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon green">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </div>
+                        <h3>RAG & Vector Search</h3>
+                        <p>Connect LLMs to your private enterprise data using Vector Databases, embeddings, and hybrid search.</p>
+                        <a href="rag.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <!-- Agents Module -->
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <div class="card-icon pink">
+                            <ion-icon name="hardware-chip-outline"></ion-icon>
+                        </div>
+                        <h3>Agentic AI Systems</h3>
+                        <p>Build autonomous agents that plan, use tools, reflect, and solve complex multi-step problems.</p>
+                        <a href="agents.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <!-- MCP Module -->
+                    <div class="bento-card animate-on-scroll delay-4">
+                        <div class="card-icon blue">
+                            <ion-icon name="git-network-outline"></ion-icon>
+                        </div>
+                        <h3>Model Context Protocol</h3>
+                        <p>Standardize how your AI models securely access external tools, APIs, and data sources.</p>
+                        <a href="mcp.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <h2>Production & Operations</h2>
+                <img src="concept2.png" alt="Machine Learning Operations" class="section-banner">
+
+                <div class="bento-grid">
+                    <div class="bento-card animate-on-scroll delay-1">
+                        <div class="card-icon amber">
+                            <ion-icon name="server-outline"></ion-icon>
+                        </div>
+                        <h3>LLMOps & Observability</h3>
+                        <p>Deploy, monitor, and maintain LLM applications in production with rigorous telemetry.</p>
+                        <a href="llmops.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <div class="bento-card animate-on-scroll delay-2">
+                        <div class="card-icon red">
+                            <ion-icon name="shield-checkmark-outline"></ion-icon>
+                        </div>
+                        <h3>AI Security & OWASP</h3>
+                        <p>OWASP LLM Top 10, prompt injection defenses, jailbreaking, and guardrails.</p>
+                        <a href="security.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <div class="bento-card animate-on-scroll delay-3">
+                        <div class="card-icon green">
+                            <ion-icon name="bar-chart-outline"></ion-icon>
+                        </div>
+                        <h3>AI Evaluation & RAGAS</h3>
+                        <p>Score LLM outputs with Faithfulness, Relevance, and Context Recall using Golden Datasets.</p>
+                        <a href="evals.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+
+                    <div class="bento-card animate-on-scroll delay-4">
+                        <div class="card-icon blue">
+                            <ion-icon name="build-outline"></ion-icon>
+                        </div>
+                        <h3>Open Source AI & FinOps</h3>
+                        <p>Run Ollama locally, optimize token costs, and implement dynamic model routing.</p>
+                        <a href="tools.html" class="card-link">Start Module <ion-icon name="arrow-forward-outline"></ion-icon></a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & LLM Fundamentals | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .token-anim-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 32px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: 150px;
+            align-items: center;
+        }
+        .token {
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .token:nth-child(1) { animation: popIn 2s infinite; animation-delay: 0.2s; }
+        .token:nth-child(2) { animation: popIn 2s infinite; animation-delay: 0.6s; }
+        .token:nth-child(3) { animation: popIn 2s infinite; animation-delay: 1.0s; }
+        .token:nth-child(4) { animation: popIn 2s infinite; animation-delay: 1.4s; }
+        
+        @keyframes popIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            10%, 90% { opacity: 1; transform: translateY(0); background: var(--accent-glow); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search fundamentals...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 1 & 2</span>
+                    <h1>AI & LLM Fundamentals</h1>
+                    <p class="page-description">Understand the core building blocks of Large Language Models: Tokens, Transformers, and Parameters.</p>
+                </header>
+
+                <section class="animate-on-scroll">
+                    <h2>1. What is an LLM?</h2>
+                    <p>A <strong>Large Language Model (LLM)</strong> is a type of neural network (specifically, a Transformer) trained on massive amounts of text data. Its core function is surprisingly simple: it predicts the next most likely word (or token) based on the context of the words that came before it.</p>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>2. Real World Analogy</h2>
+                    <div class="bento-grid" style="margin-top: 16px;">
+                        <div class="bento-card">
+                            <h3><ion-icon name="phone-portrait-outline"></ion-icon> Smartphone Autocomplete</h3>
+                            <p>An LLM is just a highly advanced version of your phone's autocomplete. When you type "I am going to the...", your phone predicts "store". An LLM does this across paragraphs and code blocks with vast logical reasoning.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>3. Interactive Token Animation</h2>
+                    <p>LLMs don't read words; they read <strong>Tokens</strong>. A token can be a word, a part of a word, or just a single character. Watch how an LLM streams a response token by token:</p>
+                    
+                    <div class="token-anim-box">
+                        <div class="token">The</div>
+                        <div class="token">capital</div>
+                        <div class="token">is</div>
+                        <div class="token">Paris</div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>4. Key Parameters</h2>
+                    <div class="bento-grid">
+                        <div class="bento-card">
+                            <h3>Temperature (0.0 to 1.0)</h3>
+                            <p>Controls randomness. A temperature of <code>0.0</code> makes the model deterministic (always picks the most likely next word). High temperature makes it creative and varied.</p>
+                        </div>
+                        <div class="bento-card">
+                            <h3>Context Window</h3>
+                            <p>The maximum number of tokens the model can "remember" in a single prompt. If a model has a 128k context window, it can read a ~300-page book in one go.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="animate-on-scroll">
+                    <h2>5. Interview Questions</h2>
+                    <div class="bento-card" style="margin-bottom: 16px;">
+                        <h3>Beginner</h3>
+                        <p><strong>Q: Why does the model output different answers for the same prompt?</strong></p>
+                        <p><em>A:</em> Because the Temperature is set > 0.0, introducing probability sampling into the next-token prediction.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

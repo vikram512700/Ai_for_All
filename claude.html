@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering for Claude | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tip-box { background: var(--gradient-card); background-color: var(--bg-card); border: 1px solid var(--accent-tertiary); border-radius: 14px; padding: 20px 24px; margin: 20px 0; }
+        .tip-box h4 { color: var(--accent-tertiary); margin: 0 0 8px; font-size: 0.95rem; }
+        .warn-box { background: var(--gradient-card); background-color: var(--bg-card); border: 1px solid var(--warning); border-radius: 14px; padding: 20px 24px; margin: 20px 0; }
+        .warn-box h4 { color: var(--warning); margin: 0 0 8px; font-size: 0.95rem; }
+        .prompt-example { background: #1a1a2e; border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin: 20px 0; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #c4b5fd; white-space: pre-wrap; line-height: 1.7; }
+        .prompt-example .role { color: var(--accent-tertiary); font-weight: 700; }
+        .prompt-example .comment { color: var(--text-muted); font-style: italic; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.9rem; }
+        .comparison-table th { background: var(--bg-card); padding: 14px 16px; text-align: left; border-bottom: 2px solid var(--accent-primary); font-weight: 600; color: var(--text-primary); }
+        .comparison-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+        .comparison-table tr:hover td { background: var(--bg-card-hover); }
+        .file-tree { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 24px; margin: 20px 0; line-height: 2; }
+        .file-tree .folder { color: var(--accent-primary); font-weight: 600; }
+        .file-tree .file { color: var(--text-secondary); }
+        .file-tree .highlight { color: var(--accent-tertiary); font-weight: 600; }
+        .token-visual { display: flex; flex-wrap: wrap; gap: 6px; margin: 20px 0; }
+        .token-chip { padding: 6px 14px; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.8rem; font-weight: 500; border: 1px solid var(--border-color); }
+        .token-chip.t1 { background: rgba(129,140,248,0.15); color: #818cf8; border-color: rgba(129,140,248,0.3); }
+        .token-chip.t2 { background: rgba(52,211,153,0.15); color: #34d399; border-color: rgba(52,211,153,0.3); }
+        .token-chip.t3 { background: rgba(251,191,36,0.15); color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+        .token-chip.t4 { background: rgba(244,114,182,0.15); color: #f472b6; border-color: rgba(244,114,182,0.3); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI &amp; LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude &amp; Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG &amp; Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools &amp; FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+        <main class="main-content">
+            <header class="topbar"><button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button><div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search Claude &amp; Prompt Engineering..."></div><div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div></header>
+
+            <div class="content-area">
+
+                <!-- ===================== HEADER ===================== -->
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">&#10024; Complete Guide</span>
+                    <h1>Prompt Engineering <span class="text-gradient">for Claude</span></h1>
+                    <p class="page-description">Master Claude Code, understand tokens &amp; context windows, write SKILL.md files, and connect Claude to open-source agents like LangGraph, CrewAI, and Ollama.</p>
+                </header>
+
+                <!-- ===================== SECTION 1: WHAT IS CLAUDE ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>1. What is Claude &amp; Claude Code?</h2>
+                    <p><strong>Claude</strong> is a family of large language models built by Anthropic. Claude is designed to be helpful, harmless, and honest. <strong>Claude Code</strong> is a powerful agentic coding tool that lives in your terminal or IDE &mdash; it can read your entire codebase, edit files, run commands, search the web, and manage Git workflows autonomously.</p>
+
+                    <div class="bento-grid">
+                        <div class="bento-card">
+                            <div class="card-icon purple"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+                            <h3>Claude (Chat)</h3>
+                            <p>Conversational AI accessible via claude.ai, the API, or mobile apps. Great for brainstorming, writing, analysis, and coding assistance.</p>
+                        </div>
+                        <div class="bento-card">
+                            <div class="card-icon green"><ion-icon name="terminal-outline"></ion-icon></div>
+                            <h3>Claude Code (Agentic IDE)</h3>
+                            <p>An autonomous agent that runs in your VS Code or terminal. It reads files, writes code, runs tests, and commits &mdash; all while asking for your approval at each step.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== SECTION 2: TOKENS & CONTEXT ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>2. Understanding Tokens &amp; Context Windows</h2>
+
+                    <h3>What is a Token?</h3>
+                    <p>A <strong>token</strong> is the smallest unit of text that an LLM processes. It is NOT always a full word. A token can be a word, part of a word, a number, or punctuation. Roughly: <strong>1 token &#8776; 0.75 words</strong> (or ~4 characters in English).</p>
+
+                    <p>Here is how the sentence <code>"Claude is amazing at coding!"</code> gets tokenized:</p>
+
+                    <div class="token-visual">
+                        <span class="token-chip t1">Claude</span>
+                        <span class="token-chip t2">is</span>
+                        <span class="token-chip t3">amazing</span>
+                        <span class="token-chip t4">at</span>
+                        <span class="token-chip t1">coding</span>
+                        <span class="token-chip t2">!</span>
+                    </div>
+                    <p><em>6 tokens for 5 words.</em> Longer or rarer words may split into multiple tokens (e.g., "Kubernetes" &#8594; ["Kub", "ern", "etes"]).</p>
+
+                    <h3>What is the Context Window?</h3>
+                    <p>The <strong>context window</strong> is the total number of tokens the model can "see" at once &mdash; this includes your system prompt, the conversation history, any tool results, AND the model's response. Think of it as the model's short-term memory.</p>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr><th>Model</th><th>Context Window</th><th>Approx. Pages</th><th>Best For</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Claude 3.5 Haiku</td><td>200K tokens</td><td>~500 pages</td><td>Fast, cheap tasks</td></tr>
+                            <tr><td>Claude 3.5 Sonnet</td><td>200K tokens</td><td>~500 pages</td><td>Balanced performance</td></tr>
+                            <tr><td>Claude 4 Opus</td><td>200K tokens</td><td>~500 pages</td><td>Complex reasoning</td></tr>
+                            <tr><td>GPT-4o</td><td>128K tokens</td><td>~300 pages</td><td>Multimodal tasks</td></tr>
+                            <tr><td>Gemini 2.5 Pro</td><td>1M tokens</td><td>~2500 pages</td><td>Massive codebase</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="warn-box">
+                        <h4>&#9888; Why Context Matters for Claude Code</h4>
+                        <p>When Claude Code reads your codebase, every file it reads consumes tokens from the context window. If you load 50 files into context, Claude may "forget" the first files by the time it finishes reading the last ones. This is why it is critical to be <strong>specific</strong> in your prompts &mdash; tell Claude exactly which files to focus on.</p>
+                    </div>
+                </section>
+
+                <!-- ===================== SECTION 3: PROMPT ENGINEERING ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>3. Prompt Engineering Masterclass for Claude</h2>
+
+                    <h3>3.1 The Anatomy of a Great Prompt</h3>
+                    <p>A high-quality prompt for Claude should contain these 5 elements:</p>
+                    <div class="bento-card">
+                        <ol>
+                            <li><strong>Role:</strong> Tell Claude WHO it is. <code>"You are a Senior DevOps Engineer..."</code></li>
+                            <li><strong>Context:</strong> Give background information. <code>"We use AKS on Azure with Terraform..."</code></li>
+                            <li><strong>Task:</strong> Be specific about WHAT to do. <code>"Write a Terraform module for..."</code></li>
+                            <li><strong>Format:</strong> Specify the desired output format. <code>"Return the output as a YAML file..."</code></li>
+                            <li><strong>Constraints:</strong> Set guardrails. <code>"Do NOT use deprecated APIs. Keep it under 100 lines."</code></li>
+                        </ol>
+                    </div>
+
+                    <h3>3.2 Example: Bad vs Good Prompt</h3>
+
+                    <div class="bento-grid">
+                        <div class="bento-card" style="border-left: 4px solid var(--error);">
+                            <h3>&#10060; Bad Prompt</h3>
+                            <div class="prompt-example"><span class="role">User:</span> Help me with Kubernetes.</div>
+                            <p>Too vague. Claude doesn't know if you need a tutorial, a YAML file, a debugging session, or an architecture design.</p>
+                        </div>
+                        <div class="bento-card" style="border-left: 4px solid var(--success);">
+                            <h3>&#9989; Good Prompt</h3>
+                            <div class="prompt-example"><span class="role">User:</span>
+You are a Senior Kubernetes Engineer.
+
+I have an AKS cluster (v1.29) running on Azure
+with 3 node pools. I need to deploy a
+Redis Sentinel cluster for HA caching.
+
+Write a production-ready Helm values.yaml file
+for the Bitnami Redis chart with:
+- 3 replicas
+- Persistent storage (50Gi, managed-csi)
+- Resource limits (500m CPU, 1Gi RAM)
+- Pod anti-affinity rules
+
+Output ONLY the YAML. No explanation.</div>
+                        </div>
+                    </div>
+
+                    <h3>3.3 Advanced Prompting Techniques</h3>
+                    <div class="bento-grid">
+                        <div class="bento-card">
+                            <div class="card-icon purple"><ion-icon name="git-branch-outline"></ion-icon></div>
+                            <h3>Chain-of-Thought (CoT)</h3>
+                            <p>Add <code>"Think step by step"</code> to force Claude to show its reasoning before giving a final answer. Dramatically improves accuracy on math and logic problems.</p>
+                        </div>
+                        <div class="bento-card">
+                            <div class="card-icon green"><ion-icon name="copy-outline"></ion-icon></div>
+                            <h3>Few-Shot Examples</h3>
+                            <p>Show Claude 2-3 examples of the input/output format you expect. It will mimic the pattern perfectly for your actual request.</p>
+                        </div>
+                        <div class="bento-card">
+                            <div class="card-icon amber"><ion-icon name="layers-outline"></ion-icon></div>
+                            <h3>System Prompts</h3>
+                            <p>Use the <code>system</code> message to define Claude's persona, rules, and available tools. This is the most powerful lever for controlling behavior.</p>
+                        </div>
+                        <div class="bento-card">
+                            <div class="card-icon blue"><ion-icon name="document-outline"></ion-icon></div>
+                            <h3>XML Tags</h3>
+                            <p>Claude excels at parsing structured XML tags. Wrap context in <code>&lt;context&gt;...&lt;/context&gt;</code> and instructions in <code>&lt;instructions&gt;...&lt;/instructions&gt;</code> for clarity.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== SECTION 4: WORKING WITH CLAUDE CODE ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>4. Working with Claude Code (Agentic IDE)</h2>
+
+                    <h3>4.1 How Claude Code Works</h3>
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        flowchart LR
+                            User[You Type a Prompt] --> CC[Claude Code Agent]
+                            CC --> Read[Reads Files]
+                            CC --> Search[Searches Codebase]
+                            CC --> Edit[Edits Code]
+                            CC --> Run[Runs Commands]
+                            CC --> Git[Git Commit / PR]
+                            Read --> CC
+                            Search --> CC
+                            Edit --> |Asks Permission| User
+                            Run --> |Asks Permission| User
+                        </div>
+                    </div>
+
+                    <h3>4.2 Best Practices for Claude Code</h3>
+                    <div class="bento-card">
+                        <ol>
+                            <li><strong>Be specific about files:</strong> Say <code>"Edit src/auth/login.ts"</code> not <code>"fix the login bug"</code>.</li>
+                            <li><strong>Use slash commands:</strong> Type <code>/help</code> to see all available commands. Use <code>/compact</code> to free up context.</li>
+                            <li><strong>Review every change:</strong> Claude Code always asks for permission before editing or running commands. Read the diffs carefully.</li>
+                            <li><strong>Use AGENTS.md:</strong> Place an <code>AGENTS.md</code> file in your repo root with project-specific rules (coding style, forbidden libraries, etc.). Claude Code reads this automatically.</li>
+                            <li><strong>Iterate in chunks:</strong> Don't ask Claude to "refactor the entire app." Break it into component-level tasks.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- ===================== SECTION 5: SKILL.md ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>5. The SKILL.md System (Custom Skills)</h2>
+                    <p><strong>Skills</strong> are reusable instruction sets that extend Claude Code's capabilities for specific tasks. They live as directories in your config and are automatically loaded when relevant.</p>
+
+                    <h3>5.1 Where to Place Skills</h3>
+                    <div class="file-tree">
+                        <span class="folder">~/.gemini/config/</span> <span class="comment">&mdash; Global (all projects)</span><br>
+                        &nbsp;&nbsp;<span class="folder">skills/</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">terraform_expert/</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">SKILL.md</span> <span class="comment">&mdash; Instructions</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">scripts/</span> <span class="comment">&mdash; Helper scripts</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">examples/</span> <span class="comment">&mdash; Reference code</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">references/</span> <span class="comment">&mdash; Documentation</span><br>
+                        <br>
+                        <span class="folder">.agents/</span> <span class="comment">&mdash; Project-scoped (this repo only)</span><br>
+                        &nbsp;&nbsp;<span class="folder">skills/</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">deploy_pipeline/</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">SKILL.md</span><br>
+                    </div>
+
+                    <h3>5.2 SKILL.md Structure</h3>
+                    <p>A SKILL.md file has two parts: YAML frontmatter (for discovery) and a Markdown body (instructions).</p>
+
+                    <pre><code>---
+name: terraform-azure-expert
+description: Expert at writing production-grade Terraform modules for Azure infrastructure including AKS, VNET, and Key Vault.
+---
+
+# Terraform Azure Expert Skill
+
+## Rules
+- Always use `azurerm` provider version >= 3.0
+- Use remote state with Azure Storage Account backend
+- Follow HashiCorp naming conventions
+- Include `variables.tf`, `outputs.tf`, `main.tf`, `providers.tf`
+- Add inline comments for every resource block
+
+## Coding Style
+- Use `snake_case` for all resource names
+- Group related resources in the same file
+- Always tag resources with: environment, team, managed_by
+
+## References
+- See `references/azure-naming.md` for naming conventions
+- See `examples/aks-module/` for a working AKS module</code></pre>
+
+                    <div class="tip-box">
+                        <h4>&#128161; Pro Tip: Trigger Matching</h4>
+                        <p>Skills are automatically triggered based on the <code>name</code> and <code>description</code> fields in the frontmatter. If you ask Claude Code to "write a Terraform module for Azure," it will automatically load the <code>terraform-azure-expert</code> skill because the description matches your request.</p>
+                    </div>
+                </section>
+
+                <!-- ===================== SECTION 6: AGENTS.md ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>6. AGENTS.md (Project Rules)</h2>
+                    <p>While Skills are for <em>capabilities</em>, <code>AGENTS.md</code> is for <em>project-wide rules and constraints</em>. Place it in <code>.agents/AGENTS.md</code> in your repository root.</p>
+
+                    <pre><code># Project Rules for AI Assistants
+
+## Tech Stack
+- Backend: Python 3.12 + FastAPI
+- Frontend: Next.js 15 + TypeScript
+- Database: PostgreSQL 16 with pgvector
+- Cloud: Azure (AKS, Key Vault, Blob Storage)
+
+## Coding Standards
+- Use Ruff for Python linting
+- Use Pydantic v2 for all data models
+- Never use `print()` for logging; use `structlog`
+- All API endpoints must have OpenAPI docstrings
+
+## Forbidden
+- Do NOT use SQLAlchemy ORM; use raw SQL with asyncpg
+- Do NOT install new dependencies without asking
+- Do NOT modify files in the `/infrastructure` folder
+
+## Testing
+- Every new function must have a pytest unit test
+- Use `pytest-asyncio` for async tests
+- Target 80% code coverage minimum</code></pre>
+                </section>
+
+                <!-- ===================== SECTION 7: OPEN SOURCE AGENTS ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>7. Connecting Claude with Open-Source Agents</h2>
+                    <p>Claude's API can be plugged into open-source agentic frameworks to build autonomous multi-step workflows.</p>
+
+                    <h3>7.1 Architecture Overview</h3>
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        flowchart TD
+                            subgraph Your Application
+                                LG[LangGraph / CrewAI / AutoGen]
+                            end
+
+                            subgraph LLM Providers
+                                Claude[Claude API - Anthropic]
+                                Ollama[Ollama - Local Models]
+                            end
+
+                            subgraph Tools
+                                MCP[MCP Servers]
+                                WebSearch[Web Search]
+                                DB[(Database)]
+                            end
+
+                            LG <--> Claude
+                            LG <--> Ollama
+                            LG --> MCP
+                            LG --> WebSearch
+                            LG --> DB
+                        </div>
+                    </div>
+
+                    <h3>7.2 Framework Comparison</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr><th>Framework</th><th>Language</th><th>Best For</th><th>Claude Support</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>LangGraph</strong></td><td>Python</td><td>Complex stateful agent graphs</td><td>&#9989; Native via ChatAnthropic</td></tr>
+                            <tr><td><strong>CrewAI</strong></td><td>Python</td><td>Multi-agent role-based teams</td><td>&#9989; Via LiteLLM</td></tr>
+                            <tr><td><strong>AutoGen</strong></td><td>Python</td><td>Conversational agent teams</td><td>&#9989; Via config</td></tr>
+                            <tr><td><strong>Semantic Kernel</strong></td><td>C# / Python</td><td>Enterprise (.NET) apps</td><td>&#9989; Native connector</td></tr>
+                            <tr><td><strong>Ollama + Open WebUI</strong></td><td>Go / Python</td><td>Local private deployment</td><td>&#10060; Use Llama/Mistral locally</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>7.3 Lab: Claude + LangGraph Agent</h3>
+                    <pre><code>from langchain_anthropic import ChatAnthropic
+from langgraph.prebuilt import create_react_agent
+
+# 1. Initialize Claude as the LLM brain
+llm = ChatAnthropic(model="claude-sonnet-4-20250514")
+
+# 2. Define tools the agent can use
+def get_weather(city: str) -> str:
+    """Get the current weather for a city."""
+    return f"It is 22C and sunny in {city}."
+
+def search_docs(query: str) -> str:
+    """Search internal documentation."""
+    return f"Found 3 results for '{query}' in company wiki."
+
+# 3. Create the ReAct agent
+agent = create_react_agent(llm, tools=[get_weather, search_docs])
+
+# 4. Run the agent
+result = agent.invoke({
+    "messages": [{"role": "user", "content": "What is the weather in London?"}]
+})
+
+print(result["messages"][-1].content)</code></pre>
+
+                    <h3>7.4 Lab: Claude + Ollama (Hybrid Local/Cloud)</h3>
+                    <p>Use Claude for complex reasoning and a local Ollama model for cheap, fast tasks:</p>
+                    <pre><code>from langchain_anthropic import ChatAnthropic
+from langchain_ollama import ChatOllama
+
+# Cloud model for hard tasks
+claude = ChatAnthropic(model="claude-sonnet-4-20250514")
+
+# Local model for simple tasks (FREE, no API cost)
+local_llm = ChatOllama(model="llama3.2:3b")
+
+def smart_route(query: str):
+    """Route to the right model based on complexity."""
+    simple_keywords = ["format", "extract", "list", "summarize"]
+    if any(kw in query.lower() for kw in simple_keywords):
+        print("Routing to LOCAL Ollama (free)")
+        return local_llm.invoke(query)
+    else:
+        print("Routing to Claude API (paid)")
+        return claude.invoke(query)
+
+# Simple task -> Ollama (free)
+print(smart_route("List the days of the week"))
+
+# Complex task -> Claude (paid)
+print(smart_route("Design a microservices architecture for a fintech app"))</code></pre>
+
+                    <div class="tip-box">
+                        <h4>&#128161; Cost Saving with Hybrid Routing</h4>
+                        <p>By routing simple tasks to a free local model (Ollama) and only sending complex reasoning tasks to Claude's API, enterprises can reduce their LLM API costs by <strong>40-70%</strong> while maintaining output quality.</p>
+                    </div>
+                </section>
+
+                <!-- ===================== SECTION 8: INTERVIEW QUESTIONS ===================== -->
+                <section class="animate-on-scroll">
+                    <h2>8. Interview Questions</h2>
+                    <div class="bento-card" style="margin-bottom: 16px;">
+                        <h3>Beginner</h3>
+                        <p><strong>Q: What is the difference between a Token and a Word?</strong></p>
+                        <p><em>A:</em> A word is a human language unit. A token is a model's processing unit. Common words like "the" are 1 token. Rare words like "Kubernetes" are split into 3 tokens. Punctuation and spaces are also tokens. Roughly 100 tokens = 75 words.</p>
+                    </div>
+                    <div class="bento-card" style="margin-bottom: 16px;">
+                        <h3>Intermediate</h3>
+                        <p><strong>Q: Why does Claude sometimes "forget" things mid-conversation?</strong></p>
+                        <p><em>A:</em> Because the conversation has exceeded the <strong>effective context window</strong>. While Claude supports 200K tokens, attention quality degrades with very long contexts. The solution is to periodically summarize the conversation or use RAG to retrieve only the relevant context.</p>
+                    </div>
+                    <div class="bento-card">
+                        <h3>Advanced</h3>
+                        <p><strong>Q: How would you design a production system that uses both Claude and local open-source models?</strong></p>
+                        <p><em>A:</em> Implement a <strong>Model Router</strong>: classify incoming queries by complexity using a lightweight classifier. Route simple tasks (formatting, extraction) to a local Ollama/vLLM instance running Llama-3. Route complex reasoning, code generation, and agentic workflows to Claude via the Anthropic API. Use LangGraph to orchestrate the workflow and Langfuse/LangSmith for observability across both providers.</p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

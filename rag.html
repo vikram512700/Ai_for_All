@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG & Vector Search | AI for All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .rag-flow { display: flex; align-items: center; gap: 0; margin: 32px 0; flex-wrap: wrap; justify-content: center; }
+        .flow-step { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 24px; text-align: center; min-width: 140px; position: relative; transition: all 0.3s ease; }
+        .flow-step:hover { border-color: var(--accent-primary); transform: translateY(-4px); box-shadow: 0 8px 24px var(--accent-glow); }
+        .flow-step .step-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+        .flow-step .step-label { font-weight: 600; font-size: 0.85rem; }
+        .flow-step .step-detail { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+        .flow-arrow { font-size: 1.5rem; color: var(--accent-primary); padding: 0 8px; animation: pulseArrow 2s infinite; }
+        @keyframes pulseArrow { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        @media(max-width: 768px) { .flow-arrow { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <a href="index.html" class="logo-container" style="text-decoration:none;"><div class="logo-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="logo-text">AI for All</div></a>
+            <div class="nav-section"><div class="nav-section-title">Getting Started</div><a href="index.html" class="nav-item"><ion-icon name="home-outline"></ion-icon> Home Overview</a><a href="roadmap.html" class="nav-item"><ion-icon name="map-outline"></ion-icon> Career Roadmap</a></div>
+            <div class="nav-section"><div class="nav-section-title">Core Modules</div><a href="fundamentals.html" class="nav-item"><ion-icon name="bulb-outline"></ion-icon> AI & LLM Fundamentals</a><a href="claude.html" class="nav-item"><ion-icon name="sparkles-outline"></ion-icon> Claude & Prompt Eng</a><a href="rag.html" class="nav-item"><ion-icon name="search-outline"></ion-icon> RAG & Vector Search</a><a href="agents.html" class="nav-item"><ion-icon name="hardware-chip-outline"></ion-icon> Agentic AI</a><a href="mcp.html" class="nav-item"><ion-icon name="git-network-outline"></ion-icon> Model Context Protocol</a></div>
+            <div class="nav-section"><div class="nav-section-title">Production Ops</div><a href="llmops.html" class="nav-item"><ion-icon name="server-outline"></ion-icon> LLMOps</a><a href="evals.html" class="nav-item"><ion-icon name="bar-chart-outline"></ion-icon> AI Evaluation</a><a href="security.html" class="nav-item"><ion-icon name="shield-checkmark-outline"></ion-icon> AI Security</a><a href="tools.html" class="nav-item"><ion-icon name="build-outline"></ion-icon> OS Tools & FinOps</a></div>
+            <div class="nav-section"><div class="nav-section-title">Resources</div><a href="glossary.html" class="nav-item"><ion-icon name="book-outline"></ion-icon> Glossary</a></div>
+        </aside>
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+        <main class="main-content">
+            <header class="topbar"><button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button><div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" placeholder="Search RAG concepts..."></div><div class="topbar-actions"><button class="icon-btn" id="theme-toggle"><ion-icon name="moon-outline"></ion-icon></button></div></header>
+
+            <div class="content-area">
+                <header class="page-header animate-on-scroll">
+                    <span class="badge">Module 6</span>
+                    <h1>Retrieval Augmented <span class="text-gradient">Generation (RAG)</span></h1>
+                    <p class="page-description">Learn how to connect Large Language Models to your private, proprietary enterprise data using Vector Databases, embeddings, and hybrid search.</p>
+                </header>
+
+                <section class="animate-on-scroll">
+                    <h2>1. What is RAG?</h2>
+                    <p><strong>Retrieval-Augmented Generation (RAG)</strong> is a technique that grants Large Language Models (LLMs) access to external, up-to-date, or proprietary data that they were not originally trained on. It solves the LLM hallucination problem by grounding responses in retrieved facts.</p>
+                    <div class="bento-card">
+                        <h3>&#127919; Problem it solves</h3>
+                        <p>LLMs have a knowledge cutoff and hallucinate when they don't know the answer. RAG forces the LLM to read relevant documents <em>before</em> answering, dramatically improving accuracy.</p>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>2. Real World Analogies</h2>
+                    <div class="bento-grid">
+                        <div class="bento-card">
+                            <div class="card-icon purple"><ion-icon name="person-outline"></ion-icon></div>
+                            <h3>Human Analogy</h3>
+                            <p>Taking an open-book exam. Instead of relying on memory (LLM weights), you search the textbook (Retrieval), read it, then write your answer (Generation).</p>
+                        </div>
+                        <div class="bento-card">
+                            <div class="card-icon blue"><ion-icon name="cloud-outline"></ion-icon></div>
+                            <h3>Cloud Analogy</h3>
+                            <p>Like an Azure Logic App workflow: trigger is the user prompt &#8594; query Azure AI Search &#8594; retrieve JSON &#8594; inject into Azure OpenAI call &#8594; return result.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>3. RAG Workflow Visualization</h2>
+                    <p>Watch how data flows through a RAG pipeline step by step:</p>
+                    <div class="rag-flow">
+                        <div class="flow-step"><span class="step-icon"><ion-icon name="person-outline" style="color:var(--accent-primary);font-size:2rem;"></ion-icon></span><span class="step-label">User Query</span><span class="step-detail">"How do I set up AKS?"</span></div>
+                        <span class="flow-arrow">&rarr;</span>
+                        <div class="flow-step"><span class="step-icon"><ion-icon name="code-working-outline" style="color:var(--accent-secondary);font-size:2rem;"></ion-icon></span><span class="step-label">Embedding</span><span class="step-detail">text &rarr; [0.12, 0.87, ...]</span></div>
+                        <span class="flow-arrow">&rarr;</span>
+                        <div class="flow-step"><span class="step-icon"><ion-icon name="search-outline" style="color:var(--accent-tertiary);font-size:2rem;"></ion-icon></span><span class="step-label">Vector Search</span><span class="step-detail">Cosine Similarity</span></div>
+                        <span class="flow-arrow">&rarr;</span>
+                        <div class="flow-step"><span class="step-icon"><ion-icon name="document-text-outline" style="color:var(--info);font-size:2rem;"></ion-icon></span><span class="step-label">Retrieved Docs</span><span class="step-detail">Top-K Chunks</span></div>
+                        <span class="flow-arrow">&rarr;</span>
+                        <div class="flow-step"><span class="step-icon"><ion-icon name="hardware-chip-outline" style="color:var(--warning);font-size:2rem;"></ion-icon></span><span class="step-label">LLM</span><span class="step-detail">Generates Answer</span></div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>4. Step-by-Step Technical Workflow</h2>
+                    <div class="bento-card">
+                        <ol>
+                            <li><strong>User asks a question:</strong> <code>"How do I configure AKS networking?"</code></li>
+                            <li><strong>Embedding:</strong> The question is sent to an embedding model (e.g., <code>text-embedding-3-small</code>) which converts text into a dense vector of 1536 floats.</li>
+                            <li><strong>Vector Search:</strong> Cosine Similarity search against a Vector Database (Pinecone, Azure AI Search) to find the closest matching vectors.</li>
+                            <li><strong>Context Retrieval:</strong> The top-K chunks of text associated with those vectors are returned.</li>
+                            <li><strong>Prompt Augmentation:</strong> Retrieved text chunks are injected into the system prompt: <code>"Use the following context to answer..."</code></li>
+                            <li><strong>Generation:</strong> The LLM reads the context and generates an accurate, grounded answer.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>5. Enterprise Production Architecture</h2>
+                    <div class="diagram-container">
+                        <div class="mermaid">
+                        graph TD
+                            User((User)) --> |1. Ask Question| API[API Gateway]
+                            API --> |2. Forward| App[Web App / Backend]
+                            App --> |3. Embed Query| OpenAI1[Azure OpenAI: text-embedding]
+                            App --> |4. Vector Search| AISearch[(Azure AI Search)]
+                            AISearch --> |5. Return Docs| App
+                            App --> |6. Augmented Prompt| OpenAI2[Azure OpenAI: GPT-4]
+                            OpenAI2 --> |7. Stream Response| App
+                            App --> |8. Return to User| User
+                            style User fill:#818cf8,stroke:#fff,color:#fff
+                            style AISearch fill:#34d399,stroke:#fff,color:#fff
+                            style OpenAI1 fill:#fbbf24,stroke:#fff,color:#fff
+                            style OpenAI2 fill:#fbbf24,stroke:#fff,color:#fff
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>6. Common Mistakes in Production RAG</h2>
+                    <div class="bento-grid">
+                        <div class="bento-card" style="border-left: 4px solid var(--error);">
+                            <h3>X  Poor Chunking Strategy</h3>
+                            <p>Splitting documents every 500 tokens cuts sentences in half, destroying semantic meaning.</p>
+                            <p><strong>OK Fix:</strong> Use recursive character splitting or semantic chunking by headers/paragraphs.</p>
+                        </div>
+                        <div class="bento-card" style="border-left: 4px solid var(--error);">
+                            <h3>X  Vector Search Only</h3>
+                            <p>Vector search is bad at exact keyword matches like product IDs: <code>SKU-9942</code>.</p>
+                            <p><strong>OK Fix:</strong> Implement Hybrid Search (Vector + BM25 Keyword) and use a Cross-Encoder for re-ranking.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>7. Interview Questions</h2>
+                    <div class="bento-card" style="margin-bottom: 16px;">
+                        <h3>&#128994; Beginner</h3>
+                        <p><strong>Q: What is the difference between Fine-tuning and RAG?</strong></p>
+                        <p><em>A:</em> Fine-tuning permanently alters the model's weights. RAG provides external knowledge at inference time. RAG is better for factual accuracy; fine-tuning is better for stylistic alignment.</p>
+                    </div>
+                    <div class="bento-card">
+                        <h3>&#128308; Advanced</h3>
+                        <p><strong>Q: How does a Cross-Encoder Re-ranker improve RAG?</strong></p>
+                        <p><em>A:</em> Standard Bi-encoder search is fast but misses deep relevance. A Cross-Encoder scores the Query AND Retrieved Document simultaneously for highly accurate ranking, but is too expensive to run on the entire index (run on top ~50 results only).</p>
+                    </div>
+                </section>
+
+                <section class="animate-on-scroll">
+                    <h2>8. Hands-On Lab: Build a RAG Pipeline</h2>
+                    <pre><code>from langchain_community.document_loaders import TextLoader
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_chroma import Chroma
+
+# 1. Load Data
+loader = TextLoader("company_policy.txt")
+docs = loader.load()
+
+# 2. Embed and Store in Vector DB
+vectorstore = Chroma.from_documents(docs, embedding=OpenAIEmbeddings())
+retriever = vectorstore.as_retriever()
+
+# 3. Retrieve and Generate
+context = retriever.invoke("What is the remote work policy?")
+llm = ChatOpenAI(model="gpt-4")
+response = llm.invoke(f"Context: {context}\n\nQuestion: What is the remote work policy?")
+
+print(response.content)</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
