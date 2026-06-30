@@ -4,11 +4,369 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Career Roadmap | AI for All</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css?v=4">
+    <style>
+        /* ── ROADMAP SPINE ── */
+        .roadmap-container {
+            position: relative;
+            padding: 20px 0 40px;
+        }
+        .roadmap-spine {
+            position: absolute;
+            left: 50%;
+            top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #818cf8, #34d399, #fbbf24, #f472b6, #60a5fa);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        @media (max-width: 800px) {
+            .roadmap-spine { left: 28px; }
+        }
+
+        /* ── PHASE HEADER ── */
+        .phase-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 48px 0 32px;
+            z-index: 2;
+        }
+        .phase-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border: 2px solid;
+            background: var(--bg-base);
+            box-shadow: 0 0 32px var(--glow-color, rgba(129,140,248,0.25));
+        }
+        .phase-badge ion-icon { font-size: 1.1rem; }
+
+        /* ── ROADMAP NODE ── */
+        .rm-node {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            margin-bottom: 36px;
+            position: relative;
+            z-index: 1;
+        }
+        .rm-node.left  { flex-direction: row-reverse; }
+        .rm-node.right { flex-direction: row; }
+
+        .rm-dot-col {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .rm-dot {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 3px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            background: var(--bg-base);
+            flex-shrink: 0;
+            z-index: 2;
+            transition: transform 0.2s;
+        }
+        .rm-dot:hover { transform: scale(1.15); }
+
+        .rm-card-col {
+            flex: 1;
+            min-width: 0;
+        }
+        .rm-node.left  .rm-card-col { padding-right: 36px; }
+        .rm-node.right .rm-card-col { padding-left: 36px; }
+
+        .rm-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px 22px;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+        .rm-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 14px 14px 0 0;
+        }
+        .rm-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        .rm-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .rm-step-num {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .rm-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.3;
+        }
+        .rm-card .rm-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 8px 0 12px;
+        }
+        .rm-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .rm-skill {
+            font-size: 0.72rem;
+            padding: 3px 9px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-family: 'Fira Code', monospace;
+        }
+        .rm-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+        .rm-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .rm-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-top: 12px;
+            transition: opacity 0.15s;
+        }
+        .rm-link:hover { opacity: 0.8; }
+
+        /* ── WIDE SCREEN: alternating left/right ── */
+        @media (min-width: 801px) {
+            .rm-node {
+                align-items: flex-start;
+            }
+            .rm-node.left .rm-card-col  { text-align: right; }
+            .rm-node.left .rm-skills    { justify-content: flex-end; }
+            .rm-node.left .rm-meta      { flex-direction: row-reverse; }
+            .rm-node.left .rm-link      { margin-left: auto; }
+            .rm-dot-col { width: 80px; }
+        }
+
+        /* ── MOBILE: all right ── */
+        @media (max-width: 800px) {
+            .rm-node { flex-direction: row !important; }
+            .rm-node .rm-card-col { padding-left: 20px !important; padding-right: 0 !important; text-align: left !important; }
+            .rm-node .rm-skills   { justify-content: flex-start !important; }
+            .rm-node .rm-meta     { flex-direction: row !important; }
+            .rm-node .rm-link     { margin-left: 0 !important; }
+            .rm-dot-col { width: 56px; }
+        }
+
+        /* ── PHASE COLORS ── */
+        /* Phase 1 — Purple */
+        .p1 .rm-card::before { background: #818cf8; }
+        .p1 .rm-card:hover    { border-color: rgba(129,140,248,0.5); box-shadow: 0 12px 40px rgba(129,140,248,0.15); }
+        .p1 .rm-dot  { border-color: #818cf8; color: #818cf8; }
+        .p1 .rm-step-num { background: rgba(129,140,248,0.2); color: #818cf8; }
+        .p1 .rm-skill    { background: rgba(129,140,248,0.12); color: #a5b4fc; }
+        .p1 .rm-link     { background: rgba(129,140,248,0.15); color: #818cf8; }
+
+        /* Phase 2 — Green */
+        .p2 .rm-card::before { background: #34d399; }
+        .p2 .rm-card:hover    { border-color: rgba(52,211,153,0.5); box-shadow: 0 12px 40px rgba(52,211,153,0.15); }
+        .p2 .rm-dot  { border-color: #34d399; color: #34d399; }
+        .p2 .rm-step-num { background: rgba(52,211,153,0.2); color: #34d399; }
+        .p2 .rm-skill    { background: rgba(52,211,153,0.12); color: #6ee7b7; }
+        .p2 .rm-link     { background: rgba(52,211,153,0.15); color: #34d399; }
+
+        /* Phase 3 — Amber */
+        .p3 .rm-card::before { background: #fbbf24; }
+        .p3 .rm-card:hover    { border-color: rgba(251,191,36,0.5); box-shadow: 0 12px 40px rgba(251,191,36,0.15); }
+        .p3 .rm-dot  { border-color: #fbbf24; color: #fbbf24; }
+        .p3 .rm-step-num { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .p3 .rm-skill    { background: rgba(251,191,36,0.12); color: #fde68a; }
+        .p3 .rm-link     { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+        /* Phase 4 — Pink */
+        .p4 .rm-card::before { background: #f472b6; }
+        .p4 .rm-card:hover    { border-color: rgba(244,114,182,0.5); box-shadow: 0 12px 40px rgba(244,114,182,0.15); }
+        .p4 .rm-dot  { border-color: #f472b6; color: #f472b6; }
+        .p4 .rm-step-num { background: rgba(244,114,182,0.2); color: #f472b6; }
+        .p4 .rm-skill    { background: rgba(244,114,182,0.12); color: #f9a8d4; }
+        .p4 .rm-link     { background: rgba(244,114,182,0.15); color: #f472b6; }
+
+        /* Phase 5 — Blue */
+        .p5 .rm-card::before { background: #60a5fa; }
+        .p5 .rm-card:hover    { border-color: rgba(96,165,250,0.5); box-shadow: 0 12px 40px rgba(96,165,250,0.15); }
+        .p5 .rm-dot  { border-color: #60a5fa; color: #60a5fa; }
+        .p5 .rm-step-num { background: rgba(96,165,250,0.2); color: #60a5fa; }
+        .p5 .rm-skill    { background: rgba(96,165,250,0.12); color: #93c5fd; }
+        .p5 .rm-link     { background: rgba(96,165,250,0.15); color: #60a5fa; }
+
+        /* ── COMPARISON TABLE ── */
+        .role-compare {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .role-col {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .role-col h4 { font-size: 0.92rem; margin-bottom: 12px; }
+        .role-col ul { list-style: none; padding: 0; margin: 0; }
+        .role-col ul li {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex; gap: 8px; align-items: flex-start;
+        }
+        .role-col ul li:last-child { border-bottom: none; }
+        .role-col ul li::before { content: '→'; flex-shrink: 0; }
+
+        /* ── SALARY BANDS ── */
+        .salary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .sal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .sal-card .sal-title { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .sal-card .sal-amount { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+        .sal-card .sal-range { font-size: 0.78rem; color: var(--text-secondary); }
+        .sal-card .sal-bar-wrap { height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; margin-top: 10px; }
+        .sal-card .sal-bar { height: 100%; border-radius: 3px; }
+
+        /* ── CHECKLIST ── */
+        .checklist { display: flex; flex-direction: column; gap: 8px; margin: 20px 0; }
+        .cl-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+        .cl-item .cl-check {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+        .cl-item .cl-text h5 { font-size: 0.88rem; margin-bottom: 2px; }
+        .cl-item .cl-text p  { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+
+        /* ── TIMELINE BAR ── */
+        .timeline-bar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            margin: 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .tb-segment {
+            padding: 14px 12px;
+            text-align: center;
+        }
+        .tb-segment .tb-phase { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .tb-segment .tb-weeks { font-size: 0.82rem; font-weight: 600; }
+        .tb-segment .tb-label { font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px; }
+
+        /* ── STACK OVERVIEW ── */
+        .tech-stack-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .tso-cell {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+        }
+        .tso-cell .tso-cat { font-size: 0.72rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .tso-cell .tso-items { display: flex; flex-direction: column; gap: 4px; }
+        .tso-cell .tso-item { font-size: 0.8rem; font-family: 'Fira Code', monospace; color: var(--text-primary); }
+
+        /* ── MILESTONE ── */
+        .milestones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .ms-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .ms-card .ms-icon { font-size: 1.4rem; margin-bottom: 10px; }
+        .ms-card h4 { font-size: 0.9rem; margin-bottom: 6px; }
+        .ms-card p { font-size: 0.82rem; color: var(--text-secondary); margin: 0; }
+    </style>
 </head>
 <body>
 <div class="app-container">
@@ -62,90 +420,936 @@
     <main class="main-content">
         <header class="topbar">
             <button class="icon-btn mobile-toggle" id="mobile-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="search-input" placeholder="Search modules, concepts, tools...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button>
-            </div>
+            <div class="search-bar"><ion-icon name="search-outline"></ion-icon><input type="text" id="search-input" placeholder="Search modules, concepts, tools..."></div>
+            <div class="topbar-actions"><button class="icon-btn" id="theme-toggle" title="Toggle theme"><ion-icon name="moon-outline"></ion-icon></button></div>
         </header>
         <div class="content-area">
+
+            <!-- ═══════════════ HERO ═══════════════ -->
             <header class="page-header animate-on-scroll">
-                <span class="badge">Module 2</span>
-                <h1>Career <span class="text-gradient">Roadmap</span> <span class="text-gradient"></span></h1>
-                <p class="page-description">A structured guide for transitioning into AI Engineering.</p>
+                <span class="badge">Your Guide</span>
+                <h1>AI Engineer <span class="text-gradient">Career Roadmap</span></h1>
+                <p class="page-description">A step-by-step, skill-by-skill guide to transitioning from software engineering into AI Engineering — with exact topics to study, tools to master, projects to build, and timelines to hit at each stage.</p>
                 <div class="chip-strip">
-    <span class="chip ch-p">AI Engineer</span>
-    <span class="chip ch-g">MLOps</span>
-    <span class="chip ch-a">Phase 3</span>
-</div>
-
+                    <span class="chip ch-p">5 Phases</span>
+                    <span class="chip ch-g">~9–12 Months</span>
+                    <span class="chip ch-a">$180K–$280K Target</span>
+                    <span class="chip ch-b">No ML PhD Required</span>
+                    <span class="chip ch-r">Build → Ship → Repeat</span>
+                </div>
             </header>
-            
 
+            <!-- ═══════════════ ROLE COMPARISON ═══════════════ -->
             <section class="animate-on-scroll">
-                <div class="eyebrow">The Journey</div>
-                <h2 style="margin-top:0;">Platform Engineer to AI Engineer</h2>
+                <div class="eyebrow">Understanding the Landscape</div>
+                <h2 style="margin-top:0;">AI Engineer vs. Data Scientist vs. ML Engineer</h2>
                 <div class="info-box">
                     <ion-icon name="information-circle-outline"></ion-icon>
-                    <p>The gap between a traditional Software Engineer and an AI Engineer is shrinking. The focus has shifted from training models (Data Science) to <strong>integrating APIs, orchestrating agents, and building RAG pipelines</strong>.</p>
+                    <p>The AI Engineer role is fundamentally different from both Data Science and ML Engineering. You don't train models from scratch — you build <strong>products using pre-trained models via APIs</strong>. This makes the role accessible to software engineers without ML research backgrounds, and is by far the fastest-growing job category in tech in 2025.</p>
                 </div>
-                
-                <div class="transformer-flow">
-                    <div class="tf-step">
-                        <div class="tf-box tf-1"><h4>Phase 1: Core Fundamentals</h4><p>Tokens, Context Windows, basic RAG, and prompt engineering.</p></div>
+                <div class="role-compare">
+                    <div class="role-col" style="border-top:3px solid #818cf8;">
+                        <h4 style="color:#818cf8;">🧑‍💻 AI Engineer</h4>
+                        <ul>
+                            <li>Integrates LLM APIs (Claude, GPT, Gemini)</li>
+                            <li>Builds RAG pipelines and agent workflows</li>
+                            <li>Deploys to production with LLMOps tooling</li>
+                            <li>Evaluates with RAGAS, LangSmith</li>
+                            <li>Implements guardrails and security layers</li>
+                            <li>Optimizes cost and latency</li>
+                            <li>Needs: SWE skills + API integration + prompt eng</li>
+                        </ul>
                     </div>
-                    <div class="tf-arrow"></div>
-                    <div class="tf-step">
-                        <div class="tf-box tf-2"><h4>Phase 2: Production Ops</h4><p>LLMOps, Security, Evals (RAGAS), and FinOps.</p></div>
+                    <div class="role-col" style="border-top:3px solid #34d399;">
+                        <h4 style="color:#34d399;">📊 Data Scientist</h4>
+                        <ul>
+                            <li>Statistical analysis and EDA</li>
+                            <li>Classical ML: sklearn, XGBoost</li>
+                            <li>Business metric modeling</li>
+                            <li>A/B testing and experimentation</li>
+                            <li>Jupyter notebooks, pandas</li>
+                            <li>Often doesn't deploy to production</li>
+                            <li>Needs: statistics + Python + domain knowledge</li>
+                        </ul>
                     </div>
-                    <div class="tf-arrow"></div>
-                    <div class="tf-step">
-                        <div class="tf-box tf-3"><h4>Phase 3: Advanced Agentic Eng</h4><p>LangGraph, Multi-Agent systems, and GraphRAG.</p></div>
+                    <div class="role-col" style="border-top:3px solid #fbbf24;">
+                        <h4 style="color:#fbbf24;">⚙️ ML Engineer</h4>
+                        <ul>
+                            <li>Trains and fine-tunes deep learning models</li>
+                            <li>Writes PyTorch / JAX training loops</li>
+                            <li>Distributed training infrastructure (FSDP)</li>
+                            <li>CUDA kernels and GPU optimization</li>
+                            <li>Model compression: quantization, distillation</li>
+                            <li>MLflow, DVC, experiment tracking</li>
+                            <li>Needs: deep math + ML theory + HPC experience</li>
+                        </ul>
+                    </div>
+                    <div class="role-col" style="border-top:3px solid #60a5fa;">
+                        <h4 style="color:#60a5fa;">🔧 Platform / SWE → AI Engineer</h4>
+                        <ul>
+                            <li><strong>Your current skills transfer directly</strong></li>
+                            <li>REST APIs, Docker, Kubernetes ✓</li>
+                            <li>Python, async programming ✓</li>
+                            <li>System design and databases ✓</li>
+                            <li>CI/CD and observability ✓</li>
+                            <li>New skills: prompt eng, RAG, LLMOps, agents</li>
+                            <li>Gap: ~6–12 months of focused learning</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
+            <!-- ═══════════════ TIMELINE OVERVIEW ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">Time Investment</div>
+                <h2 style="margin-top:0;">Full Roadmap Timeline</h2>
+                <div class="timeline-bar">
+                    <div class="tb-segment" style="background:rgba(129,140,248,0.15);">
+                        <div class="tb-phase" style="color:#818cf8;">Phase 1</div>
+                        <div class="tb-weeks" style="color:#818cf8;">Weeks 1–6</div>
+                        <div class="tb-label">Foundations</div>
+                    </div>
+                    <div class="tb-segment" style="background:rgba(52,211,153,0.15);">
+                        <div class="tb-phase" style="color:#34d399;">Phase 2</div>
+                        <div class="tb-weeks" style="color:#34d399;">Weeks 7–14</div>
+                        <div class="tb-label">Production Ops</div>
+                    </div>
+                    <div class="tb-segment" style="background:rgba(251,191,36,0.15);">
+                        <div class="tb-phase" style="color:#fbbf24;">Phase 3</div>
+                        <div class="tb-weeks" style="color:#fbbf24;">Weeks 15–24</div>
+                        <div class="tb-label">Advanced Agents</div>
+                    </div>
+                    <div class="tb-segment" style="background:rgba(244,114,182,0.15);">
+                        <div class="tb-phase" style="color:#f472b6;">Phase 4</div>
+                        <div class="tb-weeks" style="color:#f472b6;">Weeks 25–36</div>
+                        <div class="tb-label">Deep Specialization</div>
+                    </div>
+                    <div class="tb-segment" style="background:rgba(96,165,250,0.15);">
+                        <div class="tb-phase" style="color:#60a5fa;">Phase 5</div>
+                        <div class="tb-weeks" style="color:#60a5fa;">Weeks 37–48</div>
+                        <div class="tb-label">Senior/Staff Level</div>
+                    </div>
+                </div>
+                <p style="color:var(--text-secondary);font-size:0.85rem;">Timeline assumes 10–15 hours/week of focused study and project work alongside a full-time job. Full-time learners can compress to 6–8 months. The exact pace is less important than consistency — miss weeks and you lose momentum.</p>
+            </section>
 
-            <section class="animate-on-scroll" style="margin-top:40px;">
+            <!-- ═══════════════ GRAPHICAL ROADMAP ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">The Visual Journey</div>
+                <h2 style="margin-top:0;">Step-by-Step Graphical Roadmap</h2>
+                <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:24px;">Each card below represents one learning step. They alternate left and right down the timeline spine. Click through the linked module to dive deep into each topic.</p>
+
+                <div class="roadmap-container">
+                    <div class="roadmap-spine"></div>
+
+                    <!-- ══ PHASE 1 ══ -->
+                    <div class="phase-header">
+                        <div class="phase-badge" style="border-color:#818cf8;color:#818cf8;--glow-color:rgba(129,140,248,0.3);">
+                            <ion-icon name="school-outline"></ion-icon>
+                            Phase 1 — Core Foundations &nbsp;·&nbsp; Weeks 1–6
+                        </div>
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="rm-node right p1 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p1"><ion-icon name="bulb-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 01</span>
+                                    <h3>LLM Fundamentals — How AI Actually Works</h3>
+                                </div>
+                                <p class="rm-desc">Before touching a single API, you must understand what an LLM actually is at a conceptual level. This is the bedrock everything else builds on. Without it, you'll copy-paste code without understanding why it works or why it breaks.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> Tokens and tokenization (GPT uses BPE, Claude uses similar). Context windows and why 200K tokens ≠ perfect memory. Temperature and sampling (why the model is non-deterministic). Embeddings: dense vector representations of meaning. The Transformer architecture at a conceptual level: self-attention, why it parallelizes better than RNNs. Pre-training vs. fine-tuning vs. RLHF. Why hallucination is a structural property, not a bug to fix.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A simple CLI app that calls the Claude API, tokenizes a prompt, prints token count, and adjusts temperature — understanding why outputs change.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Transformers</span>
+                                    <span class="rm-skill">Tokenization</span>
+                                    <span class="rm-skill">Embeddings</span>
+                                    <span class="rm-skill">Temperature</span>
+                                    <span class="rm-skill">Context Windows</span>
+                                    <span class="rm-skill">Hallucination</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 1–2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Foundational</span>
+                                </div>
+                                <a href="fundamentals.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="rm-node left p1 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p1"><ion-icon name="sparkles-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 02</span>
+                                    <h3>Prompt Engineering — Controlling Model Behavior</h3>
+                                </div>
+                                <p class="rm-desc">Prompt engineering is the single most leveraged skill in AI Engineering. A well-crafted prompt can turn a mediocre output into a production-ready one. This is not about magic tricks — it's about understanding how the model's next-token prediction works and designing inputs that steer it reliably.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> System prompts vs. user prompts and why they're treated differently by the model. Zero-shot vs. few-shot prompting (when to include examples). Chain of Thought: forcing the model to reason before answering improves accuracy by 20–40% on reasoning tasks. XML tags for structure (Claude's preferred format). Output formatting: JSON mode, markdown control. Temperature tuning for creative vs. deterministic tasks. Claude's extended thinking mode for hard problems. Common failure modes: sycophancy, over-qualification, prompt leakage.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A prompt comparison dashboard — same question, 5 different prompt strategies, side-by-side quality scores.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">System Prompts</span>
+                                    <span class="rm-skill">Few-Shot</span>
+                                    <span class="rm-skill">Chain of Thought</span>
+                                    <span class="rm-skill">XML Structure</span>
+                                    <span class="rm-skill">JSON Mode</span>
+                                    <span class="rm-skill">Extended Thinking</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 1 week</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> High leverage</span>
+                                </div>
+                                <a href="claude.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="rm-node right p1 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p1"><ion-icon name="search-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 03</span>
+                                    <h3>RAG — Retrieval Augmented Generation</h3>
+                                </div>
+                                <p class="rm-desc">RAG is the most important and most commonly implemented pattern in production AI systems. It solves the fundamental problem that LLMs are frozen in time — they don't know about your private data, recent events, or your company's proprietary knowledge. RAG gives LLMs access to external knowledge at query time.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The full RAG pipeline: Document → Chunk → Embed → Store → Query → Retrieve → Augment → Generate. Vector databases: Pinecone, Qdrant, Chroma, pgvector — when to use each. Chunking strategies and why they matter (fixed vs. semantic vs. sentence chunking). Embedding models: OpenAI text-embedding-3, Cohere embed, BGE. Cosine similarity search explained. Hybrid search (BM25 + dense vectors). Re-ranking with cross-encoders. Advanced RAG: HyDE, query decomposition, RAG fusion.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A document Q&amp;A system — upload any PDF, chunk it, embed it into Chroma, then ask questions about it with cited sources.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Vector DBs</span>
+                                    <span class="rm-skill">Embeddings</span>
+                                    <span class="rm-skill">Chunking</span>
+                                    <span class="rm-skill">Hybrid Search</span>
+                                    <span class="rm-skill">Re-ranking</span>
+                                    <span class="rm-skill">Pinecone</span>
+                                    <span class="rm-skill">pgvector</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Core skill</span>
+                                </div>
+                                <a href="rag.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="rm-node left p1 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p1"><ion-icon name="git-network-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 04</span>
+                                    <h3>Model Context Protocol (MCP) — Tool Integration Standard</h3>
+                                </div>
+                                <p class="rm-desc">MCP is the emerging industry standard for connecting AI models to external tools, data sources, and APIs — created by Anthropic in 2024 and now widely adopted. Understanding MCP means you can build integrations once and have them work with any compliant AI system, similar to how USB-C works across devices.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The MCP architecture: Host (LLM App) ↔ Client ↔ Server ↔ Data Sources. The three primitives: Resources (read-only data), Tools (execute actions), Prompts (reusable templates). Transport protocols: STDIO for local processes, HTTP+SSE for remote servers. How Claude Desktop uses MCP to connect to filesystem, GitHub, databases. Building your own MCP server. Security model: trust levels and permissions.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A custom MCP server that exposes your company's internal API as tools callable by Claude.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">MCP Protocol</span>
+                                    <span class="rm-skill">Tools / Resources</span>
+                                    <span class="rm-skill">STDIO Transport</span>
+                                    <span class="rm-skill">HTTP+SSE</span>
+                                    <span class="rm-skill">Tool Schemas</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 1 week</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Emerging standard</span>
+                                </div>
+                                <a href="mcp.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ PHASE 2 ══ -->
+                    <div class="phase-header">
+                        <div class="phase-badge" style="border-color:#34d399;color:#34d399;--glow-color:rgba(52,211,153,0.3);">
+                            <ion-icon name="construct-outline"></ion-icon>
+                            Phase 2 — Production Operations &nbsp;·&nbsp; Weeks 7–14
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="rm-node right p2 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p2"><ion-icon name="hardware-chip-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 05</span>
+                                    <h3>Agentic AI — From Single Calls to Autonomous Systems</h3>
+                                </div>
+                                <p class="rm-desc">Agents represent the leap from "the model answers a question" to "the model takes actions in the world." An agent is an LLM in a loop: it can call tools, observe results, and decide what to do next — potentially running for minutes or hours on a complex task.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The ReAct loop: Reason → Act → Observe → Repeat. Tool calling: how the LLM decides which tool to invoke and with what arguments. Function calling / tool use APIs. The autonomy spectrum from simple chatbots to fully autonomous agents. Agent failure modes: infinite loops, hallucinated tool calls, context overflow. When NOT to use agents (over-engineering risk). Basic agent implementation without a framework (just Python + API).</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A ReAct agent from scratch — a research assistant that searches the web, reads URLs, and synthesizes a report. No LangChain yet — do it with raw API calls to understand the loop deeply.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">ReAct Loop</span>
+                                    <span class="rm-skill">Tool Calling</span>
+                                    <span class="rm-skill">Function APIs</span>
+                                    <span class="rm-skill">Agent Loops</span>
+                                    <span class="rm-skill">Failure Modes</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Game changer</span>
+                                </div>
+                                <a href="agents.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="rm-node left p2 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p2"><ion-icon name="server-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 06</span>
+                                    <h3>LLMOps — Running AI in Production</h3>
+                                </div>
+                                <p class="rm-desc">Building a demo is easy. Running it reliably for 10,000 users at 3am when Claude has an outage, while staying under budget, is the actual job. LLMOps is the operational discipline that makes AI applications reliable, observable, and cost-effective at scale.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The four key metrics: TTFT (Time To First Token target: &lt;500ms), Cost per request (target: &lt;$0.02), Cache hit rate (target: 40–60%), Uptime SLA (target: 99.5%). Semantic caching with Redis. Prompt versioning and CI/CD for prompts. Cost budgeting and per-user spend limits. Rate limiting and request queuing. Streaming responses for UX. Observability tooling: LangSmith, Langfuse, Helicone. Fallback strategies: primary provider → secondary provider. Load testing LLM endpoints.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> Add Langfuse observability to your RAG project. Implement semantic caching. Set up cost alerting when daily spend exceeds threshold.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">LangSmith</span>
+                                    <span class="rm-skill">Langfuse</span>
+                                    <span class="rm-skill">Semantic Cache</span>
+                                    <span class="rm-skill">TTFT</span>
+                                    <span class="rm-skill">Cost Control</span>
+                                    <span class="rm-skill">Streaming</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Production critical</span>
+                                </div>
+                                <a href="llmops.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 7 -->
+                    <div class="rm-node right p2 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p2"><ion-icon name="bar-chart-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 07</span>
+                                    <h3>AI Evaluation — Measuring What the Model Actually Does</h3>
+                                </div>
+                                <p class="rm-desc">You can't improve what you can't measure. Traditional unit tests don't work for LLMs — the same prompt can produce different outputs, and "correct" is often subjective. AI evaluation requires new paradigms: RAGAS metrics, LLM-as-judge, golden datasets, and behavioral regression testing.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> Why standard tests fail for LLMs. RAGAS framework: Faithfulness (does the answer come from the retrieved context?), Context Recall (did we retrieve all needed facts?), Context Precision (did we retrieve only relevant facts?), Answer Relevance (is the answer on-topic?). LLM-as-Judge: use GPT-4 or Claude to rate another model's outputs. Building a golden dataset of 50–100 question-answer pairs for regression testing. Human evaluation workflows. Eval-driven development cycle: eval → improve → re-eval.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> An automated eval suite for your RAG project — RAGAS scores tracked over time, with GitHub Actions failing the CI build if faithfulness drops below 0.85.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">RAGAS</span>
+                                    <span class="rm-skill">Faithfulness</span>
+                                    <span class="rm-skill">Context Recall</span>
+                                    <span class="rm-skill">LLM-as-Judge</span>
+                                    <span class="rm-skill">Golden Dataset</span>
+                                    <span class="rm-skill">Regression Testing</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Often ignored, critical</span>
+                                </div>
+                                <a href="evals.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 8 -->
+                    <div class="rm-node left p2 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p2"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 08</span>
+                                    <h3>AI Security — OWASP Top 10 for LLMs</h3>
+                                </div>
+                                <p class="rm-desc">Every AI application is a new attack surface. Prompt injection, data leakage through the model, jailbreaks, and insecure tool execution are all real production risks. Security must be designed in from day one — retrofitting it after a breach is always more expensive.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The OWASP LLM Top 10 — know all 10, not just the top 3. Direct vs. Indirect prompt injection. System prompt leakage attacks and defenses. Output validation to prevent data exfiltration. Least-privilege tool design for agents. Input guardrails: content moderation APIs, regex, classifier models. Output guardrails: toxicity detection, PII scrubbing. Human-in-the-Loop as a security control. Audit logging for AI systems.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A prompt injection test suite — 20 attack patterns automated against your own agent, with defenses implemented and verified.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">OWASP LLM Top 10</span>
+                                    <span class="rm-skill">Prompt Injection</span>
+                                    <span class="rm-skill">Input Guardrails</span>
+                                    <span class="rm-skill">PII Detection</span>
+                                    <span class="rm-skill">HITL</span>
+                                    <span class="rm-skill">Audit Logging</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Non-negotiable</span>
+                                </div>
+                                <a href="security.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ PHASE 3 ══ -->
+                    <div class="phase-header">
+                        <div class="phase-badge" style="border-color:#fbbf24;color:#fbbf24;--glow-color:rgba(251,191,36,0.3);">
+                            <ion-icon name="git-branch-outline"></ion-icon>
+                            Phase 3 — Advanced Agentic Engineering &nbsp;·&nbsp; Weeks 15–24
+                        </div>
+                    </div>
+
+                    <!-- Step 9 -->
+                    <div class="rm-node right p3 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p3"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 09</span>
+                                    <h3>LangGraph — Production-Grade Agent Orchestration</h3>
+                                </div>
+                                <p class="rm-desc">LangGraph is the industry standard for building production AI agents. By the time you reach this step, you've built a ReAct agent from scratch — now you'll rebuild it with LangGraph to see why structure, state persistence, and HITL matter for real systems.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> StateGraph fundamentals — nodes (Python functions), edges (routing functions), and typed State (TypedDict). Conditional edges for dynamic routing. Checkpointers: SQLite for dev, Postgres for prod — how state is persisted across every node. Time Travel: rewinding state to debug or replay a failed workflow. Human-in-the-Loop: interrupt_before, update_state, and resuming after human approval. Multi-agent subgraphs: compiling sub-graphs inside parent graphs. The full comparison to raw ReAct: why structure wins in production.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> Rewrite your ReAct agent using LangGraph with Postgres checkpointing, HITL for high-impact tool calls, and LangSmith tracing.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">StateGraph</span>
+                                    <span class="rm-skill">Checkpointers</span>
+                                    <span class="rm-skill">Conditional Edges</span>
+                                    <span class="rm-skill">Time Travel</span>
+                                    <span class="rm-skill">interrupt_before</span>
+                                    <span class="rm-skill">Subgraphs</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Industry standard</span>
+                                </div>
+                                <a href="langgraph.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 10 -->
+                    <div class="rm-node left p3 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p3"><ion-icon name="construct-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 10</span>
+                                    <h3>Agent Engineering — Memory, Planning &amp; Self-Correction</h3>
+                                </div>
+                                <p class="rm-desc">There's a gap between "an agent that runs" and "an agent that reliably solves hard problems." Agent Engineering bridges that gap — applying cognitive architecture principles to design agents that remember, plan, reflect on their work, and improve over time.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The four memory types: Working memory (context window), In-session state (LangGraph State), Semantic memory (RAG / vector DB), Episodic memory (logs of past actions). Planning patterns: ReAct (adaptive, exploration), Plan &amp; Execute (planner LLM + executor LLM), Reflection/Self-Refine (critic loop), Tree of Thoughts (parallel path exploration). Agent evaluation: task completion rate, efficiency (steps and tokens), tool selection accuracy, reliability tracking. How to prevent correction loops from becoming infinite loops.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> An agent with episodic memory — it learns from past tool failures and avoids repeating them in future sessions.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Semantic Memory</span>
+                                    <span class="rm-skill">Episodic Memory</span>
+                                    <span class="rm-skill">Plan &amp; Execute</span>
+                                    <span class="rm-skill">Reflection</span>
+                                    <span class="rm-skill">Tree of Thoughts</span>
+                                    <span class="rm-skill">Agent Evals</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Senior-level skill</span>
+                                </div>
+                                <a href="agent-engineering.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 11 -->
+                    <div class="rm-node right p3 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p3"><ion-icon name="people-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 11</span>
+                                    <h3>Multi-Agent Systems — Orchestrating Teams of Agents</h3>
+                                </div>
+                                <p class="rm-desc">The most capable AI systems in 2025 are not single agents — they're teams of specialized agents working in parallel. The Supervisor pattern, where an orchestrator LLM delegates to specialist workers, is the dominant production architecture for complex, long-running workflows.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> The Supervisor pattern in detail — how the supervisor decomposes tasks, delegates with structured schemas, and aggregates results. Peer-to-peer (Swarm) pattern and when it's better. The Debate pattern for improving answer quality. MapReduce pattern for parallel document processing. Agent communication protocols: Shared LangGraph State, Google's A2A protocol, HTTP tool calls. Multi-agent failure modes: cascade failures, token explosion, conflicting plans, cross-agent prompt injection. Debugging multi-agent systems with LangSmith correlation IDs.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A Supervisor + 3 worker agents (Research, Coding, Writer) using LangGraph subgraphs — build a feature spec, implement code, and write docs in parallel.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Supervisor Pattern</span>
+                                    <span class="rm-skill">Worker Agents</span>
+                                    <span class="rm-skill">A2A Protocol</span>
+                                    <span class="rm-skill">MapReduce</span>
+                                    <span class="rm-skill">Swarm</span>
+                                    <span class="rm-skill">Agent Tracing</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Cutting edge</span>
+                                </div>
+                                <a href="multi-agent.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ PHASE 4 ══ -->
+                    <div class="phase-header">
+                        <div class="phase-badge" style="border-color:#f472b6;color:#f472b6;--glow-color:rgba(244,114,182,0.3);">
+                            <ion-icon name="telescope-outline"></ion-icon>
+                            Phase 4 — Deep Specialization &nbsp;·&nbsp; Weeks 25–36
+                        </div>
+                    </div>
+
+                    <!-- Step 12 -->
+                    <div class="rm-node left p4 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p4"><ion-icon name="analytics-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 12</span>
+                                    <h3>GraphRAG — Knowledge Graphs for Deep Reasoning</h3>
+                                </div>
+                                <p class="rm-desc">Standard RAG finds similar documents. GraphRAG follows relationships between entities — answering multi-hop questions that require reasoning across connected data. This is where AI stops being a semantic search engine and starts being a genuine reasoning system over complex domain knowledge.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> Why vector similarity fails on multi-hop questions. Knowledge graph fundamentals: nodes (entities), edges (typed relationships), properties. Microsoft GraphRAG pipeline: entity extraction → deduplication → graph construction → community detection (Leiden algorithm) → community summaries. Local search (graph traversal) vs. global search (community summaries). Hybrid GraphRAG + Vector RAG. Graph databases: Neo4j, ArangoDB, Amazon Neptune. Building entity extractors with LLMs. Cost trade-offs of GraphRAG vs. standard RAG.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A knowledge graph over 100 technical papers — answer multi-hop questions like "What techniques did researchers who worked on both retrieval and generation propose?"</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Knowledge Graphs</span>
+                                    <span class="rm-skill">Entity Extraction</span>
+                                    <span class="rm-skill">Neo4j</span>
+                                    <span class="rm-skill">Community Detection</span>
+                                    <span class="rm-skill">Leiden Algorithm</span>
+                                    <span class="rm-skill">Multi-Hop Queries</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Advanced specialization</span>
+                                </div>
+                                <a href="graphrag.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 13 -->
+                    <div class="rm-node right p4 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p4"><ion-icon name="server-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 13</span>
+                                    <h3>Infrastructure &amp; Serving — Running Models at Scale</h3>
+                                </div>
+                                <p class="rm-desc">If you work at a company deploying open-weight models (Llama, Mistral, Qwen), you need to understand inference infrastructure. This determines whether your serving costs $50/day or $500/day, and whether your system handles 100 or 10,000 concurrent users on the same hardware.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> vLLM: PagedAttention, continuous batching, OpenAI-compatible API. Text Generation Inference (TGI) from HuggingFace. NVIDIA Triton for enterprise GPU clusters. Quantization: FP32 → FP16 → INT8 (GPTQ) → INT4 (AWQ) — quality vs. memory trade-offs. KV cache mechanics and why it matters for throughput. GPU selection: A100 vs. H100 vs. consumer (RTX 4090 for dev). The full production GPU serving stack: Cloud → Kubernetes → vLLM → AI Gateway → Load Balancer. llama.cpp and Ollama for dev environments and edge deployment.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> Deploy Llama 3.1 70B INT4 on a rented A100 with vLLM, benchmark throughput, and compare to the Anthropic API cost.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">vLLM</span>
+                                    <span class="rm-skill">PagedAttention</span>
+                                    <span class="rm-skill">Triton</span>
+                                    <span class="rm-skill">AWQ / GPTQ</span>
+                                    <span class="rm-skill">KV Cache</span>
+                                    <span class="rm-skill">A100 / H100</span>
+                                    <span class="rm-skill">Kubernetes</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> High salary leverage</span>
+                                </div>
+                                <a href="infrastructure.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 14 -->
+                    <div class="rm-node left p4 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p4"><ion-icon name="swap-horizontal-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 14</span>
+                                    <h3>AI Gateways &amp; Advanced Observability</h3>
+                                </div>
+                                <p class="rm-desc">At scale, every LLM call flowing through a single gateway enables capabilities that are nearly impossible to retrofit: unified cost control, automatic failover across providers, semantic caching, centralized security enforcement, and deep observability. This is the operational backbone of any serious AI platform.</p>
+                                <p class="rm-desc"><strong>What to learn (Gateways):</strong> LiteLLM as the open-source standard gateway — virtual keys, budget tracking, 100+ provider support. Portkey for advanced routing rules. Kong AI Gateway for enterprise. Semantic caching: how embedding-based cache keys work and achieve 40–60% hit rates. Intelligent model routing rules — complexity-based, tier-based, latency-budget-based. Automatic failover configuration. Per-user and per-team cost budgets.</p>
+                                <p class="rm-desc"><strong>What to learn (Observability):</strong> The four pillars: Metrics, Logs, Traces, Quality. Distributed trace waterfall anatomy. Prompt drift detection: golden set monitoring, output distribution analysis. Alerting thresholds: P1/P2/P3 classification for LLM-specific incidents. OpenTelemetry vs. LangSmith positioning.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">LiteLLM</span>
+                                    <span class="rm-skill">Model Routing</span>
+                                    <span class="rm-skill">Semantic Cache</span>
+                                    <span class="rm-skill">Langfuse</span>
+                                    <span class="rm-skill">OpenTelemetry</span>
+                                    <span class="rm-skill">Prompt Drift</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 2 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Platform engineering</span>
+                                </div>
+                                <a href="ai-gateway.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ PHASE 5 ══ -->
+                    <div class="phase-header">
+                        <div class="phase-badge" style="border-color:#60a5fa;color:#60a5fa;--glow-color:rgba(96,165,250,0.3);">
+                            <ion-icon name="trophy-outline"></ion-icon>
+                            Phase 5 — Senior / Staff Level &nbsp;·&nbsp; Weeks 37–48
+                        </div>
+                    </div>
+
+                    <!-- Step 15 -->
+                    <div class="rm-node right p5 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p5"><ion-icon name="lock-closed-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 15</span>
+                                    <h3>Advanced Security &amp; Red Teaming</h3>
+                                </div>
+                                <p class="rm-desc">At the senior/staff level, you're expected to be the person who catches security issues before the team ships — not after an incident. AI red teaming is a distinct skill from traditional security testing: it requires creativity, adversarial thinking, and deep knowledge of how LLMs can be manipulated.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> AI red teaming methodology: threat modeling → attack execution → documentation → remediation → re-test. Advanced attack techniques: many-shot jailbreaking (100+ in-context examples), multilingual bypass, Unicode token smuggling, role-play persona injection, indirect injection via RAG. Supply chain attacks: model poisoning, malicious HuggingFace Pickle files, compromised embedding models, model extraction. Defense-in-depth: 6-layer defense model from input normalization through audit logging. Running automated red team suites with Garak or PyRIT.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> A full red team report for your own agent — documented attacks, severity scores, and verified defenses for each finding.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Red Teaming</span>
+                                    <span class="rm-skill">Many-Shot Jailbreak</span>
+                                    <span class="rm-skill">Token Smuggling</span>
+                                    <span class="rm-skill">Supply Chain</span>
+                                    <span class="rm-skill">Garak / PyRIT</span>
+                                    <span class="rm-skill">Defense-in-Depth</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Staff-level signal</span>
+                                </div>
+                                <a href="advanced-security.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 16 -->
+                    <div class="rm-node left p5 animate-on-scroll">
+                        <div class="rm-dot-col">
+                            <div class="rm-dot p5"><ion-icon name="layers-outline"></ion-icon></div>
+                        </div>
+                        <div class="rm-card-col">
+                            <div class="rm-card">
+                                <div class="rm-card-header">
+                                    <span class="rm-step-num">Step 16</span>
+                                    <h3>Architecture Patterns — System Design for AI</h3>
+                                </div>
+                                <p class="rm-desc">The final skill tier is system design: given a problem statement, designing the right architecture from the available patterns. This is what distinguishes a staff engineer from a senior — the ability to reason about trade-offs at the system level, not just implement existing patterns.</p>
+                                <p class="rm-desc"><strong>What to learn:</strong> All major AI architecture patterns: Naive RAG → Advanced RAG → Agentic RAG → Corrective RAG → Self-RAG. Orchestration architectures: single agent, multi-agent supervisor, swarm. Hybrid patterns combining multiple approaches. When to use which pattern based on: query complexity, latency requirements, cost envelope, and accuracy needs. Architecture decision records for AI systems. Communicating technical architecture to non-technical stakeholders. Designing for failure: circuit breakers, graceful degradation, fallback chains.</p>
+                                <p class="rm-desc"><strong>What to build:</strong> Write 3 system design documents for realistic AI products: a customer support bot, a code review agent, a market research multi-agent — justifying each architectural decision with concrete trade-offs.</p>
+                                <div class="rm-skills">
+                                    <span class="rm-skill">Corrective RAG</span>
+                                    <span class="rm-skill">Self-RAG</span>
+                                    <span class="rm-skill">System Design</span>
+                                    <span class="rm-skill">Trade-off Analysis</span>
+                                    <span class="rm-skill">ADRs</span>
+                                    <span class="rm-skill">Graceful Degradation</span>
+                                </div>
+                                <div class="rm-meta">
+                                    <span class="rm-meta-item"><ion-icon name="time-outline"></ion-icon> 3 weeks</span>
+                                    <span class="rm-meta-item"><ion-icon name="trending-up-outline"></ion-icon> Staff-level thinking</span>
+                                </div>
+                                <a href="architecture-patterns.html" class="rm-link"><ion-icon name="arrow-forward-outline"></ion-icon> Study Module →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FINISH -->
+                    <div class="phase-header" style="margin-top:32px;">
+                        <div class="phase-badge" style="border-color:#34d399;color:#34d399;background:rgba(52,211,153,0.1);--glow-color:rgba(52,211,153,0.4); font-size:0.9rem; padding:14px 28px;">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                            &nbsp; You Are Now a Senior AI Engineer &nbsp;
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        </div>
+                    </div>
+
+                </div><!-- /roadmap-container -->
+            </section>
+
+            <!-- ═══════════════ SALARY BANDS ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">Market Compensation</div>
+                <h2 style="margin-top:0;">AI Engineer Salary Bands (US, 2025)</h2>
+                <div class="salary-grid">
+                    <div class="sal-card" style="border-top:3px solid #818cf8;">
+                        <div class="sal-title">Junior AI Engineer</div>
+                        <div class="sal-amount" style="color:#818cf8;">$120K</div>
+                        <div class="sal-range">$100K – $145K base</div>
+                        <div class="sal-bar-wrap"><div class="sal-bar" style="background:#818cf8;width:42%;"></div></div>
+                    </div>
+                    <div class="sal-card" style="border-top:3px solid #34d399;">
+                        <div class="sal-title">Mid-Level (Phase 1–2)</div>
+                        <div class="sal-amount" style="color:#34d399;">$165K</div>
+                        <div class="sal-range">$145K – $190K base</div>
+                        <div class="sal-bar-wrap"><div class="sal-bar" style="background:#34d399;width:58%;"></div></div>
+                    </div>
+                    <div class="sal-card" style="border-top:3px solid #fbbf24;">
+                        <div class="sal-title">Senior (Phase 3–4)</div>
+                        <div class="sal-amount" style="color:#fbbf24;">$220K</div>
+                        <div class="sal-range">$190K – $260K base</div>
+                        <div class="sal-bar-wrap"><div class="sal-bar" style="background:#fbbf24;width:77%;"></div></div>
+                    </div>
+                    <div class="sal-card" style="border-top:3px solid #f472b6;">
+                        <div class="sal-title">Staff / Principal (Phase 5)</div>
+                        <div class="sal-amount" style="color:#f472b6;">$300K</div>
+                        <div class="sal-range">$260K – $380K total comp</div>
+                        <div class="sal-bar-wrap"><div class="sal-bar" style="background:#f472b6;width:100%;"></div></div>
+                    </div>
+                </div>
+                <p style="color:var(--text-secondary);font-size:0.82rem;margin-top:8px;">Figures represent US tech market base salaries. Total compensation (base + equity + bonus) is typically 30–80% higher at FAANG/AI labs. Remote AI roles typically pay 90–100% of market rate.</p>
+            </section>
+
+            <!-- ═══════════════ TECH STACK ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">What You'll Master</div>
+                <h2 style="margin-top:0;">The Complete AI Engineering Tech Stack</h2>
+                <div class="tech-stack-overview">
+                    <div class="tso-cell">
+                        <div class="tso-cat">LLM APIs</div>
+                        <div class="tso-items">
+                            <span class="tso-item">Anthropic Claude SDK</span>
+                            <span class="tso-item">OpenAI Python SDK</span>
+                            <span class="tso-item">Google Gemini API</span>
+                            <span class="tso-item">LiteLLM (unified)</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Orchestration</div>
+                        <div class="tso-items">
+                            <span class="tso-item">LangGraph</span>
+                            <span class="tso-item">LangChain</span>
+                            <span class="tso-item">OpenAI Swarm</span>
+                            <span class="tso-item">Raw Python loops</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Vector DBs</div>
+                        <div class="tso-items">
+                            <span class="tso-item">Pinecone</span>
+                            <span class="tso-item">Qdrant</span>
+                            <span class="tso-item">Chroma (dev)</span>
+                            <span class="tso-item">pgvector (Postgres)</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Observability</div>
+                        <div class="tso-items">
+                            <span class="tso-item">LangSmith</span>
+                            <span class="tso-item">Langfuse</span>
+                            <span class="tso-item">Helicone</span>
+                            <span class="tso-item">OpenTelemetry</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Evaluation</div>
+                        <div class="tso-items">
+                            <span class="tso-item">RAGAS</span>
+                            <span class="tso-item">LLM-as-Judge</span>
+                            <span class="tso-item">Braintrust</span>
+                            <span class="tso-item">PromptFoo</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Inference Serving</div>
+                        <div class="tso-items">
+                            <span class="tso-item">vLLM</span>
+                            <span class="tso-item">TGI (HuggingFace)</span>
+                            <span class="tso-item">Ollama (dev)</span>
+                            <span class="tso-item">NVIDIA Triton</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Infrastructure</div>
+                        <div class="tso-items">
+                            <span class="tso-item">Docker + Kubernetes</span>
+                            <span class="tso-item">AWS / GCP / Azure</span>
+                            <span class="tso-item">GitHub Actions</span>
+                            <span class="tso-item">Terraform</span>
+                        </div>
+                    </div>
+                    <div class="tso-cell">
+                        <div class="tso-cat">Graph / Advanced</div>
+                        <div class="tso-items">
+                            <span class="tso-item">Neo4j</span>
+                            <span class="tso-item">Microsoft GraphRAG</span>
+                            <span class="tso-item">Garak (red team)</span>
+                            <span class="tso-item">PyRIT (security)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════ PROJECT MILESTONES ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">Portfolio Projects</div>
+                <h2 style="margin-top:0;">5 Projects That Will Get You Hired</h2>
+                <p style="color:var(--text-secondary);font-size:0.88rem; margin-bottom:20px;">Don't just study — build. Each of these projects demonstrates a concrete skill cluster and makes your portfolio stand out. Interviewers at AI companies look for evidence of hands-on building, not just theoretical knowledge.</p>
+                <div class="milestones">
+                    <div class="ms-card" style="border-top:3px solid #818cf8;">
+                        <div class="ms-icon" style="color:#818cf8;"><ion-icon name="document-text-outline"></ion-icon></div>
+                        <h4>Project 1: Document Q&amp;A with RAG</h4>
+                        <p>Full RAG pipeline over any PDF: chunking, embedding with text-embedding-3-small, Chroma vector store, hybrid BM25+dense retrieval, re-ranking, Claude generation with citations. RAGAS evaluation suite. <strong>Shows:</strong> RAG fundamentals, embeddings, evaluation.</p>
+                    </div>
+                    <div class="ms-card" style="border-top:3px solid #34d399;">
+                        <div class="ms-icon" style="color:#34d399;"><ion-icon name="globe-outline"></ion-icon></div>
+                        <h4>Project 2: ReAct Research Agent (Scratch)</h4>
+                        <p>Build a web research agent using ONLY the Claude API — no LangChain. Implements the ReAct loop manually in Python: thought → tool_call → observation → repeat. Tools: web_search, read_url, write_report. <strong>Shows:</strong> Deep understanding of agent loop mechanics.</p>
+                    </div>
+                    <div class="ms-card" style="border-top:3px solid #fbbf24;">
+                        <div class="ms-icon" style="color:#fbbf24;"><ion-icon name="git-branch-outline"></ion-icon></div>
+                        <h4>Project 3: LangGraph Agent with HITL</h4>
+                        <p>A DevOps agent (kubectl, GitHub, PagerDuty tools) built on LangGraph with Postgres checkpointer, Human-in-the-Loop before any destructive action, Time Travel for debugging, LangSmith tracing. <strong>Shows:</strong> Production agent engineering, LangGraph mastery.</p>
+                    </div>
+                    <div class="ms-card" style="border-top:3px solid #f472b6;">
+                        <div class="ms-icon" style="color:#f472b6;"><ion-icon name="people-outline"></ion-icon></div>
+                        <h4>Project 4: Multi-Agent SaaS Builder</h4>
+                        <p>Supervisor + 3 specialist worker agents: Research Agent (web search), Coding Agent (sandboxed code exec), Writer Agent (doc generation). Builds a complete product feature spec + implementation + documentation in parallel. <strong>Shows:</strong> Multi-agent orchestration, supervisor pattern.</p>
+                    </div>
+                    <div class="ms-card" style="border-top:3px solid #60a5fa;">
+                        <div class="ms-icon" style="color:#60a5fa;"><ion-icon name="shield-outline"></ion-icon></div>
+                        <h4>Project 5: AI Security Audit Tool</h4>
+                        <p>Automated red team suite for any LLM endpoint: 50+ attack patterns (prompt injection, jailbreaks, token smuggling, encoding bypasses), defense verification, severity scoring, PDF report generation. <strong>Shows:</strong> Security expertise, advanced AI engineering skills.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════ JOB SEARCH CHECKLIST ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">Interview Readiness</div>
+                <h2 style="margin-top:0;">AI Engineer Interview Readiness Checklist</h2>
+                <div class="checklist">
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>You can explain the full RAG pipeline end-to-end in 2 minutes</h5>
+                            <p>Document → Chunk → Embed → Store → Query → Retrieve → Re-rank → Augment → Generate. Know the trade-offs at every step.</p>
+                        </div>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>You can design a LangGraph agent with HITL on a whiteboard</h5>
+                            <p>Nodes, edges, conditional edges, State schema, checkpointer selection, interrupt_before config, and how to resume execution.</p>
+                        </div>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>You know all 10 OWASP LLM vulnerabilities by name and how to mitigate them</h5>
+                            <p>LLM01–LLM10. At minimum, deeply know: Prompt Injection, Sensitive Information Disclosure, Excessive Agency, and Insecure Output Handling.</p>
+                        </div>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>You've used RAGAS to evaluate a real RAG system and can discuss the scores</h5>
+                            <p>Not just "I know RAGAS" but "I ran RAGAS on my project, got Faithfulness: 0.82, Context Recall: 0.74, and here's what I changed to improve it."</p>
+                        </div>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>You can explain PagedAttention and why it enables more concurrent users</h5>
+                            <p>Even if you're not deploying self-hosted models, understanding why vLLM is the standard shows systems-level thinking.</p>
+                        </div>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>Your GitHub has 2+ deployed AI projects with documentation</h5>
+                            <p>Working demos beat slides. A live URL or a detailed README with architecture diagrams makes you memorable in screening rounds.</p>
+                        </div>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-check" style="background:rgba(52,211,153,0.2);color:#34d399;"><ion-icon name="checkmark-outline"></ion-icon></div>
+                        <div class="cl-text">
+                            <h5>You've shipped something real to production (even a side project)</h5>
+                            <p>Production experience means you've hit real problems: rate limits, cost spikes, context overflow, latency p99s. These war stories are gold in interviews.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════ INTERVIEW Q&A ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
                 <div class="eyebrow">Interview Prep</div>
-                <h2 style="margin-top:0; border:none;">Top Interview Questions</h2>
+                <h2 style="margin-top:0; border:none;">Top AI Engineer Interview Questions</h2>
                 <div class="qa-list">
-    <div class="qa-item">
-        <div class="qa-q">What is the difference between an AI Engineer and a Data Scientist? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
-        <div class="qa-a">Data Scientists train models using PyTorch/TensorFlow. AI Engineers build software applications using pre-trained models via APIs (like building a LangGraph agent).</div>
-    </div>
-</div>
-
+                    <div class="qa-item">
+                        <div class="qa-q">What's the difference between an AI Engineer and a Data Scientist? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Data Scientists train models — they write PyTorch training loops, work with datasets, tune hyperparameters, and use tools like scikit-learn and TensorFlow. Their output is a model artifact. AI Engineers build software products using pre-trained models via APIs — they design RAG pipelines, orchestrate agents, set up LLMOps tooling, and ship features to production users. Their output is a deployed application. The skill transfer from SWE to AI Engineering is much shorter than SWE to Data Science — you bring your existing knowledge of APIs, Docker, CI/CD, and system design, and layer on: prompt engineering, vector databases, agent orchestration, and LLM-specific evaluation. A Data Scientist typically doesn't need to know about Kubernetes or production observability; an AI Engineer uses those skills daily.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How would you design a production RAG system for a company's internal knowledge base? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">I'd approach this in layers: (1) Ingestion: automated document pipeline (Confluence, Google Drive, S3) → parse with Unstructured.io → semantic chunking (600 tokens, 100 overlap) → embed with text-embedding-3-large → store in Qdrant with metadata (department, date, author, doc_type). (2) Retrieval: Hybrid search (BM25 + dense vector, alpha=0.5) → re-rank top 20 results with a cross-encoder → return top 5 with metadata. (3) Generation: Construct prompt with system instructions + retrieved context tagged in XML → Claude Sonnet → stream response with source citations. (4) Observability: Langfuse for tracing, RAGAS weekly eval suite on golden dataset, semantic cache in Redis for 40% cost reduction. (5) Security: Auth via company SSO, document-level permissions enforced at retrieval time (a user only gets chunks from documents they can access), no PII in logs. I'd start with Chroma for dev, migrate to Qdrant for prod.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">When would you choose GraphRAG over standard vector RAG? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Standard vector RAG is the right choice for 80% of use cases — it's faster to build, cheaper to operate, and sufficient when queries are single-hop (find similar documents). I'd choose GraphRAG when: (1) Queries require multi-hop reasoning across connected entities ("what are all products that Company X has acquired since 2020 that have compliance violations?"); (2) Relationship understanding matters more than document similarity; (3) You need global corpus-wide questions ("what are the main themes across all 10,000 support tickets?") — GraphRAG's community detection and pre-computed summaries handle this well. The key trade-off: GraphRAG's upfront indexing cost is 10–50× higher than standard RAG (LLM entity extraction over every chunk), and re-indexing when documents change is expensive. I'd use it for stable, domain-specific corpora with complex relational structure — legal contract analysis, biomedical research, company knowledge graphs — but standard RAG for most chatbots and FAQ systems.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">An agent is in production and occasionally gets stuck in an infinite loop. How do you diagnose and fix it? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Diagnosis: Pull the LangSmith trace for the failing run. Look at the full node execution sequence — you'll see the same node being called repeatedly. Check the conditional edge routing function: what condition is supposed to break the loop (reaching END)? Is the model failing to produce that condition? Look at the tool call history — is the agent calling a tool that consistently returns an error, then re-trying without learning from it? Fix options: (1) Hard iteration limit — set max_steps=25 in the graph config; when exceeded, route to a graceful error handler node instead of END. (2) Error learning — if a tool call fails 3 times with the same arguments, the router should detect this and route to END with an error message rather than looping. (3) Convergence check — track whether the state is changing between iterations; if the model is producing identical outputs, the loop is not converging and should terminate. (4) Root cause — inspect the system prompt to ensure the "DONE criteria" are unambiguous; vague stopping conditions are the most common root cause of infinite loops in my experience.</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-q">How do you control costs for an AI application serving 50,000 users/day? <ion-icon name="add-outline" class="qa-toggle"></ion-icon></div>
+                        <div class="qa-a">Five-layer approach: (1) Model tiering through an AI gateway — route &lt;300 token queries to Claude Haiku (8× cheaper), &gt;2K token complex queries to Claude Sonnet, reserve Opus for executive or power users only. (2) Semantic caching via LiteLLM — embedding-based cache for responses; at scale a 40–60% hit rate means 40–60% of requests don't even reach the LLM API. At $0.02/request × 50K requests × 50% cache hit = $500/day saved. (3) Per-user budgets — each user gets a $5/month budget enforced at the gateway; when they hit 80%, downgrade to a smaller model. (4) Prompt optimization — audit prompt templates weekly; trim unnecessary instructions, remove redundant examples. A 30% shorter system prompt = 30% lower input token cost across all requests. (5) Async batching where possible — for non-real-time workflows (daily reports, batch processing), accumulate requests and use the batch API (40% cheaper than real-time). Track cost/request as a primary KPI on your Grafana dashboard and alert when it exceeds 2× the 7-day average.</div>
+                    </div>
+                </div>
             </section>
-            
-            <section class="animate-on-scroll" style="margin-top:40px;">
-                <div class="eyebrow">Up Next</div>
-                <h2 style="margin-top:0; border:none;">Continue Learning</h2>
+
+            <!-- ═══════════════ NEXT STEPS ═══════════════ -->
+            <section class="animate-on-scroll" style="margin-top:48px;">
+                <div class="eyebrow">Start Now</div>
+                <h2 style="margin-top:0; border:none;">Begin Your Learning Journey</h2>
                 <div class="next-steps-grid">
-    <a href="fundamentals.html" class="next-card">
-        <ion-icon name="bulb-outline" style="color: #818cf8;"></ion-icon>
-        <div class="next-card-text">
-            <h4>Fundamentals</h4>
-            <p>Continue your journey &rarr;</p>
-        </div>
-    </a>
-</div>
-
+                    <a href="fundamentals.html" class="next-card">
+                        <ion-icon name="bulb-outline" style="color:#818cf8;"></ion-icon>
+                        <div class="next-card-text"><h4>Step 1: LLM Fundamentals</h4><p>Start here — no prerequisites &rarr;</p></div>
+                    </a>
+                    <a href="claude.html" class="next-card">
+                        <ion-icon name="sparkles-outline" style="color:#34d399;"></ion-icon>
+                        <div class="next-card-text"><h4>Step 2: Prompt Engineering</h4><p>Control what the model does &rarr;</p></div>
+                    </a>
+                    <a href="knowledge-map.html" class="next-card">
+                        <ion-icon name="map-outline" style="color:#fbbf24;"></ion-icon>
+                        <div class="next-card-text"><h4>Knowledge Map</h4><p>See all concepts connected &rarr;</p></div>
+                    </a>
+                </div>
             </section>
+
         </div>
     </main>
 </div>
-    <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('.qa-q').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                item.classList.toggle('open');
-            });
-        });
-    </script>
-    <script>mermaid.initialize({theme: "dark", startOnLoad: true});</script>
+<script src="script.js"></script>
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+</script>
 </body>
 </html>
